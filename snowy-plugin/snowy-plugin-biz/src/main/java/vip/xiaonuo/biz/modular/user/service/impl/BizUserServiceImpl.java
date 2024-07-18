@@ -563,7 +563,7 @@ public class BizUserServiceImpl extends ServiceImpl<BizUserMapper, BizUser> impl
             if(ObjectUtil.isNotEmpty(bizUser.getBirthday())) {
                 try {
                     // 年龄
-                    long age = cn.hutool.core.date.DateUtil.betweenYear(cn.hutool.core.date.DateUtil.parseDate(bizUser.getBirthday()), DateTime.now(), true);
+                    long age = DateUtil.betweenYear(DateUtil.parseDate(bizUser.getBirthday()), DateTime.now(), true);
                     if(age != 0) {
                         map.put("age", age + "岁");
                     }
