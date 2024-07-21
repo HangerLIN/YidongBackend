@@ -1,0 +1,277 @@
+{
+  "subproject": [
+    {
+      "Project_id": "035600",
+      "Basic_information": [
+        {
+          "key": "产品代码",
+          "value": "310101"
+        },
+        {
+          "key": "产品名称",
+          "value": "双向双车道道路"
+        },
+        {
+          "key": "规格型号",
+          "value": "有绿植"
+        },
+        {
+          "key": "单位",
+          "value": "条"
+        },
+        {
+          "key": "其他信息1",
+          "value": "信息1"
+        },
+        {
+          "key": "其他信息2",
+          "value": "信息2"
+        }
+      ],
+      "SubProject_schedule": [
+        {
+          "year": 2024,
+          "amount": 340.00
+        },
+        {
+          "year": 2025,
+          "amount": 260.00
+        },
+        {
+          "year": 2026,
+          "amount": 198.00
+        }
+      ],
+      "SubProject_singleCost": [
+        {
+          "year": 2024,
+          "amount": 6000.00
+        },
+        {
+          "year": 2025,
+          "amount": 6000.00
+        },
+        {
+          "year": 2026,
+          "amount": 6000.00
+        }
+      ],
+      "SubProject_singlePrice": [
+        {
+          "year": 2024,
+          "amount": 400.00
+        },
+        {
+          "year": 2025,
+          "amount": 395.00
+        },
+        {
+          "year": 2026,
+          "amount": 385.00
+        },
+        {
+          "year": 2027,
+          "amount": 385.00
+        },
+        {
+          "year": 2028,
+          "amount": 385.00
+        },
+        {
+          "year": 2029,
+          "amount": 385.00
+        },
+        {
+          "year": 2030,
+          "amount": 385.00
+        },
+        {
+          "year": 2031,
+          "amount": 385.00
+        }
+      ]
+    },
+    {
+      "Project_id": "035600",
+      "Basic_information": [
+        {
+          "key": "产品代码",
+          "value": "310300"
+        },
+        {
+          "key": "产品名称",
+          "value": "单向双车道道路"
+        },
+        {
+          "key": "规格型号",
+          "value": "无绿植"
+        },
+        {
+          "key": "单位",
+          "value": "条"
+        },
+        {
+          "key": "其他信息1",
+          "value": "信息1"
+        },
+        {
+          "key": "其他信息2",
+          "value": "信息2"
+        }
+      ],
+      "SubProject_schedule": [
+        {
+          "year": 2024,
+          "amount": 150.00
+        },
+        {
+          "year": 2025,
+          "amount": 140.00
+        },
+        {
+          "year": 2026,
+          "amount": 120.00
+        }
+      ],
+      "SubProject_singleCost": [
+        {
+          "year": 2024,
+          "amount": 2000.00
+        },
+        {
+          "year": 2025,
+          "amount": 2000.00
+        },
+        {
+          "year": 2026,
+          "amount": 2125.00
+        }
+      ],
+      "SubProject_singlePrice": [
+        {
+          "year": 2024,
+          "amount": 500.00
+        },
+        {
+          "year": 2025,
+          "amount": 400.00
+        },
+        {
+          "year": 2026,
+          "amount": 350.00
+        },
+        {
+          "year": 2027,
+          "amount": 350.00
+        },
+        {
+          "year": 2028,
+          "amount": 350.00
+        },
+        {
+          "year": 2029,
+          "amount": 350.00
+        },
+        {
+          "year": 2030,
+          "amount": 350.00
+        },
+        {
+          "year": 2031,
+          "amount": 350.00
+        }
+      ]
+    },
+    {
+      "Project_id": "035600",
+      "Basic_information": [
+        {
+          "key": "产品代码",
+          "value": "310800"
+        },
+        {
+          "key": "产品名称",
+          "value": "快速路桥"
+        },
+        {
+          "key": "规格型号",
+          "value": "无绿植"
+        },
+        {
+          "key": "单位",
+          "value": "座"
+        },
+        {
+          "key": "其他信息1",
+          "value": "信息1"
+        },
+        {
+          "key": "其他信息2",
+          "value": "信息2"
+        }
+      ],
+      "SubProject_schedule": [
+        {
+          "year": 2024,
+          "amount": 240.00
+        },
+        {
+          "year": 2025,
+          "amount": 230.00
+        },
+        {
+          "year": 2026,
+          "amount": 220.00
+        }
+      ],
+      "SubProject_singleCost": [
+        {
+          "year": 2024,
+          "amount": 3500.00
+        },
+        {
+          "year": 2025,
+          "amount": 3500.00
+        },
+        {
+          "year": 2026,
+          "amount": 3500.00
+        }
+      ],
+      "SubProject_singlePrice": [
+        {
+          "year": 2024,
+          "amount": 300.00
+        },
+        {
+          "year": 2025,
+          "amount": 300.00
+        },
+        {
+          "year": 2026,
+          "amount": 300.00
+        },
+        {
+          "year": 2027,
+          "amount": 300.00
+        },
+        {
+          "year": 2028,
+          "amount": 300.00
+        },
+        {
+          "year": 2029,
+          "amount": 300.00
+        },
+        {
+          "year": 2030,
+          "amount": 300.00
+        },
+        {
+          "year": 2031,
+          "amount": 300.00
+        }
+      ]
+    }
+  ]
+}
