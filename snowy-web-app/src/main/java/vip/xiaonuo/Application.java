@@ -67,6 +67,7 @@ public class Application {
      * @author xuyuxiang
      * @date 2022/7/8 14:22
      **/
+
     @GetMapping("/")
     public String index() {
         return "WELCOME";
