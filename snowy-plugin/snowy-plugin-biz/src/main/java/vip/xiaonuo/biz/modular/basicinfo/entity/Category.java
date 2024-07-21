@@ -1,4 +1,4 @@
-package vip.xiaonuo.biz.entity.ro;
+package vip.xiaonuo.biz.modular.basicinfo.entity;
 
 import lombok.Data;
 

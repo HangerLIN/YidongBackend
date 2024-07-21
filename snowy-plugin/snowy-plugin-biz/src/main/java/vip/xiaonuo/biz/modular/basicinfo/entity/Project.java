@@ -1,4 +1,4 @@
-package vip.xiaonuo.biz.entity.po;
+package vip.xiaonuo.biz.modular.basicinfo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
