@@ -9,5 +9,5 @@ import vip.xiaonuo.biz.modular.basicinfo.entity.ProjectBasicInfo;
  * @Date 2024/7/18 23:37
  * @Created by lth
  */
-public interface ProjectMapper extends BaseMapper<vip.xiaonuo.biz.entity.po.Project> {
+public interface ProjectMapper extends BaseMapper<vip.xiaonuo.biz.modular.basicinfo.entity.Project> {
 }
