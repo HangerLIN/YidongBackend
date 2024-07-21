@@ -1,4 +1,4 @@
-package vip.xiaonuo.biz.modular.strategy.invest;
+package vip.xiaonuo.biz.modular.basicinfo.strategy.invest;
 
 import java.util.Map;
 
