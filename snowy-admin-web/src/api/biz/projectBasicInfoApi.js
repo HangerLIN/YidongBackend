@@ -6,7 +6,7 @@ const request = (url, ...arg) => baseRequest(`/biz/basicinfo/` + url, ...arg)
  * 项目基础信息Api接口管理器
  *
  * @author lth
- * @date  2024/07/18 19:32
+ * @date  2024/07/19 21:16
  **/
 export default {
 	// 获取项目基础信息分页

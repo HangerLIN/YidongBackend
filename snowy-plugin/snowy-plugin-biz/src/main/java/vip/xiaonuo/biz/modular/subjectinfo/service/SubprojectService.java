@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import vip.xiaonuo.biz.modular.subjectinfo.dto.SubProjcetParam;
 import vip.xiaonuo.biz.modular.subjectinfo.entity.Subproject;
 
+import java.util.List;
+
 
 /**
 * @author admin
@@ -13,5 +15,9 @@ import vip.xiaonuo.biz.modular.subjectinfo.entity.Subproject;
 public interface SubprojectService extends IService<Subproject> {
 
     boolean addSubProject(SubProjcetParam.SubprojectInfo sp);
+
+    List<SubProjcetParam.SubprojectInfo> selectbyProuctId(Long projectId);
+
+    boolean deleteSubProject(Long SubProject_id);
 
 }
