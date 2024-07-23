@@ -1,0 +1,217 @@
+{
+  "subprojectIncome": [
+    {
+      "subprojectId": "3232456431",
+      "annualAdd": [
+        {
+          "year": 2024,
+          "number": 798
+        },
+        {
+          "year": 2025,
+          "number": 0
+        },
+        {
+          "year": 2026,
+          "number": 0
+        },
+        {
+          "year": 2027,
+          "number": 0
+        },
+        {
+          "year": 2028,
+          "number": 0
+        },
+        {
+          "year": 2029,
+          "number": 0
+        },
+        {
+          "year": 2030,
+          "number": 0
+        },
+        {
+          "year": 2031,
+          "number": 0
+        }
+      ],
+      "annualDiscard": [
+        {
+          "year": 2024,
+          "number": 0
+        },
+        {
+          "year": 2025,
+          "number": 20
+        },
+        {
+          "year": 2026,
+          "number": 50
+        },
+        {
+          "year": 2027,
+          "number": 50
+        },
+        {
+          "year": 2028,
+          "number": 50
+        },
+        {
+          "year": 2029,
+          "number": 20
+        },
+        {
+          "year": 2030,
+          "number": 80
+        },
+        {
+          "year": 2031,
+          "number": 20
+        }
+      ]
+    },
+    {
+      "subprojectId": "3232456432",
+      "annualAdd": [
+        {
+          "year": 2024,
+          "number": 650
+        },
+        {
+          "year": 2025,
+          "number": 450
+        },
+        {
+          "year": 2026,
+          "number": 350
+        },
+        {
+          "year": 2027,
+          "number": 0
+        },
+        {
+          "year": 2028,
+          "number": 0
+        },
+        {
+          "year": 2029,
+          "number": 0
+        },
+        {
+          "year": 2030,
+          "number": 0
+        },
+        {
+          "year": 2031,
+          "number": 0
+        }
+      ],
+      "annualDiscard": [
+        {
+          "year": 2024,
+          "number": 0
+        },
+        {
+          "year": 2025,
+          "number": 50
+        },
+        {
+          "year": 2026,
+          "number": 30
+        },
+        {
+          "year": 2027,
+          "number": 30
+        },
+        {
+          "year": 2028,
+          "number": 30
+        },
+        {
+          "year": 2029,
+          "number": 30
+        },
+        {
+          "year": 2030,
+          "number": 30
+        },
+        {
+          "year": 2031,
+          "number": 30
+        }
+      ]
+    },
+    {
+      "subprojectId": "3232456433",
+      "annualAdd": [
+        {
+          "year": 2024,
+          "number": 530
+        },
+        {
+          "year": 2025,
+          "number": 350
+        },
+        {
+          "year": 2026,
+          "number": 250
+        },
+        {
+          "year": 2027,
+          "number": 0
+        },
+        {
+          "year": 2028,
+          "number": 0
+        },
+        {
+          "year": 2029,
+          "number": 0
+        },
+        {
+          "year": 2030,
+          "number": 0
+        },
+        {
+          "year": 2031,
+          "number": 0
+        }
+      ],
+      "annualDiscard": [
+        {
+          "year": 2024,
+          "number": 0
+        },
+        {
+          "year": 2025,
+          "number": 30
+        },
+        {
+          "year": 2026,
+          "number": 20
+        },
+        {
+          "year": 2027,
+          "number": 20
+        },
+        {
+          "year": 2028,
+          "number": 20
+        },
+        {
+          "year": 2029,
+          "number": 20
+        },
+        {
+          "year": 2030,
+          "number": 20
+        },
+        {
+          "year": 2031,
+          "number": 20
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,615 @@
+{
+  "subprojectIncomeVO": [
+    {
+      "subprojectId": "3232456431",
+      "annualAdd": [
+        {
+          "year": 2024,
+          "number": 798
+        },
+        {
+          "year": 2025,
+          "number": 0
+        },
+        {
+          "year": 2026,
+          "number": 0
+        },
+        {
+          "year": 2027,
+          "number": 0
+        },
+        {
+          "year": 2028,
+          "number": 0
+        },
+        {
+          "year": 2029,
+          "number": 0
+        },
+        {
+          "year": 2030,
+          "number": 0
+        },
+        {
+          "year": 2031,
+          "number": 0
+        }
+      ],
+      "annualDiscard": [
+        {
+          "year": 2024,
+          "number": 0
+        },
+        {
+          "year": 2025,
+          "number": 20
+        },
+        {
+          "year": 2026,
+          "number": 50
+        },
+        {
+          "year": 2027,
+          "number": 50
+        },
+        {
+          "year": 2028,
+          "number": 50
+        },
+        {
+          "year": 2029,
+          "number": 20
+        },
+        {
+          "year": 2030,
+          "number": 80
+        },
+        {
+          "year": 2031,
+          "number": 20
+        }
+      ],
+      "yearEndUse": [
+        {
+          "year": 2024,
+          "number": 798
+        },
+        {
+          "year": 2025,
+          "number": 778
+        },
+        {
+          "year": 2026,
+          "number": 728
+        },
+        {
+          "year": 2027,
+          "number": 678
+        },
+        {
+          "year": 2028,
+          "number": 628
+        },
+        {
+          "year": 2029,
+          "number": 608
+        },
+        {
+          "year": 2030,
+          "number": 528
+        },
+        {
+          "year": 2031,
+          "number": 508
+        }
+      ],
+      "unincludeTotal": {
+        "annual": [
+          {
+            "year": 2024,
+            "amount": 424000.00
+          },
+          {
+            "year": 2025,
+            "amount": 2292000.00
+          },
+          {
+            "year": 2026,
+            "amount": 3336000.00
+          },
+          {
+            "year": 2027,
+            "amount": 3864000.00
+          },
+          {
+            "year": 2028,
+            "amount": 3792000.00
+          },
+          {
+            "year": 2029,
+            "amount": 3720000.00
+          },
+          {
+            "year": 2030,
+            "amount": 3648000.00
+          },
+          {
+            "year": 2031,
+            "amount": 3576000.00
+          }
+        ],
+        "sum": 24652000
+      },
+      "includeTaxRate6": {
+        "annual": [
+          {
+            "year": 2024,
+            "amount": 449440.00
+          },
+          {
+            "year": 2025,
+            "amount": 2429520.00
+          },
+          {
+            "year": 2026,
+            "amount": 3536160.00
+          },
+          {
+            "year": 2027,
+            "amount": 4095840.00
+          },
+          {
+            "year": 2028,
+            "amount": 4019520.00
+          },
+          {
+            "year": 2029,
+            "amount": 3943200.00
+          },
+          {
+            "year": 2030,
+            "amount": 3866880.00
+          },
+          {
+            "year": 2031,
+            "amount": 3790560.00
+          }
+        ],
+        "sum": 24652000.00
+      }
+    },
+    {
+      "subprojectId": "3232456432",
+      "annualAdd": [
+        {
+          "year": 2024,
+          "number": 650
+        },
+        {
+          "year": 2025,
+          "number": 450
+        },
+        {
+          "year": 2026,
+          "number": 350
+        },
+        {
+          "year": 2027,
+          "number": 0
+        },
+        {
+          "year": 2028,
+          "number": 0
+        },
+        {
+          "year": 2029,
+          "number": 0
+        },
+        {
+          "year": 2030,
+          "number": 0
+        },
+        {
+          "year": 2031,
+          "number": 0
+        }
+      ],
+      "annualDiscard": [
+        {
+          "year": 2024,
+          "number": 0
+        },
+        {
+          "year": 2025,
+          "number": 50
+        },
+        {
+          "year": 2026,
+          "number": 30
+        },
+        {
+          "year": 2027,
+          "number": 30
+        },
+        {
+          "year": 2028,
+          "number": 30
+        },
+        {
+          "year": 2029,
+          "number": 30
+        },
+        {
+          "year": 2030,
+          "number": 30
+        },
+        {
+          "year": 2031,
+          "number": 30
+        }
+      ],
+      "yearEndUse": [
+        {
+          "year": 2024,
+          "number": 650
+        },
+        {
+          "year": 2025,
+          "number": 1050
+        },
+        {
+          "year": 2026,
+          "number": 1370
+        },
+        {
+          "year": 2027,
+          "number": 1340
+        },
+        {
+          "year": 2028,
+          "number": 1310
+        },
+        {
+          "year": 2029,
+          "number": 1280
+        },
+        {
+          "year": 2030,
+          "number": 1250
+        },
+        {
+          "year": 2031,
+          "number": 1220
+        }
+      ],
+      "unincludeTotal": {
+        "annual": [
+          {
+            "year": 2024,
+            "amount": 424000.00
+          },
+          {
+            "year": 2025,
+            "amount": 2292000.00
+          },
+          {
+            "year": 2026,
+            "amount": 3336000.00
+          },
+          {
+            "year": 2027,
+            "amount": 3864000.00
+          },
+          {
+            "year": 2028,
+            "amount": 3792000.00
+          },
+          {
+            "year": 2029,
+            "amount": 3720000.00
+          },
+          {
+            "year": 2030,
+            "amount": 3648000.00
+          },
+          {
+            "year": 2031,
+            "amount": 3576000.00
+          }
+        ],
+        "sum": 24652000
+      },
+      "includeTaxRate6": {
+        "annual": [
+          {
+            "year": 2024,
+            "amount": 449440.00
+          },
+          {
+            "year": 2025,
+            "amount": 2429520.00
+          },
+          {
+            "year": 2026,
+            "amount": 3536160.00
+          },
+          {
+            "year": 2027,
+            "amount": 4095840.00
+          },
+          {
+            "year": 2028,
+            "amount": 4019520.00
+          },
+          {
+            "year": 2029,
+            "amount": 3943200.00
+          },
+          {
+            "year": 2030,
+            "amount": 3866880.00
+          },
+          {
+            "year": 2031,
+            "amount": 3790560.00
+          }
+        ],
+        "sum": 24652000.00
+      }
+    },
+    {
+      "subprojectId": "3232456433",
+      "annualAdd": [
+        {
+          "year": 2024,
+          "number": 530
+        },
+        {
+          "year": 2025,
+          "number": 350
+        },
+        {
+          "year": 2026,
+          "number": 250
+        },
+        {
+          "year": 2027,
+          "number": 0
+        },
+        {
+          "year": 2028,
+          "number": 0
+        },
+        {
+          "year": 2029,
+          "number": 0
+        },
+        {
+          "year": 2030,
+          "number": 0
+        },
+        {
+          "year": 2031,
+          "number": 0
+        }
+      ],
+      "annualDiscard": [
+        {
+          "year": 2024,
+          "number": 0
+        },
+        {
+          "year": 2025,
+          "number": 30
+        },
+        {
+          "year": 2026,
+          "number": 20
+        },
+        {
+          "year": 2027,
+          "number": 20
+        },
+        {
+          "year": 2028,
+          "number": 20
+        },
+        {
+          "year": 2029,
+          "number": 20
+        },
+        {
+          "year": 2030,
+          "number": 20
+        },
+        {
+          "year": 2031,
+          "number": 20
+        }
+      ],
+      "yearEndUse": [
+        {
+          "year": 2024,
+          "number": 530
+        },
+        {
+          "year": 2025,
+          "number": 850
+        },
+        {
+          "year": 2026,
+          "number": 1080
+        },
+        {
+          "year": 2027,
+          "number": 1060
+        },
+        {
+          "year": 2028,
+          "number": 1040
+        },
+        {
+          "year": 2029,
+          "number": 1020
+        },
+        {
+          "year": 2030,
+          "number": 1000
+        },
+        {
+          "year": 2031,
+          "number": 980
+        }
+      ],
+      "unincludeTotal": {
+        "annual": [
+          {
+            "year": 2024,
+            "amount": 424000.00
+          },
+          {
+            "year": 2025,
+            "amount": 2292000.00
+          },
+          {
+            "year": 2026,
+            "amount": 3336000.00
+          },
+          {
+            "year": 2027,
+            "amount": 3864000.00
+          },
+          {
+            "year": 2028,
+            "amount": 3792000.00
+          },
+          {
+            "year": 2029,
+            "amount": 3720000.00
+          },
+          {
+            "year": 2030,
+            "amount": 3648000.00
+          },
+          {
+            "year": 2031,
+            "amount": 3576000.00
+          }
+        ],
+        "sum": 24652000
+      },
+      "includeTaxRate6": {
+        "annual": [
+          {
+            "year": 2024,
+            "amount": 449440.43
+          },
+          {
+            "year": 2025,
+            "amount": 2429520.00
+          },
+          {
+            "year": 2026,
+            "amount": 3536160.00
+          },
+          {
+            "year": 2027,
+            "amount": 4095840.00
+          },
+          {
+            "year": 2028,
+            "amount": 4019520.00
+          },
+          {
+            "year": 2029,
+            "amount": 3943200.00
+          },
+          {
+            "year": 2030,
+            "amount": 3866880.00
+          },
+          {
+            "year": 2031,
+            "amount": 3790560.00
+          }
+        ],
+        "sum": 24652000.43
+      }
+    }
+  ],
+  "unincludeSum": {
+    "annual": [
+      {
+        "year": 2024,
+        "amount": 2141866.67
+      },
+      {
+        "year": 2025,
+        "amount": 9802920.00
+      },
+      {
+        "year": 2026,
+        "amount": 11711360.00
+      },
+      {
+        "year": 2027,
+        "amount": 12862360.00
+      },
+      {
+        "year": 2028,
+        "amount": 12433360.00
+      },
+      {
+        "year": 2029,
+        "amount": 12050560.00
+      },
+      {
+        "year": 2030,
+        "amount": 11667760.00
+      },
+      {
+        "year": 2031,
+        "amount": 11667760.00
+      }
+    ],
+    "sum": 83862746.67
+  },
+  "includeSum": {
+    "annual": [
+      {
+        "year": 2024,
+        "amount": 424000.00
+      },
+      {
+        "year": 2025,
+        "amount": 2292000.00
+      },
+      {
+        "year": 2026,
+        "amount": 3336000.00
+      },
+      {
+        "year": 2027,
+        "amount": 3864000.00
+      },
+      {
+        "year": 2028,
+        "amount": 3792000.00
+      },
+      {
+        "year": 2029,
+        "amount": 3720000.00
+      },
+      {
+        "year": 2030,
+        "amount": 3648000.00
+      },
+      {
+        "year": 2031,
+        "amount": 3576000.00
+      }
+    ],
+    "sum": 89998051.47
+  }
+}
