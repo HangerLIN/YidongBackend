@@ -6,11 +6,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import vip.xiaonuo.biz.modular.strategy.dto.InvestReq;
+import vip.xiaonuo.biz.modular.strategy.invest.InvestAlgorithm;
+import vip.xiaonuo.biz.modular.strategy.invest.InvestAlgorithmFactory;
 import vip.xiaonuo.biz.modular.subjectinfo.dto.SubProjcetParam;
 import vip.xiaonuo.biz.modular.subjectinfo.dto.SubProjcetParam.SubprojectInfo;
 import vip.xiaonuo.biz.modular.subjectinfo.entity.Subproject;
 import vip.xiaonuo.biz.modular.subjectinfo.mapper.SubprojectMapper;
 import vip.xiaonuo.biz.modular.subjectinfo.service.SubprojectService;
+import vip.xiaonuo.biz.modular.strategy.vo.InvestResp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,9 @@ public class SubprojectServiceImpl extends ServiceImpl<SubprojectMapper, Subproj
 
     @Resource
     private SubprojectMapper subprojectMapper;
+
+    @Resource
+    private InvestAlgorithmFactory factory;
 
     @Override
     public boolean addSubProject(SubProjcetParam.SubprojectInfo sp) {
@@ -101,6 +108,13 @@ public class SubprojectServiceImpl extends ServiceImpl<SubprojectMapper, Subproj
         int i = subprojectMapper.updateById(subproject);
 
         return i == 1;
+    }
+
+    @Override
+    public InvestResp calculateInvestAmout(InvestReq req) {
+
+        InvestAlgorithm investAlgorithm = factory.getAlgorithm(req.getType());
+        return investAlgorithm.investResult(req);
     }
 }
 

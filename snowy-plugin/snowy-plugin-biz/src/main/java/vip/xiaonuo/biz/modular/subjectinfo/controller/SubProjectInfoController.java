@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import vip.xiaonuo.biz.modular.strategy.dto.InvestReq;
+import vip.xiaonuo.biz.modular.strategy.vo.InvestResp;
 import vip.xiaonuo.biz.modular.subjectinfo.dto.SubProjcetParam;
 import vip.xiaonuo.biz.modular.subjectinfo.service.SubprojectService;
 import vip.xiaonuo.common.pojo.CommonResult;
@@ -77,4 +79,17 @@ public class SubProjectInfoController {
             return CommonResult.error("子项目删除失败！");
         }
     }
+
+    @Operation(summary = "计算每个子项目的投资金额（不含税）")
+    @PostMapping("/biz/subjectinfoinfo/investAmount")
+    public CommonResult<InvestResp> CalculateInvestAmout(@RequestBody InvestReq req)  {
+        System.out.println(req.getType());
+        InvestResp resp = subprojectService.calculateInvestAmout(req);
+
+        return CommonResult.data(resp);
+
+    }
+
+
+
 }

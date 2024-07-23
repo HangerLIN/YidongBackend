@@ -1,4 +1,7 @@
-package vip.xiaonuo.biz.modular.basicinfo.strategy.invest;
+package vip.xiaonuo.biz.modular.strategy.invest;
+
+import vip.xiaonuo.biz.modular.strategy.dto.InvestReq;
+import vip.xiaonuo.biz.modular.strategy.vo.InvestResp;
 
 import java.util.Map;
 
@@ -21,5 +24,5 @@ public interface InvestAlgorithm {
      * 	    2: 6%，9%，13%税率投资额（含税）
      * 	    3: 含税投资额合计
      */
-    Map<String,Object> investResult(Map<String,Object> data);
+    InvestResp investResult(InvestReq data);
 }

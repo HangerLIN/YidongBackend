@@ -1,11 +1,11 @@
-package vip.xiaonuo.biz.modular.basicinfo.strategy.invest;
+package vip.xiaonuo.biz.modular.strategy.invest;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import vip.xiaonuo.biz.modular.basicinfo.config.InvestAlgorithmTypeConfig;
+import vip.xiaonuo.biz.core.config.InvestAlgorithmTypeConfig;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
