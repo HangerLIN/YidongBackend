@@ -80,7 +80,7 @@ public class SubProjectInfoController {
         }
     }
 
-    @Operation(summary = "计算每个子项目的投资金额（不含税）")
+    @Operation(summary = "投入明细表的计算")
     @PostMapping("/biz/subjectinfoinfo/investAmount")
     public CommonResult<InvestResp> CalculateInvestAmout(@RequestBody InvestReq req)  {
         System.out.println(req.getType());

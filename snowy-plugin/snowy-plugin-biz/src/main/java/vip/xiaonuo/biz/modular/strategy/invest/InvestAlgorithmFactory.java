@@ -22,11 +22,11 @@ public class InvestAlgorithmFactory implements ApplicationContextAware {
     private InvestAlgorithmTypeConfig investAlgorithmTypeConfig;
 
     /**
-     * 从配置文件中读取策略信息存储到map中，不同的模板的投入明细可能有不同的计算方式，先简单命名为InvestAlgorithm1,InvestAlgorithm2,InvestAlgorithm3
+     * 从配置文件中读取策略信息存储到map中，不同的模板的投入明细可能有不同的计算方式
      * {
-     * Algorithm1:InvestAlgorithm1,
-     * Algorithm2:InvestAlgorithm2,
-     * Algorithm3:InvestAlgorithm3
+     * InvestAmount=InvestAmountOfSubproject
+     * TaxRate=InvestAmountPerTaxRate
+     * Algorithm3=InvestAlgorithm3
      * }
      *
      * @param applicationContext
