@@ -1,0 +1,140 @@
+{
+  "type": "TaxRate",
+  "projectUnincludeTotal": [
+    {
+      "year": 2024,
+      "amount": 3180000.00
+    },
+    {
+      "year": 2025,
+      "amount": 2645000.00
+    },
+    {
+      "year": 2026,
+      "amount": 2213000.00
+    }
+  ],
+  "projectUnincludeTaxRate6": [
+    {
+      "year": 2024,
+      "amount": 80000.00
+    },
+    {
+      "year": 2025,
+      "amount": 70000.00
+    },
+    {
+      "year": 2026,
+      "amount": 50000.00
+    }
+  ],
+  "projectUnincludeTaxRate9": [
+    {
+      "year": 2024,
+      "amount": 2300000.00
+    },
+    {
+      "year": 2025,
+      "amount": 750000.00
+    },
+    {
+      "year": 2026,
+      "amount": 560000.00
+    }
+  ],
+  "subProjectScheduleAndCosts": [
+    {
+      "projectId": "035603",
+      "schedule": [
+        {
+          "year": 2024,
+          "amount": 340.00
+        },
+        {
+          "year": 2025,
+          "amount": 260.00
+        },
+        {
+          "year": 2026,
+          "amount": 198.00
+        }
+      ],
+      "cost": [
+        {
+          "year": 2024,
+          "amount": 6000.00
+        },
+        {
+          "year": 2025,
+          "amount": 6000.00
+        },
+        {
+          "year": 2026,
+          "amount": 6000.00
+        }
+      ]
+    },
+    {
+      "projectId": "035603",
+      "schedule": [
+        {
+          "year": 2024,
+          "amount": 150.00
+        },
+        {
+          "year": 2025,
+          "amount": 140.00
+        },
+        {
+          "year": 2026,
+          "amount": 120.00
+        }
+      ],
+      "cost": [
+        {
+          "year": 2024,
+          "amount": 2000.00
+        },
+        {
+          "year": 2025,
+          "amount": 2000.00
+        },
+        {
+          "year": 2026,
+          "amount": 2125.00
+        }
+      ]
+    },
+    {
+      "projectId": "035603",
+      "schedule": [
+        {
+          "year": 2024,
+          "amount": 240.00
+        },
+        {
+          "year": 2025,
+          "amount": 230.00
+        },
+        {
+          "year": 2026,
+          "amount": 220.00
+        }
+      ],
+      "cost": [
+        {
+          "year": 2024,
+          "amount": 3500.00
+        },
+        {
+          "year": 2025,
+          "amount": 3500.00
+        },
+        {
+          "year": 2026,
+          "amount": 3500.00
+        }
+      ]
+    }
+  ]
+}

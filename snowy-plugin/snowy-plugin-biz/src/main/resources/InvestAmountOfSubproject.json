@@ -1,0 +1,126 @@
+{
+  "type": "InvestAmount",
+  "projectUnincludeTaxRate6": [
+    {
+      "year": 2024,
+      "amount": 0
+    },
+    {
+      "year": 2025,
+      "amount": 0
+    },
+    {
+      "year": 2026,
+      "amount": 0
+    }
+  ],
+  "projectUnincludeTaxRate9": [
+    {
+      "year": 2024,
+      "amount": 0
+    },
+    {
+      "year": 2025,
+      "amount": 0
+    },
+    {
+      "year": 2026,
+      "amount": 0
+    }
+  ],
+  "subProjectScheduleAndCosts": [
+    {
+      "projectId": "035603",
+      "schedule": [
+        {
+          "year": 2024,
+          "amount": 340.00
+        },
+        {
+          "year": 2025,
+          "amount": 260.00
+        },
+        {
+          "year": 2026,
+          "amount": 198.00
+        }
+      ],
+      "cost": [
+        {
+          "year": 2024,
+          "amount": 6000.00
+        },
+        {
+          "year": 2025,
+          "amount": 6000.00
+        },
+        {
+          "year": 2026,
+          "amount": 6000.00
+        }
+      ]
+    },
+    {
+      "projectId": "035603",
+      "schedule": [
+        {
+          "year": 2024,
+          "amount": 150.00
+        },
+        {
+          "year": 2025,
+          "amount": 140.00
+        },
+        {
+          "year": 2026,
+          "amount": 120.00
+        }
+      ],
+      "cost": [
+        {
+          "year": 2024,
+          "amount": 2000.00
+        },
+        {
+          "year": 2025,
+          "amount": 2000.00
+        },
+        {
+          "year": 2026,
+          "amount": 2125.00
+        }
+      ]
+    },
+    {
+      "projectId": "035603",
+      "schedule": [
+        {
+          "year": 2024,
+          "amount": 240.00
+        },
+        {
+          "year": 2025,
+          "amount": 230.00
+        },
+        {
+          "year": 2026,
+          "amount": 220.00
+        }
+      ],
+      "cost": [
+        {
+          "year": 2024,
+          "amount": 3500.00
+        },
+        {
+          "year": 2025,
+          "amount": 3500.00
+        },
+        {
+          "year": 2026,
+          "amount": 3500.00
+        }
+      ]
+    }
+  ]
+}
