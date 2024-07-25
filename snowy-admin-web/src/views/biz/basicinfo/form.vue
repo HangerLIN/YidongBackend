@@ -56,6 +56,67 @@
 		<template #footer>
 			<a-button style="margin-right: 8px" @click="onClose">关闭</a-button>
 			<a-button type="primary" @click="onSubmit" :loading="submitLoading">保存</a-button>
+			<a-button type="primary" @click="nextTouzi" :loading="submitLoading">下一步</a-button>
+		</template>
+	</xn-form-container>
+	<xn-form-container
+		:title="formData.id ? '编辑项目基础信息' : '增加项目基础信息'"
+		:width="700"
+		v-model:open="open1"
+		:destroy-on-close="true"
+		@close="onClose"
+	>
+<!--		<a-form ref="TouziformRef" :model="formData" :rules="formRules" layout="vertical">-->
+<!--			<p style="font-size: large">基础信息：</p>-->
+<!--			<a-form-item label="" name="name" rules="[{ required: true, message: '请输入或选择名称!' }]"  :wrapper-col="{ span: 16 }">-->
+<!--				<a-row>-->
+<!--					<a-col :span="12">-->
+<!--						<a-select v-model:value="BasicInformation.key1" placeholder="请选择名称" allow-clear  style="width: 100%;">-->
+<!--							<a-select-option v-for="item in calendarTypeOptions" :key="item.value" :value="item.value">-->
+<!--								{{ item.label }}-->
+<!--							</a-select-option>-->
+<!--						</a-select>-->
+<!--					</a-col>-->
+<!--					<a-col :span="12">-->
+<!--						<a-input v-model:value="BasicInformation.value1" :placeholder="`请输入${BasicInformation.key1}`" allow-clear style="width: 100%;" />-->
+<!--					</a-col>-->
+<!--				</a-row>-->
+<!--			</a-form-item>-->
+<!--			<a-form-item label="" name="name" rules="[{ required: true, message: '请输入或选择名称!' }]"  :wrapper-col="{ span: 16 }">-->
+<!--				<a-row>-->
+<!--					<a-col :span="12">-->
+<!--						<a-select v-model:value="BasicInformation.key2" placeholder="请选择名称" allow-clear style="width: 100%;">-->
+<!--							<a-select-option v-for="item in calendarTypeOptions" :key="item.value" :value="item.value">-->
+<!--								{{ item.label }}-->
+<!--							</a-select-option>-->
+<!--						</a-select>-->
+<!--					</a-col>-->
+<!--					<a-col :span="12">-->
+<!--						<a-input v-model:value="BasicInformation.value2" :placeholder="`请输入${BasicInformation.key2}`" allow-clear style="width: 100%;" />-->
+<!--					</a-col>-->
+<!--				</a-row>-->
+<!--			</a-form-item>-->
+<!--			<a-form-item label="" name="name" rules="[{ required: true, message: '请输入或选择名称!' }]"  :wrapper-col="{ span: 16 }">-->
+<!--				<a-row>-->
+<!--					<a-col :span="12">-->
+<!--						<a-select v-model:value="BasicInformation.key3" placeholder="请选择名称" allow-clear style="width: 100%;">-->
+<!--							<a-select-option v-for="item in calendarTypeOptions" :key="item.value" :value="item.value">-->
+<!--								{{ item.label }}-->
+<!--							</a-select-option>-->
+<!--						</a-select>-->
+<!--					</a-col>-->
+<!--					<a-col :span="12">-->
+<!--						<a-input v-model:value="BasicInformation.value3" :placeholder="`请输入${BasicInformation.key3}`" allow-clear style="width: 100%;" />-->
+<!--					</a-col>-->
+<!--				</a-row>-->
+<!--			</a-form-item>-->
+<!--		</a-form>-->
+<!--		<el-input v-model="input" placeholder="请输入内容"></el-input>-->
+		<touzi :cycle="cyc"></touzi>
+		<template #footer>
+			<a-button style="margin-right: 8px" @click="onClose">关闭</a-button>
+			<a-button type="primary" @click="onSubmit" :loading="submitLoading">保存</a-button>
+			<a-button type="primary" @click="nextMingxi" :loading="submitLoading">下一步</a-button>
 		</template>
 	</xn-form-container>
 </template>
@@ -64,17 +125,71 @@
 	import { cloneDeep } from 'lodash-es'
 	import { required } from '@/utils/formRules'
 	import projectBasicInfoApi from '@/api/biz/projectBasicInfoApi'
+	import Touzi from "@/views/biz/basicinfo/touzi.vue";
 	// 抽屉状态
+	let cyc=ref()
 	const open = ref(false)
+	const open1 = ref(false)
 	const emit = defineEmits({ successful: null })
 	const formRef = ref()
+	const TouziformRef = ref()
 	// 表单数据
 	const formData = ref({})
 	const submitLoading = ref(false)
+	const calendarTypeOptions = [
+		{ label: '产品名称', value: '产品名称' },
+		{ label: '产品代码', value: '产品代码' },
+		{ label: '规格型号', value: '规格型号' },
+	]
+	//请求参数ref({})
+	const listQuery=ref({
+		projectId: '',
+		//子项目基础信息
+		basicInformation: [],
+		//建设进度，条/--年
+		subprojectSchedule: [],
+		//投资金额，元/条--年
+		subprojectSinglecost: [],
+		//单挑造价，元/条--年
+		subprojectSingleprice: [],
+	},)
+	//子项目基础信息
+	const BasicInformation=ref({
+		// key: '123',
+		// value: ''
+		})
+
+	//建设进度，条/--年
+	const SubprojectSchedule=ref({
+		key: '',
+		value: ''
+	})
+
+	//投资金额，元/条--年
+	const SubprojectSinglecost=ref({
+		key: '',
+		value: ''
+	})
+
+	//建设进度，条/--年
+	const SubprojectSingleprice=ref({
+		key: '',
+		value: ''
+	})
+
 
 	// 打开抽屉
 	const onOpen = (record) => {
+		console.log(record)
 		open.value = true
+		if (record) {
+			let recordData = cloneDeep(record)
+			formData.value = Object.assign({}, recordData)
+			console.log(formData)
+		}
+	}
+	const onOpen1 = (record) => {
+		open1.value = true
 		if (record) {
 			let recordData = cloneDeep(record)
 			formData.value = Object.assign({}, recordData)
@@ -82,9 +197,11 @@
 	}
 	// 关闭抽屉
 	const onClose = () => {
-		formRef.value.resetFields()
+		// formRef.value.resetFields()
+		// TouziformRef.value.resetFields()
 		formData.value = {}
 		open.value = false
+		open1.value = false
 	}
 	// 默认要校验的
 	const formRules = {
@@ -110,6 +227,68 @@
 	}
 	// 抛出函数
 	defineExpose({
-		onOpen
+		onOpen,
+		onOpen1
 	})
+
+
+
+	//投资明细
+	const nextTouzi = () => {
+		onClose()
+		console.log('next')
+		onOpen1()
+		console.log('next')
+		// TouziformRef.value
+		// 	.validate()
+		// 	.then(() => {
+		// 		/*下一步是否存储信息*/
+		// 		// submitLoading.value = true
+		// 		// const formDataParam = cloneDeep(formData.value)
+		// 		// projectBasicInfoApi
+		// 		// 	.projectBasicInfoSubmitForm(formDataParam, formDataParam.id)
+		// 		// 	.then(() => {
+		// 		// 		onClose()
+		// 		// 		emit('successful')
+		// 		// 	})
+		// 		// 	.finally(() => {
+		// 		// 		submitLoading.value = false
+		// 		// 	})
+		// 		onClose()
+		// 		console.log('next')
+		// 		onOpen1()
+		// 		console.log('next')
+		// 	})
+		// 	.catch(() => {})
+	}
+	//nextMingxi
+	const nextMingxi = () => {
+		// onClose()
+		// console.log('next')
+		// onOpen1()
+		cyc.value='5'
+		console.log('next'+cyc.value)
+		// console.log(questionChoiceVOlist.value)
+		// TouziformRef.value
+		// 	.validate()
+		// 	.then(() => {
+		// 		/*下一步是否存储信息*/
+		// 		// submitLoading.value = true
+		// 		// const formDataParam = cloneDeep(formData.value)
+		// 		// projectBasicInfoApi
+		// 		// 	.projectBasicInfoSubmitForm(formDataParam, formDataParam.id)
+		// 		// 	.then(() => {
+		// 		// 		onClose()
+		// 		// 		emit('successful')
+		// 		// 	})
+		// 		// 	.finally(() => {
+		// 		// 		submitLoading.value = false
+		// 		// 	})
+		// 		onClose()
+		// 		console.log('next')
+		// 		onOpen1()
+		// 		console.log('next')
+		// 	})
+		// 	.catch(() => {})
+	}
 </script>
