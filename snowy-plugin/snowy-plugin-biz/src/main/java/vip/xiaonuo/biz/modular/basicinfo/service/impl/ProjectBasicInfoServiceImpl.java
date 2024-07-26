@@ -38,7 +38,7 @@ import java.util.List;
  * 项目基础信息Service接口实现类
  *
  * @author lth
- * @date  2024/07/18 19:32
+ * @date  2024/07/19 21:16
  **/
 @Service
 public class ProjectBasicInfoServiceImpl extends ServiceImpl<ProjectBasicInfoMapper, ProjectBasicInfo> implements ProjectBasicInfoService {
@@ -75,7 +75,7 @@ public class ProjectBasicInfoServiceImpl extends ServiceImpl<ProjectBasicInfoMap
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void edit(ProjectBasicInfoEditParam projectBasicInfoEditParam) {
-        ProjectBasicInfo projectBasicInfo = this.queryEntity(String.valueOf(projectBasicInfoEditParam.getId()));
+        ProjectBasicInfo projectBasicInfo = this.queryEntity(projectBasicInfoEditParam.getId());
         BeanUtil.copyProperties(projectBasicInfoEditParam, projectBasicInfo);
         this.updateById(projectBasicInfo);
     }
@@ -89,41 +89,15 @@ public class ProjectBasicInfoServiceImpl extends ServiceImpl<ProjectBasicInfoMap
 
     @Override
     public ProjectBasicInfo detail(ProjectBasicInfoIdParam projectBasicInfoIdParam) {
-        return this.queryEntity(String.valueOf(projectBasicInfoIdParam.getId()));
+        return this.queryEntity(projectBasicInfoIdParam.getId());
     }
 
     @Override
-    public ProjectBasicInfo queryEntity(String id) {
+    public ProjectBasicInfo queryEntity(Long id) {
         ProjectBasicInfo projectBasicInfo = this.getById(id);
         if(ObjectUtil.isEmpty(projectBasicInfo)) {
             throw new CommonException("项目基础信息不存在，id值为：{}", id);
         }
         return projectBasicInfo;
     }
-
-    /**
-     * 跳转进入下一步
-     *
-     * @param currentStep
-     * @return
-     */
-    @Override
-    public String nextStep(String currentStep) {
-        if (currentStep == null) {
-            return "Step1"; // 默认的起始步骤
-        }
-        switch (currentStep) {
-            case "Step1":
-                return "Step2"; // 从第一步跳转到第二步
-            case "Step2":
-                return "Step3"; // 从第二步跳转到第三步
-            case "Step3":
-                return "Step4"; // 从第三步跳转到第四步
-            case "Step4":
-                return "Complete"; // 完成所有步骤
-            default:
-                return "InvalidStep"; // 非法的步骤输入
-        }
-    }
-
 }

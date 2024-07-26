@@ -26,7 +26,7 @@ import java.util.List;
  * 项目基础信息Service接口
  *
  * @author lth
- * @date  2024/07/18 19:32
+ * @date  2024/07/19 21:16
  **/
 public interface ProjectBasicInfoService extends IService<ProjectBasicInfo> {
 
@@ -34,7 +34,7 @@ public interface ProjectBasicInfoService extends IService<ProjectBasicInfo> {
      * 获取项目基础信息分页
      *
      * @author lth
-     * @date  2024/07/18 19:32
+     * @date  2024/07/19 21:16
      */
     Page<ProjectBasicInfo> page(ProjectBasicInfoPageParam projectBasicInfoPageParam);
 
@@ -42,7 +42,7 @@ public interface ProjectBasicInfoService extends IService<ProjectBasicInfo> {
      * 添加项目基础信息
      *
      * @author lth
-     * @date  2024/07/18 19:32
+     * @date  2024/07/19 21:16
      */
     void add(ProjectBasicInfoAddParam projectBasicInfoAddParam);
 
@@ -50,7 +50,7 @@ public interface ProjectBasicInfoService extends IService<ProjectBasicInfo> {
      * 编辑项目基础信息
      *
      * @author lth
-     * @date  2024/07/18 19:32
+     * @date  2024/07/19 21:16
      */
     void edit(ProjectBasicInfoEditParam projectBasicInfoEditParam);
 
@@ -58,7 +58,7 @@ public interface ProjectBasicInfoService extends IService<ProjectBasicInfo> {
      * 删除项目基础信息
      *
      * @author lth
-     * @date  2024/07/18 19:32
+     * @date  2024/07/19 21:16
      */
     void delete(List<ProjectBasicInfoIdParam> projectBasicInfoIdParamList);
 
@@ -66,7 +66,7 @@ public interface ProjectBasicInfoService extends IService<ProjectBasicInfo> {
      * 获取项目基础信息详情
      *
      * @author lth
-     * @date  2024/07/18 19:32
+     * @date  2024/07/19 21:16
      */
     ProjectBasicInfo detail(ProjectBasicInfoIdParam projectBasicInfoIdParam);
 
@@ -74,14 +74,7 @@ public interface ProjectBasicInfoService extends IService<ProjectBasicInfo> {
      * 获取项目基础信息详情
      *
      * @author lth
-     * @date  2024/07/18 19:32
+     * @date  2024/07/19 21:16
      **/
-    ProjectBasicInfo queryEntity(String id);
-
-    /**
-     * 跳转进入下一步
-     * @param currentStep
-     * @return
-     */
-    String nextStep(String currentStep);
+    ProjectBasicInfo queryEntity(Long id);
 }
