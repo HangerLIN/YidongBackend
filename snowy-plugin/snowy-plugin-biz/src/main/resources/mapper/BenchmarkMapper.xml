@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vip.xiaonuo.biz.modular.spend.mapper.BenchmarkMapper">
+
+    <resultMap id="BaseResultMap" type="vip.xiaonuo.biz.modular.spend.entity.Benchmark">
+            <id property="benchmarkId" column="Benchmark_id" jdbcType="BIGINT"/>
+            <result property="productCode" column="Product_code" jdbcType="VARCHAR"/>
+            <result property="productName" column="Product_name" jdbcType="VARCHAR"/>
+            <result property="unit" column="Unit" jdbcType="VARCHAR"/>
+            <result property="depreciationRate1" column="Depreciation_rate1" jdbcType="DECIMAL"/>
+            <result property="depreciationRate2" column="Depreciation_rate2" jdbcType="DECIMAL"/>
+            <result property="depreciationRate3" column="Depreciation_rate3" jdbcType="DECIMAL"/>
+            <result property="depreciationRate4" column="Depreciation_rate4" jdbcType="DECIMAL"/>
+            <result property="depreciationOther" column="Depreciation_other" jdbcType="DECIMAL"/>
+            <result property="constructionLabor" column="Construction_labor" jdbcType="DECIMAL"/>
+            <result property="constructionMaterial" column="Construction_material" jdbcType="DECIMAL"/>
+            <result property="constructionOther" column="Construction_other" jdbcType="DECIMAL"/>
+            <result property="maintenanceLabor" column="Maintenance_labor" jdbcType="DECIMAL"/>
+            <result property="maintenanceOther" column="Maintenance_other" jdbcType="DECIMAL"/>
+            <result property="constructionDrawing" column="Construction_drawing" jdbcType="DECIMAL"/>
+            <result property="inventoryCost" column="Inventory_cost" jdbcType="DECIMAL"/>
+            <result property="unitTotalCost" column="Unit_total_cost" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Benchmark_id,Product_code,Product_name,
+        Unit,Depreciation_rate1,Depreciation_rate2,
+        Depreciation_rate3,Depreciation_rate4,Depreciation_other,
+        Construction_labor,Construction_material,Construction_other,
+        Maintenance_labor,Maintenance_other,Construction_drawing,
+        Inventory_cost,Unit_total_cost
+    </sql>
+</mapper>
