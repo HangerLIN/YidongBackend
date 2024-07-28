@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 
@@ -48,6 +49,11 @@ public class Subproject implements Serializable {
      * 0:未删除 1:删除
      */
     private Integer isdelete;
+
+    /**
+     * 收益税率
+     */
+    private BigDecimal taxRate;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -148,6 +154,20 @@ public class Subproject implements Serializable {
      */
     public void setIsdelete(Integer isdelete) {
         this.isdelete = isdelete;
+    }
+
+    /**
+     * 收益税率
+     */
+    public void setTaxRate(BigDecimal taxRate){
+        this.taxRate = taxRate;
+    }
+
+    /**
+     * 收益税率
+     */
+    public BigDecimal getTaxRate(){
+        return taxRate;
     }
 
     @Override

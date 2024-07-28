@@ -4,6 +4,7 @@ import vip.xiaonuo.biz.modular.income.dto.IncomeParam;
 import vip.xiaonuo.biz.modular.income.entity.Income;
 import com.baomidou.mybatisplus.extension.service.IService;
 import vip.xiaonuo.biz.modular.income.vo.IncomeVO;
+import vip.xiaonuo.biz.modular.strategy.dto.IncomeReq;
 
 import java.util.List;
 
@@ -14,8 +15,10 @@ import java.util.List;
 */
 public interface IncomeService extends IService<Income> {
 
-    boolean writeSubProjetIncomeInfo(IncomeParam incomeParam);
+    List<Income> writeSubProjetIncomeInfo(IncomeParam incomeParam) throws Exception;
 
-    IncomeVO returnSubProjetIncomeInfo(List<String> incomeID);
+    IncomeVO returnSubProjetIncomeInfo(List<Income> incomeIDList);
+
+    IncomeReq caculateSubProjetOtherIncomeInfo(IncomeParam.SubprojectIncome subprojectIncome) throws Exception;
 
 }
