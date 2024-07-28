@@ -33,16 +33,13 @@ import vip.xiaonuo.biz.modular.basicinfo.service.ProjectBasicInfoService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 项目基础信息控制器
  *
  * @author lth
- * @date  2024/07/18 19:32
+ * @date  2024/07/19 21:16
  */
 @Tag(name = "项目基础信息控制器")
 @RestController
@@ -56,7 +53,7 @@ public class ProjectBasicInfoController {
      * 获取项目基础信息分页
      *
      * @author lth
-     * @date  2024/07/18 19:32
+     * @date  2024/07/19 21:16
      */
     @Operation(summary = "获取项目基础信息分页")
     @SaCheckPermission("/biz/basicinfo/page")
@@ -65,13 +62,13 @@ public class ProjectBasicInfoController {
         return CommonResult.data(projectBasicInfoService.page(projectBasicInfoPageParam));
     }
 
-    /**
+    /**    @Operation(summary = "添加项目基础信息")
      * 添加项目基础信息
      *
      * @author lth
-     * @date  2024/07/18 19:32
+     * @date  2024/07/19 21:16
      */
-    @Operation(summary = "添加项目基础信息")
+
     @CommonLog("添加项目基础信息")
     @SaCheckPermission("/biz/basicinfo/add")
     @PostMapping("/biz/basicinfo/add")
@@ -84,7 +81,7 @@ public class ProjectBasicInfoController {
      * 编辑项目基础信息
      *
      * @author lth
-     * @date  2024/07/18 19:32
+     * @date  2024/07/19 21:16
      */
     @Operation(summary = "编辑项目基础信息")
     @CommonLog("编辑项目基础信息")
@@ -99,7 +96,7 @@ public class ProjectBasicInfoController {
      * 删除项目基础信息
      *
      * @author lth
-     * @date  2024/07/18 19:32
+     * @date  2024/07/19 21:16
      */
     @Operation(summary = "删除项目基础信息")
     @CommonLog("删除项目基础信息")
@@ -115,7 +112,7 @@ public class ProjectBasicInfoController {
      * 获取项目基础信息详情
      *
      * @author lth
-     * @date  2024/07/18 19:32
+     * @date  2024/07/19 21:16
      */
     @Operation(summary = "获取项目基础信息详情")
     @SaCheckPermission("/biz/basicinfo/detail")
@@ -123,15 +120,4 @@ public class ProjectBasicInfoController {
     public CommonResult<ProjectBasicInfo> detail(@Valid ProjectBasicInfoIdParam projectBasicInfoIdParam) {
         return CommonResult.data(projectBasicInfoService.detail(projectBasicInfoIdParam));
     }
-
-
-    @PostMapping("/next-step")
-    public CommonResult<Map<String, String>> nextStep(@RequestBody Map<String, String> request) {
-        String nextStep = projectBasicInfoService.nextStep(request.get("currentStep"));
-        Map<String, String> response = new HashMap<>();
-        response.put("nextStep", nextStep);
-        response.put("message", "跳转到下一步页面");
-        return CommonResult.data(response);
-    }
-
 }

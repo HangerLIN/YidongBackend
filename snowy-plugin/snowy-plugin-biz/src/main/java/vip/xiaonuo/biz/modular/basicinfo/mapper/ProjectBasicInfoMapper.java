@@ -19,7 +19,7 @@ import vip.xiaonuo.biz.modular.basicinfo.entity.ProjectBasicInfo;
  * 项目基础信息Mapper接口
  *
  * @author lth
- * @date  2024/07/18 19:32
+ * @date  2024/07/19 21:16
  **/
 public interface ProjectBasicInfoMapper extends BaseMapper<ProjectBasicInfo> {
 }

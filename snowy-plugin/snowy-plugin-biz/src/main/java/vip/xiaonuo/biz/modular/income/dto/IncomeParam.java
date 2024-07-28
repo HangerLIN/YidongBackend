@@ -23,6 +23,14 @@ public class IncomeParam {
         public static class AnnualInfo {
             private Integer year;
             private Integer number;
+
+            // Copy constructor
+            public AnnualInfo(AnnualInfo other) {
+                this.year = other.year;
+                this.number = other.number;
+            }
         }
+
+
     }
 }

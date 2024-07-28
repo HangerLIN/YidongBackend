@@ -94,4 +94,12 @@ public class ProjectBasicInfo {
     /** 评估时间 */
     @Schema(description = "评估时间")
     private String evaluationTime;
+
+    /** 评估时间 */
+    @Schema(description = "评估开始日期")
+    private String Evaluate_start;
+
+    /** 评估时间 */
+    @Schema(description = "评估结束日期")
+    private String Evaluate_end;
 }
