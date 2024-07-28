@@ -17,10 +17,11 @@ public class SpendParam {
     public static class SubprojectSpendInfo {
         private String subprojectId;
         private List<Annualspend> spendSafeguard;
-        private List<Annualspend> spendUpkeep;
+        private List<Annualspend> spendUpkeep; //后期维护
         private List<Annualspend> spendArtifical;
         private List<Annualspend> spendOther;
         private List<Annualspend> spendNoise;
+        private List<Annualspend> spendPublish; //宣传推广
 
         @NoArgsConstructor
         @Data

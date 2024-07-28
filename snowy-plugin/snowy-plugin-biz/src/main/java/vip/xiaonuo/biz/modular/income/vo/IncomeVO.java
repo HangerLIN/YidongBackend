@@ -1,10 +1,12 @@
 package vip.xiaonuo.biz.modular.income.vo;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -72,6 +74,13 @@ public class IncomeVO  implements Serializable {
         private List<AnnualAdd> yearEndUse;
         private UnincludeTotal unincludeTotal;
         private IncludeTaxRate6 includeTaxRate6;
+
+        public List<AnnualAdd> getAnnualAdd() {
+            if (annualAdd == null) {
+                annualAdd = new ArrayList<>(); // 确保进行初始化
+            }
+            return annualAdd;
+        }
 
         public UnincludeTotal getUnincludeTotal() {
             if (unincludeTotal == null) {
