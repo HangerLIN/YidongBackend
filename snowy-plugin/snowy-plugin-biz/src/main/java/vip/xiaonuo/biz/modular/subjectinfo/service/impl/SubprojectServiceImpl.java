@@ -6,9 +6,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import vip.xiaonuo.biz.modular.strategy.dto.InvestReq;
+import vip.xiaonuo.biz.core.config.GlobalVoMap;
+import vip.xiaonuo.biz.modular.strategy.comprehensiveAssessment.CompreAssAlgorithm;
+import vip.xiaonuo.biz.modular.strategy.comprehensiveAssessment.CompreAssAlgorithmFactory;
+import vip.xiaonuo.biz.modular.strategy.dto.*;
 import vip.xiaonuo.biz.modular.strategy.invest.InvestAlgorithm;
 import vip.xiaonuo.biz.modular.strategy.invest.InvestAlgorithmFactory;
+import vip.xiaonuo.biz.modular.strategy.utils.Pair;
+import vip.xiaonuo.biz.modular.strategy.vo.CompreAssResp;
 import vip.xiaonuo.biz.modular.subjectinfo.dto.SubProjcetParam;
 import vip.xiaonuo.biz.modular.subjectinfo.dto.SubProjcetParam.SubprojectInfo;
 import vip.xiaonuo.biz.modular.subjectinfo.entity.Subproject;
@@ -16,8 +21,11 @@ import vip.xiaonuo.biz.modular.subjectinfo.mapper.SubprojectMapper;
 import vip.xiaonuo.biz.modular.subjectinfo.service.SubprojectService;
 import vip.xiaonuo.biz.modular.strategy.vo.InvestResp;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author admin
@@ -32,7 +40,13 @@ public class SubprojectServiceImpl extends ServiceImpl<SubprojectMapper, Subproj
     private SubprojectMapper subprojectMapper;
 
     @Resource
-    private InvestAlgorithmFactory factory;
+    private InvestAlgorithmFactory investFactory;
+
+    @Resource
+    private CompreAssAlgorithmFactory compreAssFactory;
+
+    @Resource
+    private GlobalVoMap globalVoMap;
 
     @Override
     public boolean addSubProject(SubProjcetParam.SubprojectInfo sp) {
@@ -112,9 +126,120 @@ public class SubprojectServiceImpl extends ServiceImpl<SubprojectMapper, Subproj
 
     @Override
     public InvestResp calculateInvestAmout(InvestReq req) {
+        String type = req.getType();
+        InvestAlgorithm investAlgorithm = investFactory.getAlgorithm(type);
+        InvestResp resp = investAlgorithm.investResult(req);
 
-        InvestAlgorithm investAlgorithm = factory.getAlgorithm(req.getType());
-        return investAlgorithm.investResult(req);
+        if(type.equals("InvestAmount")) globalVoMap.put("invest", resp);
+
+        //因为大家返回前端的VO类还没写好，我就暂时在这个位置写点假数据。BasicInfoForCompreAssReq
+        BasicInfoForCompreAssReq basicVO = new BasicInfoForCompreAssReq();
+        IncomeForCompreAssReq incomeVO = new IncomeForCompreAssReq();
+        SpendForCompreAssReq spendVO = new SpendForCompreAssReq();
+        StreamForCompreAssReq streamVO = new StreamForCompreAssReq();
+
+        basicVO.setSingleAeCycle(5);
+
+        List<Pair<Integer, BigDecimal>> unincludeTotal = new ArrayList<>();
+        unincludeTotal.add(new Pair<>(2024,new BigDecimal(2141866.67)));
+        unincludeTotal.add(new Pair<>(2025,new BigDecimal(9802920.00)));
+        unincludeTotal.add(new Pair<>(2026,new BigDecimal(11711360.00)));
+        unincludeTotal.add(new Pair<>(2027,new BigDecimal(12862360.00)));
+        unincludeTotal.add(new Pair<>(2028,new BigDecimal(12433360.00)));
+        unincludeTotal.add(new Pair<>(2029,new BigDecimal(12050560.00)));
+        unincludeTotal.add(new Pair<>(2030,new BigDecimal(11667760.00)));
+        unincludeTotal.add(new Pair<>(2031,new BigDecimal(11192560.00)));
+        incomeVO.setUnincludeTotal(unincludeTotal);
+
+        List<Pair<Integer, BigDecimal>> spendSafeguard = new ArrayList<>();  //路面后期维护费用
+        List<Pair<Integer, BigDecimal>> spendUpkeep = new ArrayList<>();     //路面保养费用
+        List<Pair<Integer, BigDecimal>> spendArtificial = new ArrayList<>(); //人工服务费用
+        List<Pair<Integer, BigDecimal>> spendOther = new ArrayList<>();      //其他费用
+        List<Pair<Integer, BigDecimal>> spendNoise = new ArrayList<>();      //噪音污染补偿
+        List<Pair<Integer, BigDecimal>> spendPublicize = new ArrayList<>();  //宣传推广费用
+
+        spendSafeguard.add(new Pair<>(2024,new BigDecimal(703052.96)));
+        spendSafeguard.add(new Pair<>(2025,new BigDecimal(2051295.28)));
+        spendSafeguard.add(new Pair<>(2026,new BigDecimal(3232634.28)));
+        spendSafeguard.add(new Pair<>(2027,new BigDecimal(3189056.48)));
+        spendSafeguard.add(new Pair<>(2028,new BigDecimal(2983495.68)));
+        spendSafeguard.add(new Pair<>(2029,new BigDecimal(3054558.28)));
+        spendSafeguard.add(new Pair<>(2030,new BigDecimal(2913997.48)));
+        spendSafeguard.add(new Pair<>(2031,new BigDecimal(543359.17)));
+
+        spendUpkeep.add(new Pair<>(2024,new BigDecimal(357285.20)));
+        spendUpkeep.add(new Pair<>(2025,new BigDecimal(1297869.60)));
+        spendUpkeep.add(new Pair<>(2026,new BigDecimal(1400445.40)));
+        spendUpkeep.add(new Pair<>(2027,new BigDecimal(1308935.00)));
+        spendUpkeep.add(new Pair<>(2028,new BigDecimal(1260390.60)));
+        spendUpkeep.add(new Pair<>(2029,new BigDecimal(1186219.20)));
+        spendUpkeep.add(new Pair<>(2030,new BigDecimal(1137674.80)));
+        spendUpkeep.add(new Pair<>(2031,new BigDecimal(343532.60)));
+
+        spendArtificial.add(new Pair<>(2024,new BigDecimal(106692.08)));
+        spendArtificial.add(new Pair<>(2025,new BigDecimal(394583.44)));
+        spendArtificial.add(new Pair<>(2026,new BigDecimal(445363.44)));
+        spendArtificial.add(new Pair<>(2027,new BigDecimal(428610.04)));
+        spendArtificial.add(new Pair<>(2028,new BigDecimal(412557.64)));
+        spendArtificial.add(new Pair<>(2029,new BigDecimal(400328.44)));
+        spendArtificial.add(new Pair<>(2030,new BigDecimal(384276.04)));
+        spendArtificial.add(new Pair<>(2031,new BigDecimal(167055.91)));
+
+        spendOther.add(new Pair<>(2024,new BigDecimal(96753.84)));
+        spendOther.add(new Pair<>(2025,new BigDecimal(352663.12)));
+        spendOther.add(new Pair<>(2026,new BigDecimal(395423.92)));
+        spendOther.add(new Pair<>(2027,new BigDecimal(406391.32)));
+        spendOther.add(new Pair<>(2028,new BigDecimal(393607.72)));
+        spendOther.add(new Pair<>(2029,new BigDecimal(383437.72)));
+        spendOther.add(new Pair<>(2030,new BigDecimal(370654.12)));
+        spendOther.add(new Pair<>(2031,new BigDecimal(164467.63)));
+
+        spendNoise.add(new Pair<>(2024,new BigDecimal(960.00)));
+        spendNoise.add(new Pair<>(2025,new BigDecimal(905.00)));
+        spendNoise.add(new Pair<>(2026,new BigDecimal(855.00)));
+        spendNoise.add(new Pair<>(2027,new BigDecimal(825.00)));
+        spendNoise.add(new Pair<>(2028,new BigDecimal(815.00)));
+        spendNoise.add(new Pair<>(2029,new BigDecimal(805.00)));
+        spendNoise.add(new Pair<>(2030,new BigDecimal(805.00)));
+        spendNoise.add(new Pair<>(2031,new BigDecimal(805.00)));
+
+        spendPublicize.add(new Pair<>(2024,new BigDecimal(61257.39)));
+        spendPublicize.add(new Pair<>(2025,new BigDecimal(280363.51)));
+        spendPublicize.add(new Pair<>(2026,new BigDecimal(334944.90)));
+        spendPublicize.add(new Pair<>(2027,new BigDecimal(367863.50)));
+        spendPublicize.add(new Pair<>(2028,new BigDecimal(355594.10)));
+        spendPublicize.add(new Pair<>(2029,new BigDecimal(344646.02)));
+        spendPublicize.add(new Pair<>(2030,new BigDecimal(333697.94)));
+        spendPublicize.add(new Pair<>(2031,new BigDecimal(320107.22)));
+
+        spendVO.setSpendSafeguard(spendSafeguard);
+        spendVO.setSpendUpkeep(spendUpkeep);
+        spendVO.setSpendArtificial(spendArtificial);
+        spendVO.setSpendOther(spendOther);
+        spendVO.setSpendNoise(spendNoise);
+        spendVO.setSpendPublicize(spendPublicize);
+
+        streamVO.setApprovedTaxRate(new BigDecimal(0.25));
+        streamVO.setAnnualNetCashFlowPv(new BigDecimal(2229.45));
+
+        globalVoMap.put("basic", basicVO);
+        globalVoMap.put("income", incomeVO);
+        globalVoMap.put("spend", spendVO);
+        globalVoMap.put("stream", streamVO);
+
+        return resp;
+    }
+
+    @Override
+    public CompreAssResp calculateCompreAssessment() {
+        BasicInfoForCompreAssReq basicResp = (BasicInfoForCompreAssReq) globalVoMap.get("basic");
+        InvestResp investResp = (InvestResp) globalVoMap.get("invest");
+        IncomeForCompreAssReq incomeResp = (IncomeForCompreAssReq) globalVoMap.get("income");
+        SpendForCompreAssReq spendResp = (SpendForCompreAssReq) globalVoMap.get("spend");
+        StreamForCompreAssReq streamResp = (StreamForCompreAssReq) globalVoMap.get("stream");
+
+        CompreAssAlgorithm compreAssAlgorithm = compreAssFactory.getAlgorithm("basic");
+        return compreAssAlgorithm.compreAssResult(basicResp, investResp, incomeResp, spendResp, streamResp);
     }
 }
 

@@ -1,6 +1,5 @@
 package vip.xiaonuo.biz.modular.subjectinfo.controller;
 
-import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import vip.xiaonuo.biz.modular.strategy.dto.InvestReq;
+import vip.xiaonuo.biz.modular.strategy.vo.CompreAssResp;
 import vip.xiaonuo.biz.modular.strategy.vo.InvestResp;
 import vip.xiaonuo.biz.modular.subjectinfo.dto.SubProjcetParam;
 import vip.xiaonuo.biz.modular.subjectinfo.service.SubprojectService;
@@ -89,6 +89,16 @@ public class SubProjectInfoController {
         return CommonResult.data(resp);
 
     }
+
+    @Operation(summary = "综合评估表的计算")
+    @PostMapping("/biz/subjectinfoinfo/compreAssAmount")
+    public CommonResult<CompreAssResp> CalculateInvestAmout()  {
+        CompreAssResp resp = subprojectService.calculateCompreAssessment();
+
+        return CommonResult.data(resp);
+
+    }
+
 
 
 
