@@ -68,9 +68,6 @@ public class Spend implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    @TableField(exist = false)  // 这会告诉 MyBatis 这个字段不与数据库的列直接对应
-    private Map<String, Map<Integer, BigDecimal>> annualSumsByTypeAndYear;
-
     @Override
     public boolean equals(Object that) {
         if (this == that) {

@@ -14,4 +14,6 @@ public interface SpendService extends IService<Spend> {
 
     boolean saveSubjectSpendInfo(SpendParam spendParam) throws Exception;
 
+    boolean saveSpendInfo(SpendVO spendVO) throws Exception;
+
 }

@@ -1,5 +1,6 @@
 package vip.xiaonuo.biz.modular.spend.service.impl;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import vip.xiaonuo.biz.modular.income.vo.IncomeVO;
@@ -17,6 +18,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author M
@@ -79,12 +81,35 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
             //5. 计算每一种产品代码所有年度的总和（横向求和），
             calculateTotalSumsForAllYears(spendVO);
 
-            // 数据为手动输入形式,直接存入数据库
-            Spend spend = new Spend();
-            String subprojectId = subprojectSpendInfo.getSubprojectId();
-            spend.setSpendId(Long.valueOf(subprojectId));
-            // 下面步骤省略了
+            // 6. 保存数据
+            saveSpendInfo(spendVO);
+        }
+        return true;
+    }
 
+    /**
+     * 保存支出信息,将数据序列化存储
+     * @param spendVO
+     * @return
+     */
+    @Override
+    public boolean saveSpendInfo(SpendVO spendVO) {
+        // 遍历 SpendVO 中的 subprojectSpendInfoList，并将每个项目的数据序列化存储
+        // 值得一提的是，传入的一个SpendVO对象中包含了多个子项目的支出信息，需要使用循环遍历的方式将每个子项目的支出信息存储到数据库中
+        for (SpendVO.SubprojectSpendVO subproject : spendVO.getSubprojectSpendVOList()) {
+            Spend spend = new Spend();
+            spend.setSubprojectId(Long.parseLong(subproject.getSubprojectId())); // 设置子项目ID
+
+            // 序列化并存储每个具体的支出信息
+            spend.setSpendSafeguard(JSONUtil.toJsonStr(subproject.getSpendSafeguard()));
+            spend.setSpendUpkeep(JSONUtil.toJsonStr(subproject.getSpendUpkeep()));
+            spend.setSpendArtificial(JSONUtil.toJsonStr(subproject.getSpendArtifical()));
+            spend.setSpendOther(JSONUtil.toJsonStr(subproject.getSpendOther()));
+            spend.setSpendNoise(JSONUtil.toJsonStr(subproject.getSpendNoise()));
+            spend.setSpendPublicize(JSONUtil.toJsonStr(subproject.getSpendPublicize()));
+
+            // 持久化 Spend 对象
+            save(spend);
         }
         return true;
     }
@@ -162,8 +187,6 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
                     // 计算并更新 SpendOther
                     updateFirstAnnualSpend(subprojectSpend.getSpendOther().getAnnual(), other.multiply(numberAsBigDecimal).multiply(monthAsBigDecimal).divide(new BigDecimal(2)));
                 }
-
-
             }
         }
     }
