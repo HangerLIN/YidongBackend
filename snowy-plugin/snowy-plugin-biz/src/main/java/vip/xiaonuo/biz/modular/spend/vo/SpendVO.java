@@ -1,16 +1,20 @@
 package vip.xiaonuo.biz.modular.spend.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 @Data
 public class SpendVO {
 
     private List<SubprojectSpendVO> subprojectSpendVOList;
+
+    private Map<String, Map<Integer, BigDecimal>> annualSumsByTypeAndYear;
 
     @NoArgsConstructor
     @Data
@@ -31,6 +35,7 @@ public class SpendVO {
 
 
         @NoArgsConstructor
+        @AllArgsConstructor
         @Data
         public static class Annualspend {
             private Integer year;
