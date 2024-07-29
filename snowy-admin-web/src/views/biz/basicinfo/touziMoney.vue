@@ -1,6 +1,6 @@
 <template>
 	<div id="table-wrap">
-		<h2>建设进度表：</h2>
+		<h2>投资金额（不含税）：</h2>
 		<!-- 可编辑表格-Vue3 + ElementPlus -->
 		<el-table
 			:data="questionChoiceVOlist"
@@ -33,16 +33,16 @@
 				:index="idx"
 			>
 				<template #default="{ row }">
-<!--					<div-->
-<!--						v-if="col.type === 'button'"-->
-<!--						style="height: 75px; padding-top: 26px; width: 100%"-->
-<!--					>-->
-<!--&lt;!&ndash;						<el-badge type="warning" :value="getRiskLenght(row.riskIds)">&ndash;&gt;-->
-<!--&lt;!&ndash;							<el-button size="small">&ndash;&gt;-->
-<!--&lt;!&ndash;								{{ paramsIdType == 'detail' ? '查看' : '选择' }}&ndash;&gt;-->
-<!--&lt;!&ndash;							</el-button>&ndash;&gt;-->
-<!--&lt;!&ndash;						</el-badge>&ndash;&gt;-->
-<!--					</div>-->
+					<!--					<div-->
+					<!--						v-if="col.type === 'button'"-->
+					<!--						style="height: 75px; padding-top: 26px; width: 100%"-->
+					<!--					>-->
+					<!--&lt;!&ndash;						<el-badge type="warning" :value="getRiskLenght(row.riskIds)">&ndash;&gt;-->
+					<!--&lt;!&ndash;							<el-button size="small">&ndash;&gt;-->
+					<!--&lt;!&ndash;								{{ paramsIdType == 'detail' ? '查看' : '选择' }}&ndash;&gt;-->
+					<!--&lt;!&ndash;							</el-button>&ndash;&gt;-->
+					<!--&lt;!&ndash;						</el-badge>&ndash;&gt;-->
+					<!--					</div>-->
 					<el-input-number
 						v-if="col.type === 'input-number'"
 						v-model.number="row[col.prop]"
@@ -55,7 +55,7 @@
 			</el-table-column>
 		</el-table>
 		<h2></h2>
-		<h2>单条造价表（不含税）：</h2>
+		<h2>投资金额（含税）：</h2>
 		<el-table
 			:data="questionChoiceVOlist1"
 			stripe
@@ -111,10 +111,8 @@
 		<el-button @click="con">测试</el-button>
 		<el-button @click="con1">测试1</el-button>
 		<el-button @click="con2">测试2</el-button>
-		<el-button @click="onSubmit">提交</el-button>
-		<h2></h2>
-		<h2></h2>
-		<touzi-money></touzi-money>
+
+
 
 		<!-- 右键菜单框 -->
 		<div v-show="showMenu" id="contextmenu" @mouseleave="showMenu = false">
@@ -180,22 +178,22 @@
 		第二个和第三个参数来格式化JSON输出，其中null作为替换函数（这里不进行替换），2表示缩进级别。
 		这样JSON数据会以格式化的形式展示，增加了可读性
 		 -->
-<!--		<div>-->
-<!--			<h3 style="text-align: center; margin-top: 15px">实时数据展示</h3>-->
-<!--			<label>当前目标：</label>-->
-<!--			<pre><code>{{ JSON.stringify(curTarget, null, 2) }}</code></pre>-->
-<!--			<div style="width: 100%; height: auto">-->
-<!--				<label>表头：</label>-->
-<!--				<pre><code v-for="col in columnList" :key="col.prop">{{ JSON.stringify(col, null, 2) }}</code></pre>-->
-<!--			</div>-->
+		<!--		<div>-->
+		<!--			<h3 style="text-align: center; margin-top: 15px">实时数据展示</h3>-->
+		<!--			<label>当前目标：</label>-->
+		<!--			<pre><code>{{ JSON.stringify(curTarget, null, 2) }}</code></pre>-->
+		<!--			<div style="width: 100%; height: auto">-->
+		<!--				<label>表头：</label>-->
+		<!--				<pre><code v-for="col in columnList" :key="col.prop">{{ JSON.stringify(col, null, 2) }}</code></pre>-->
+		<!--			</div>-->
 
-<!--			<div>-->
-<!--				<label>数据：</label>-->
-<!--				<pre><code v-for="(data, idx) in questionChoiceVOlist" :key="idx">-->
-<!--					{{ JSON.stringify(data, null, 2) }}-->
-<!--				</code></pre>-->
-<!--			</div>-->
-<!--		</div>-->
+		<!--			<div>-->
+		<!--				<label>数据：</label>-->
+		<!--				<pre><code v-for="(data, idx) in questionChoiceVOlist" :key="idx">-->
+		<!--					{{ JSON.stringify(data, null, 2) }}-->
+		<!--				</code></pre>-->
+		<!--			</div>-->
+		<!--		</div>-->
 		<!-- 实时数据展示 End-->
 	</div>
 
@@ -205,9 +203,6 @@
 import { ref, reactive, computed, toRefs, nextTick } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { DeleteFilled, CaretBottom, CaretTop, EditPen } from '@element-plus/icons-vue';
-import TouziMoney from "@/views/biz/basicinfo/touziMoney.vue";
-import {cloneDeep} from "lodash-es";
-import projectBasicInfoApi from "@/api/biz/projectBasicInfoApi";
 
 
 //
@@ -260,28 +255,28 @@ const paramsIdType = 'detail';
 
 const state = reactive({
 	columnList: [
-		{ prop: '产品代码', label: '产品代码' },
-		{ prop: '产品名称', label: '产品名称' },
-		{ prop: '规格型号', label: '规格型号' },
-		{ prop: '单位', label: '单位' },
+		{ prop: '类型', label: '类型' },
+		// { prop: '产品名称', label: '产品名称' },
+		// { prop: '规格型号', label: '规格型号' },
+		// { prop: '单位', label: '单位' },
 		// { prop: 'itemScore', label: '合计', type: 'input-number' },
 	] as Column[],
 	questionChoiceVOlist: [
 		{
-			产品代码: '310101',
-			产品名称: '双向双车道',
-			规格型号: '有绿植',
+			类型: '不含税投资额合计',
+			// 产品名称: '双向双车道',
+			// 规格型号: '有绿植',
 			// itemScore: 1,
 			// isClickCheckBtn: true,
-			单位: '条',
+			// 单位: '条',
 			// riskIds: '46',
 			// id: 1,
 		},
 		{
-			产品代码: '310101',
-			产品名称: '双向双车道',
-			规格型号: '有绿植',
-			单位: '条',
+			类型: '6%税率投资额',
+			// 产品名称: '双向双车道',
+			// 规格型号: '有绿植',
+			// 单位: '条',
 			// choiceCode: 'B',
 			// choiceContent: '否',
 			// riskIds: '46',
@@ -290,10 +285,22 @@ const state = reactive({
 			// id: 2,
 		},
 		{
-			产品代码: '310101',
-			产品名称: '双向双车道',
-			规格型号: '有绿植',
-			单位: '条',
+			类型: '9%税率投资额',
+			// 产品名称: '双向双车道',
+			// 规格型号: '有绿植',
+			// 单位: '条',
+			// choiceCode: 'C',
+			// choiceContent: '否',
+			// riskIds: '',
+			// itemScore: 4,
+			// isClickCheckBtn: true,
+			// id: 3,
+		},
+		{
+			类型: '13%税率投资额',
+			// 产品名称: '双向双车道',
+			// 规格型号: '有绿植',
+			// 单位: '条',
 			// choiceCode: 'C',
 			// choiceContent: '否',
 			// riskIds: '',
@@ -304,20 +311,20 @@ const state = reactive({
 	] as Data[],
 	questionChoiceVOlist1: [
 		{
-			产品代码: '40101',
-			产品名称: '双向双车道1',
-			规格型号: '有绿植1',
+			类型: '不含税投资额合计',
+			// 产品名称: '双向双车道',
+			// 规格型号: '有绿植',
 			// itemScore: 1,
 			// isClickCheckBtn: true,
-			单位: '元/条',
+			// 单位: '条',
 			// riskIds: '46',
 			// id: 1,
 		},
 		{
-			产品代码: '310101',
-			产品名称: '双向双车道',
-			规格型号: '有绿植',
-			单位: '元/条',
+			类型: '6%税率投资额',
+			// 产品名称: '双向双车道',
+			// 规格型号: '有绿植',
+			// 单位: '条',
 			// choiceCode: 'B',
 			// choiceContent: '否',
 			// riskIds: '46',
@@ -326,10 +333,22 @@ const state = reactive({
 			// id: 2,
 		},
 		{
-			产品代码: '310101',
-			产品名称: '双向双车道',
-			规格型号: '有绿植',
-			单位: '元/条',
+			类型: '9%税率投资额',
+			// 产品名称: '双向双车道',
+			// 规格型号: '有绿植',
+			// 单位: '条',
+			// choiceCode: 'C',
+			// choiceContent: '否',
+			// riskIds: '',
+			// itemScore: 4,
+			// isClickCheckBtn: true,
+			// id: 3,
+		},
+		{
+			类型: '13%税率投资额',
+			// 产品名称: '双向双车道',
+			// 规格型号: '有绿植',
+			// 单位: '条',
 			// choiceCode: 'C',
 			// choiceContent: '否',
 			// riskIds: '',
@@ -717,7 +736,7 @@ const addYearColumns = () => {
 	// state.countCol += cycles;
 
 };
-let dataform = [];
+let resultArray = [];
 let newArray = Object.keys(JSON.parse(JSON.stringify(questionChoiceVOlist.value))[0]).map(key => ({
 
 	key: key,
@@ -902,26 +921,12 @@ const con2 = () =>{
 		...SubProject_singleCost[index]
 
 	}));
-	dataform = resultArray1
 	console.log(resultArray1)
 	console.log(questionChoiceVOlist.value)
 	console.log(newArray)
 	console.log(props.cycle)
 }
-const onSubmit = () => {
-	console.log(dataform)
-	projectBasicInfoApi
-		.addSubProject(dataform)
-		.then(() => {
-			alert("success")
-			// onClose()
-			// emit('successful')
-		})
-		.finally(() => {
-			alert("fail")
-			// submitLoading.value = false
-		})
-}
+
 defineExpose({
 	questionChoiceVOlist,
 });

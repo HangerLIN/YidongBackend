@@ -1,7 +1,7 @@
 import { baseRequest } from '@/utils/request'
 
 const request = (url, ...arg) => baseRequest(`/biz/basicinfo/` + url, ...arg)
-
+const request1 = (url, ...arg) => baseRequest(`/biz/subjectinfoinfo/` + url, ...arg)
 /**
  * 项目基础信息Api接口管理器
  *
@@ -24,5 +24,10 @@ export default {
 	// 获取项目基础信息详情
 	projectBasicInfoDetail(data) {
 		return request('detail', data, 'get')
-	}
+	},
+
+	// 提交子项目信息
+	addSubProject(data, edit = false) {
+		return request1(edit ? 'edit' : 'add', data)
+	},
 }
