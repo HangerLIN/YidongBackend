@@ -20,10 +20,6 @@ public class SpendAlgorithmBasicAmount implements SpendAlgorithm{
         benchmarkLambdaQueryWrapper.eq(Benchmark::getProductCode, productCode);
 //      Benchmark benchmark = benchmarkService.getOne(benchmarkLambdaQueryWrapper); //TODO
         Benchmark benchmark = new Benchmark(); //TODO:后续需要调用service
-
-
-
-
-
+        return null;
     }
 }

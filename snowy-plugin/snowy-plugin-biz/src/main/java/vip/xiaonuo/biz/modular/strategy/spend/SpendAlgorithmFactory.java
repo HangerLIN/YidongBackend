@@ -34,10 +34,16 @@ public class SpendAlgorithmFactory implements ApplicationContextAware {
      */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        spendAlgorithmTypeConfig.getTypes().forEach((k, y) -> {
-            spendAlgorithmPool.put(k, (SpendAlgorithm) applicationContext.getBean(y));
-        });
+        Map<String, String> types = spendAlgorithmTypeConfig.getTypes();
+        if (types != null) {
+            types.forEach((k, y) -> {
+                spendAlgorithmPool.put(k, (SpendAlgorithm) applicationContext.getBean(y));
+            });
+        } else {
+            throw new IllegalStateException("Types configuration is missing in SpendAlgorithmTypeConfig");
+        }
     }
+
 
     /**
      * 对外提供获取具体策略

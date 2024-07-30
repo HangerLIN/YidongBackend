@@ -28,16 +28,12 @@ public class SpendController {
     @PostMapping("/biz/spend/save")
     public CommonResult<SpendVO> saveSpendInfo(@RequestBody SpendParam spendParam) throws Exception {
         //1.保存子项目花费信息到数据库
-        boolean  isSave =  service.saveSubjectSpendInfo(spendParam);
+        boolean isSave =  service.saveSubjectSpendInfo(spendParam);
         System.out.println(isSave);
-
-
         // 2.计算并返回子项目信息
         // 2.1模拟数据（测试用）
         String resource = ResourceUtil.readUtf8Str("spendVO.json");
         SpendVO spendVO = JSONUtil.toBean(resource, SpendVO.class);
-        // 真正计算
-//        SpendVO spendVO = service.caculateSpendInfo(spendParam);
 
 
         return CommonResult.data(spendVO);

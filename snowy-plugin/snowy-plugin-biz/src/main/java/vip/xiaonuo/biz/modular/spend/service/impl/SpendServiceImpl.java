@@ -1,5 +1,6 @@
 package vip.xiaonuo.biz.modular.spend.service.impl;
 
+import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -34,6 +35,7 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
     @Override
     public boolean saveSubjectSpendInfo(SpendParam spendParam) throws Exception {
         //先创建一个返回的结果
+        //这个SpendVO
         SpendVO spendVO = new SpendVO();
 
         List<SubprojectSpendInfo> subprojectSpendInfoList = spendParam.getSubprojectSpendInfoList();
@@ -54,6 +56,7 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
             //3.开始调用策略计算
             LambdaQueryWrapper<Benchmark> benchmarkLambdaQueryWrapper = new LambdaQueryWrapper<>();
             Integer productCode = 120198;
+            //TODO 计算获得月份差（开始），第一年需要做减法获得月份的数目；后续的年份需要都是直接乘以12
             benchmarkLambdaQueryWrapper.eq(Benchmark::getProductCode, productCode);
             //        Benchmark benchmark = benchmarkService.getOne(benchmarkLambdaQueryWrapper); //TODO
             Benchmark benchmark = new Benchmark(); //TODO:后续需要调用service获取数据
@@ -63,7 +66,10 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
             BigDecimal depreciationRate3 = benchmark.getDepreciationRate3();
             BigDecimal depreciationRate4 = benchmark.getDepreciationRate4();
 
-            IncomeVO incomeVO = new IncomeVO(); //TODO 后续需要调用service获取数据
+            IncomeVO incomeVO = new IncomeVO(); //TODO 后续需要调用service获取数据,这里只是模拟数据
+            String JsonMessage = ResourceUtil.readUtf8Str("incomeVO.json");
+            incomeVO = JSONUtil.toBean(JsonMessage, IncomeVO.class);
+
             // 获得收入数据，使用HashMap完成数据的解耦
             Map<String, Map<String, List<IncomeVO.SubprojectIncomeVO.AnnualAdd>>> subprojectData = organizeIncomeData(incomeVO);
 
