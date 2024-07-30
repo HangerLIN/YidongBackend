@@ -3,6 +3,7 @@ package vip.xiaonuo.biz.modular.spend.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import vip.xiaonuo.biz.modular.spend.entity.Annualspend;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -32,15 +33,6 @@ public class SpendVO {
         private SpendOtherR9 spendOtherR9;
         private SpendNoiseR6 spendNoiseR6;
         private SpendPublicizeR6 spendPublicizeR6;
-
-
-        @NoArgsConstructor
-        @AllArgsConstructor
-        @Data
-        public static class Annualspend {
-            private Integer year;
-            private BigDecimal amount;
-        }
         
         @NoArgsConstructor
         @Data

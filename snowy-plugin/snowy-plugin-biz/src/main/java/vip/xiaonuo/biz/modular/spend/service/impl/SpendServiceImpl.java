@@ -7,9 +7,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import vip.xiaonuo.biz.modular.income.vo.IncomeVO;
 import vip.xiaonuo.biz.modular.spend.dto.SpendParam;
 import vip.xiaonuo.biz.modular.spend.dto.SpendParam.SubprojectSpendInfo;
-import vip.xiaonuo.biz.modular.spend.dto.SpendParam.SubprojectSpendInfo.Annualspend;
+import vip.xiaonuo.biz.modular.spend.entity.Annualspend;
 import vip.xiaonuo.biz.modular.spend.entity.Benchmark;
 import vip.xiaonuo.biz.modular.spend.entity.Spend;
+import vip.xiaonuo.biz.modular.spend.mapstruct.SpendConvert;
 import vip.xiaonuo.biz.modular.spend.service.SpendService;
 import vip.xiaonuo.biz.modular.spend.mapper.SpendMapper;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,8 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
 
             // 2. 判断数据是否为空
             if(Objects.isNull(spendUpkeep) || Objects.isNull(spendSafeguard) || Objects.isNull(spendOther) || Objects.isNull(spendArtifical)){
-                throw new Exception("数据不能为空");
+                //TODO 判断是否是手动输入的 每一次都是对相同的一个id对应的Project的List来进行判定 判定是否是一个需要手动输入的 直接跳过计算的步骤
+                continue;
             }
 
             //3.开始调用策略计算
@@ -75,11 +77,12 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
 
             // 3.1 计算后续每一个年度的数据
             //3.1.1 第一个位置的计算公式 直接相乘 不需要做减法 更新第一个位置的数据
-            updateSpendAnnualAddDataFirstYear(incomeVO, spendVO);
+            updateSpendAnnualAddDataFirstYear(incomeVO, spendVO, subprojectSpendInfoList);
             //3.1.2 第二个位置的计算公式 需要做减法
-            updateSpendDataOtherYear(incomeVO, spendVO, benchmark);
+            updateSpendDataOtherYear(incomeVO, spendVO, benchmark, subprojectSpendInfoList);
 
             //3.1.3 计算含税金额
+            // 这部分不需要再从SpendParam中获取数据，因为已经在spendVO里面在上面注入了数据了
             applyTaxRatesUsingReflection(spendVO);
 
             //4. 计算每一种支出类别每一年总和的年度数据 （纵向求和）
@@ -87,7 +90,7 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
             //5. 计算每一种产品代码所有年度的总和（横向求和），
             calculateTotalSumsForAllYears(spendVO);
 
-            // 6. 保存数据
+            // 6. 保存数据 遍历的方式批量存储 按照一个List同时存入
             saveSpendInfo(spendVO);
         }
         return true;
@@ -148,7 +151,13 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
         return subprojectData;
     }
 
-    public void updateSpendAnnualAddDataFirstYear(IncomeVO incomeVO, SpendVO spendVO) {
+    /**
+     *
+     * @param incomeVO
+     * @param spendVO
+     * @param subprojectSpendInfoList
+     */
+    public void updateSpendAnnualAddDataFirstYear(IncomeVO incomeVO, SpendVO spendVO, List<SubprojectSpendInfo> subprojectSpendInfoList) {
         // 1. 获取 IncomeVO 中的 annualAdd 的第一个元素
         if (incomeVO.getSubprojectIncomeVO() != null && !incomeVO.getSubprojectIncomeVO().isEmpty()) {
             IncomeVO.SubprojectIncomeVO firstSubprojectIncome = incomeVO.getSubprojectIncomeVO().get(0);
@@ -181,39 +190,60 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
 //                BigDecimal resultOther = other.multiply(numberAsBigDecimal).multiply(monthAsBigDecimal).divide(new BigDecimal(2));
 
                 // 对折旧类的
-                for (SpendVO.SubprojectSpendVO subprojectSpend : spendVO.getSubprojectSpendVOList()) {
-                    updateFirstAnnualSpend(subprojectSpend.getSpendUpkeep().getAnnual(), depreciationRate2.multiply(numberAsBigDecimal).multiply(monthAsBigDecimal).divide(new BigDecimal(2)));
+                for (SpendParam.SubprojectSpendInfo subprojectSpendInfo: subprojectSpendInfoList) {
+                    updateFirstAnnualSpend(subprojectSpendInfo.getSpendUpkeep(), depreciationRate2.multiply(numberAsBigDecimal).multiply(monthAsBigDecimal).divide(new BigDecimal(2)));
 
                     // 计算并更新 SpendSafeguard
-                    updateFirstAnnualSpend(subprojectSpend.getSpendSafeguard().getAnnual(), depreciationRate4.multiply(numberAsBigDecimal).multiply(monthAsBigDecimal).divide(new BigDecimal(2)));
+                    updateFirstAnnualSpend(subprojectSpendInfo.getSpendSafeguard(), depreciationRate4.multiply(numberAsBigDecimal).multiply(monthAsBigDecimal).divide(new BigDecimal(2)));
 
                     // 计算并更新 SpendArtifical
-                    updateFirstAnnualSpend(subprojectSpend.getSpendArtifical().getAnnual(), depreciationRate3.multiply(numberAsBigDecimal).multiply(monthAsBigDecimal).divide(new BigDecimal(2)));
+                    updateFirstAnnualSpend(subprojectSpendInfo.getSpendArtifical(), depreciationRate3.multiply(numberAsBigDecimal).multiply(monthAsBigDecimal).divide(new BigDecimal(2)));
 
                     // 计算并更新 SpendOther
-                    updateFirstAnnualSpend(subprojectSpend.getSpendOther().getAnnual(), other.multiply(numberAsBigDecimal).multiply(monthAsBigDecimal).divide(new BigDecimal(2)));
+                    updateFirstAnnualSpend(subprojectSpendInfo.getSpendOther(), other.multiply(numberAsBigDecimal).multiply(monthAsBigDecimal).divide(new BigDecimal(2)));
                 }
+                // 使用 MapStruct 进行映射 因为这里是一个List 而且是第一次映射 全部映射
+                List<SpendVO.SubprojectSpendVO> subprojectSpendVOList = subprojectSpendInfoList.stream()
+                                                                                                .map(SpendConvert.INSTANCE::toSubprojectSpendVO)
+                                                                                                .collect(Collectors.toList());
+
+                spendVO.setSubprojectSpendVOList(subprojectSpendVOList);
             }
         }
     }
 
     /**
-     * 更新第一个年度支出
-     * @param annualSpendList
-     * @param result
+     * 更新第一年的支出数据
+     * @param annualspendList
+     * @param rate
      */
-    private void updateFirstAnnualSpend(List<SpendVO.SubprojectSpendVO.Annualspend> annualSpendList, BigDecimal result) {
-        if (annualSpendList != null && !annualSpendList.isEmpty()) {
-            SpendVO.SubprojectSpendVO.Annualspend firstAnnualSpend = annualSpendList.get(0);
-            firstAnnualSpend.setAmount(result);
-        }
+    private void updateFirstAnnualSpend(List<Annualspend> annualspendList, BigDecimal rate) {
+        BigDecimal amount = annualspendList.get(0).getAmount(); //获得当前id产品类型的第一年的开销
+        BigDecimal res = amount.multiply(rate);
+        annualspendList.get(0).setAmount(res);
     }
+
+
+//    private void updateFirstAnnualSpend(List<SpendParam.SubprojectSpendInfo> subprojectSpendInfoList, BigDecimal result) {
+//        for (int i = 0; i < subprojectSpendInfoList.size(); i++) {
+//            if (subprojectSpendInfoList != null && !subprojectSpendInfoList.isEmpty()) {
+//                SubprojectSpendInfo subprojectSpendInfo = subprojectSpendInfoList.get(i);
+//
+//                        // 使用 MapStruct 进行映射
+//                        List<SpendVO.SubprojectSpendVO> subprojectSpendVOList = subprojectSpendInfoList.stream()
+//                        .map(spendConvert.INSTANCE::toSubprojectSpendVO)
+//                        .collect(Collectors.toList());
+//                firstAnnualSpend.setAmount(result);
+//            }
+//        }
+//    }
 
     /**
      * 更新支出数据
      * @param incomeVO
      * @param spendVO
      */
+    @Deprecated
     public void updateSpendDataOtherYear(IncomeVO incomeVO, SpendVO spendVO, Benchmark benchmark) {
         // 从 Benchmark 对象获取不同的折旧率和其他参数
         BigDecimal depreciationRate2 = benchmark.getDepreciationRate2(); // For spendUpkeep
@@ -252,15 +282,80 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
         }
     }
 
-    private void updateAnnualSpendList(List<SpendVO.SubprojectSpendVO.Annualspend> spends, BigDecimal rate, Map<Integer, Integer> yearEndUseMap, Map<Integer, Integer> annualAddMap, Map<Integer, Integer> annualDiscardMap, int startCalculationYear) {
-        for (SpendVO.SubprojectSpendVO.Annualspend spend : spends) {
-            if (spend.getYear() >= startCalculationYear) {
+    public void updateSpendDataOtherYear(IncomeVO incomeVO, SpendVO spendVO, Benchmark benchmark, List<SubprojectSpendInfo> subprojectSpendInfoList) {
+        BigDecimal depreciationRate2 = benchmark.getDepreciationRate2(); // For spendUpkeep
+        BigDecimal depreciationRate4 = benchmark.getDepreciationRate4(); // For spendSafeguard
+        BigDecimal depreciationRate3 = benchmark.getDepreciationRate3(); // For spendArtifical
+        BigDecimal other = benchmark.getMaintenanceOther(); // For spendOther
+
+        Map<Integer, Integer> yearEndUseMap = new HashMap<>();
+        Map<Integer, Integer> annualAddMap = new HashMap<>();
+        Map<Integer, Integer> annualDiscardMap = new HashMap<>();
+
+        for (IncomeVO.SubprojectIncomeVO subprojectIncome : incomeVO.getSubprojectIncomeVO()) {
+            for (IncomeVO.SubprojectIncomeVO.AnnualAdd add : subprojectIncome.getAnnualAdd()) {
+                annualAddMap.put(add.getYear(), add.getNumber());
+            }
+            for (IncomeVO.SubprojectIncomeVO.AnnualAdd discard : subprojectIncome.getAnnualDiscard()) {
+                annualDiscardMap.put(discard.getYear(), discard.getNumber());
+            }
+            for (IncomeVO.SubprojectIncomeVO.AnnualAdd use : subprojectIncome.getYearEndUse()) {
+                yearEndUseMap.put(use.getYear(), use.getNumber());
+            }
+        }
+
+        for (SubprojectSpendInfo subprojectSpendInfo : subprojectSpendInfoList) {
+            //获取当前第一年的年份
+            int startYear = subprojectSpendInfo.getSpendUpkeep().get(0).getYear(); //随便取一个subprojectSpendInfo的年份 反正都是统一的
+            updateAnnualSpendList(subprojectSpendInfo.getSpendUpkeep(), depreciationRate2, yearEndUseMap, annualAddMap, annualDiscardMap, startYear); // 从第二年开始计算，所以 startYear 为 1
+            updateAnnualSpendList(subprojectSpendInfo.getSpendSafeguard(), depreciationRate4, yearEndUseMap, annualAddMap, annualDiscardMap, startYear);
+            updateAnnualSpendList(subprojectSpendInfo.getSpendArtifical(), depreciationRate3, yearEndUseMap, annualAddMap, annualDiscardMap, startYear);
+            updateAnnualSpendList(subprojectSpendInfo.getSpendOther(), other, yearEndUseMap, annualAddMap, annualDiscardMap, startYear);
+        }
+
+        List<SpendVO.SubprojectSpendVO> subprojectSpendVOList = subprojectSpendInfoList.stream()
+                .map(SpendConvert.INSTANCE::toSubprojectSpendVO)
+                .collect(Collectors.toList());
+
+        spendVO.setSubprojectSpendVOList(subprojectSpendVOList);
+    }
+
+    private void updateAnnualSpendList(List<Annualspend> spends, BigDecimal rate, Map<Integer, Integer> yearEndUseMap, Map<Integer, Integer> annualAddMap, Map<Integer, Integer> annualDiscardMap, int startYear) {
+        for (Annualspend spend : spends) {
+            if (spend.getYear() > startYear) {
                 BigDecimal baseValue = calculateBaseValue(spend.getYear(), yearEndUseMap, annualAddMap, annualDiscardMap);
                 BigDecimal result = rate.multiply(baseValue);
                 spend.setAmount(result);
             }
         }
     }
+
+//    private void updateAnnualSpendList(List<Annualspend> spends, BigDecimal rate, Map<Integer, Integer> yearEndUseMap, Map<Integer, Integer> annualAddMap, Map<Integer, Integer> annualDiscardMap, int startCalculationYear) {
+//        for (Annualspend spend : spends) {
+//            if (spend.getYear() >= startCalculationYear) {
+//                BigDecimal baseValue = calculateBaseValue(spend.getYear(), yearEndUseMap, annualAddMap, annualDiscardMap);
+//                BigDecimal result = rate.multiply(baseValue);
+//                spend.setAmount(result);
+//            }
+//        }
+//    }
+
+    @Deprecated
+    private void updateAnnualSpendList(List<Annualspend> spends, BigDecimal rate, Map<Integer, Integer> yearEndUseMap, Map<Integer, Integer> annualAddMap, Map<Integer, Integer> annualDiscardMap) {
+        for (Annualspend spend : spends) {
+            BigDecimal baseValue = calculateBaseValue(spend.getYear(), yearEndUseMap, annualAddMap, annualDiscardMap);
+            BigDecimal result = rate.multiply(baseValue);
+            spend.setAmount(result);
+        }
+    }
+
+
+//    private BigDecimal calculateBaseValue(int year, Map<Integer, Integer> yearEndUseMap, Map<Integer, Integer> annualAddMap, Map<Integer, Integer> annualDiscardMap) {
+//        Integer previousYearEndUse = yearEndUseMap.getOrDefault(year - 1, 0);
+//        Integer currentYearAdd = annualAddMap.getOrDefault(year, 0);
+//        Integer currentYearDiscard = annualDiscardMap.getOrDefault(year, 0);
+//        return new BigDecimal(previousYearEndUse * 12 + (currentYearAdd - currentYearDiscard) * 6);
+//    }
 
     private BigDecimal calculateBaseValue(int year, Map<Integer, Integer> yearEndUseMap, Map<Integer, Integer> annualAddMap, Map<Integer, Integer> annualDiscardMap) {
         Integer previousYearEndUse = yearEndUseMap.getOrDefault(year - 1, 0);
@@ -269,7 +364,8 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
         return new BigDecimal(previousYearEndUse * 12 + (currentYearAdd - currentYearDiscard) * 6);
     }
 
-/**
+
+    /**
      * 计算每一种支出类别每一年总和的年度数据 （纵向求和）
      * @param spendVO
      */
@@ -287,11 +383,11 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
         spendVO.setAnnualSumsByTypeAndYear(sumsByTypeAndYear);
     }
 
-    private void accumulateAnnualSums(Map<String, Map<Integer, BigDecimal>> sumsByTypeAndYear, String type, List<SpendVO.SubprojectSpendVO.Annualspend> annuals) {
+    private void accumulateAnnualSums(Map<String, Map<Integer, BigDecimal>> sumsByTypeAndYear, String type, List<Annualspend> annuals) {
         if (annuals != null) {
             sumsByTypeAndYear.putIfAbsent(type, new HashMap<>());
             Map<Integer, BigDecimal> sumsByYear = sumsByTypeAndYear.get(type);
-            for (SpendVO.SubprojectSpendVO.Annualspend annual : annuals) {
+            for (Annualspend annual : annuals) {
                 sumsByYear.merge(annual.getYear(), annual.getAmount(), BigDecimal::add);
             }
         }
@@ -321,9 +417,9 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
     private void sumAllYearsReflectively(Object spendCategory) {
         try {
             Method getAnnualMethod = spendCategory.getClass().getMethod("getAnnual");
-            List<SpendVO.SubprojectSpendVO.Annualspend> annuals = (List<SpendVO.SubprojectSpendVO.Annualspend>) getAnnualMethod.invoke(spendCategory);
+            List<Annualspend> annuals = (List<Annualspend>) getAnnualMethod.invoke(spendCategory);
             BigDecimal totalSum = annuals.stream()
-                    .map(SpendVO.SubprojectSpendVO.Annualspend::getAmount)
+                    .map(Annualspend::getAmount)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
 
             Method setSumMethod = spendCategory.getClass().getMethod("setSum", BigDecimal.class);
@@ -369,11 +465,11 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
     }
 
     private void mapWithTaxUsingReflection(SpendVO.SubprojectSpendVO.SpendSafeguard source, Field targetField, SpendVO.SubprojectSpendVO subproject, BigDecimal taxRate) throws IllegalAccessException {
-        List<SpendVO.SubprojectSpendVO.Annualspend> sourceAnnuals = source.getAnnual();
-        List<SpendVO.SubprojectSpendVO.Annualspend> targetAnnuals = new ArrayList<>();
-        for (SpendVO.SubprojectSpendVO.Annualspend annual : sourceAnnuals) {
+        List<Annualspend> sourceAnnuals = source.getAnnual();
+        List<Annualspend> targetAnnuals = new ArrayList<>();
+        for (Annualspend annual : sourceAnnuals) {
             BigDecimal taxedAmount = annual.getAmount().multiply(taxRate);
-            targetAnnuals.add(new SpendVO.SubprojectSpendVO.Annualspend(annual.getYear(), taxedAmount));
+            targetAnnuals.add(new Annualspend(annual.getYear(), taxedAmount));
         }
         SpendVO.SubprojectSpendVO.SpendSafeguard target = (SpendVO.SubprojectSpendVO.SpendSafeguard)targetField.get(subproject);
         if (target == null) {
