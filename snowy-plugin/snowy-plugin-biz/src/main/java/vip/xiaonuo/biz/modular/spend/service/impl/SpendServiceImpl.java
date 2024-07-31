@@ -10,7 +10,6 @@ import vip.xiaonuo.biz.modular.spend.dto.SpendParam.SubprojectSpendInfo;
 import vip.xiaonuo.biz.modular.spend.entity.Annualspend;
 import vip.xiaonuo.biz.modular.spend.entity.Benchmark;
 import vip.xiaonuo.biz.modular.spend.entity.Spend;
-import vip.xiaonuo.biz.modular.spend.mapstruct.SpendConvert;
 import vip.xiaonuo.biz.modular.spend.service.SpendService;
 import vip.xiaonuo.biz.modular.spend.mapper.SpendMapper;
 import org.springframework.stereotype.Service;
@@ -32,9 +31,16 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
         implements SpendService {
     private final static Benchmark benchmark = new Benchmark(); //初始化过程中需要调用service获取数据
 
+    static {
+        benchmark.setDepreciationRate1(new BigDecimal("0.1"));
+        benchmark.setDepreciationRate2(new BigDecimal("0.2"));
+        benchmark.setDepreciationRate3(new BigDecimal("0.3"));
+        benchmark.setDepreciationRate4(new BigDecimal("0.4"));
+        benchmark.setMaintenanceOther(new BigDecimal("0.5"));
+    }
 
     @Override
-    public boolean saveSubjectSpendInfo(SpendParam spendParam) throws Exception {
+    public SpendVO saveSubjectSpendInfo(SpendParam spendParam) throws Exception {
         //先创建一个返回的结果
         //这个SpendVO
         SpendVO spendVO = new SpendVO();
@@ -60,8 +66,7 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
             Integer productCode = 120198;
             //TODO 计算获得月份差（开始），第一年需要做减法获得月份的数目；后续的年份需要都是直接乘以12
             benchmarkLambdaQueryWrapper.eq(Benchmark::getProductCode, productCode);
-            //        Benchmark benchmark = benchmarkService.getOne(benchmarkLambdaQueryWrapper); //TODO
-            Benchmark benchmark = new Benchmark(); //TODO:后续需要调用service获取数据
+            //        Benchmark benchmark = benchmarkService.getOne(benchmarkLambdaQueryWrapper); //TODO:后续需要调用service获取数据
 
             BigDecimal depreciationRate1 = benchmark.getDepreciationRate1();
             BigDecimal depreciationRate2 = benchmark.getDepreciationRate2();
@@ -83,7 +88,7 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
 
             //3.1.3 计算含税金额
             // 这部分不需要再从SpendParam中获取数据，因为已经在spendVO里面在上面注入了数据了
-            applyTaxRatesUsingReflection(spendVO);
+            applyTaxRates(spendVO);
 
             //4. 计算每一种支出类别每一年总和的年度数据 （纵向求和）
             calculateAnnualSumsByTypeAndYear(spendVO);
@@ -93,7 +98,7 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
             // 6. 保存数据 遍历的方式批量存储 按照一个List同时存入
             saveSpendInfo(spendVO);
         }
-        return true;
+        return spendVO;
     }
 
     /**
@@ -172,11 +177,12 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
                 Integer productCode = 120198;
                 benchmarkLambdaQueryWrapper.eq(Benchmark::getProductCode, productCode);
                 //        Benchmark benchmark = benchmarkService.getOne(benchmarkLambdaQueryWrapper); //TODO
-                Benchmark benchmark = new Benchmark(); //TODO:后续需要调用service获取数据
+//                Benchmark benchmark = new Benchmark(); //TODO:后续需要调用service获取数据
                 BigDecimal depreciationRate2 = benchmark.getDepreciationRate2();
                 BigDecimal depreciationRate3 = benchmark.getDepreciationRate3(); // For spendArtifical
                 BigDecimal depreciationRate4 = benchmark.getDepreciationRate4(); // For spendSafeguard
                 BigDecimal other = benchmark.getMaintenanceOther(); // For spendOther
+
                 Integer month = 8;
 
                 // 将 Integer 转换为 BigDecimal
@@ -204,7 +210,7 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
                 }
                 // 使用 MapStruct 进行映射 因为这里是一个List 而且是第一次映射 全部映射
                 List<SpendVO.SubprojectSpendVO> subprojectSpendVOList = subprojectSpendInfoList.stream()
-                                                                                                .map(SpendConvert.INSTANCE::toSubprojectSpendVO)
+                                                                                                .map(vip.xiaonuo.biz.modular.spend.convert.SpendConvert::toSubprojectSpendVO)
                                                                                                 .collect(Collectors.toList());
 
                 spendVO.setSubprojectSpendVOList(subprojectSpendVOList);
@@ -314,7 +320,7 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
         }
 
         List<SpendVO.SubprojectSpendVO> subprojectSpendVOList = subprojectSpendInfoList.stream()
-                .map(SpendConvert.INSTANCE::toSubprojectSpendVO)
+                .map(vip.xiaonuo.biz.modular.spend.convert.SpendConvert::toSubprojectSpendVO)
                 .collect(Collectors.toList());
 
         spendVO.setSubprojectSpendVOList(subprojectSpendVOList);
@@ -365,33 +371,90 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
     }
 
 
+//    /**
+//     * 计算每一种支出类别每一年总和的年度数据 （纵向求和）
+//     * @param spendVO
+//     */
+//    public void calculateAnnualSumsByTypeAndYear(SpendVO spendVO) {
+//        Map<String, Map<Integer, BigDecimal>> sumsByTypeAndYear = new HashMap<>();
+//
+//        for (SpendVO.SubprojectSpendVO subproject : spendVO.getSubprojectSpendVOList()) {
+//            accumulateAnnualSums(sumsByTypeAndYear, "SpendSafeguard", subproject.getSpendSafeguard().getAnnual());
+//            accumulateAnnualSums(sumsByTypeAndYear, "SpendUpkeep", subproject.getSpendUpkeep().getAnnual());
+//            accumulateAnnualSums(sumsByTypeAndYear, "SpendArtifical", subproject.getSpendArtifical().getAnnual());
+//            accumulateAnnualSums(sumsByTypeAndYear, "SpendOther", subproject.getSpendOther().getAnnual());
+//            accumulateAnnualSums(sumsByTypeAndYear, "SpendNoise", subproject.getSpendNoise().getAnnual());
+//            accumulateAnnualSums(sumsByTypeAndYear, "SpendPublicize", subproject.getSpendPublicize().getAnnual());
+//            accumulateAnnualSums(sumsByTypeAndYear, "SpendSafeguardR9", subproject.getSpendSafeguardR9().getAnnual());
+//            accumulateAnnualSums(sumsByTypeAndYear, "SpendUpkeepR6", subproject.getSpendUpkeepR6().getAnnual());
+//            accumulateAnnualSums(sumsByTypeAndYear, "SpendArtificalR9", subproject.getSpendArtificalR9().getAnnual());
+//            accumulateAnnualSums(sumsByTypeAndYear, "SpendOtherR9", subproject.getSpendOtherR9().getAnnual());
+//            accumulateAnnualSums(sumsByTypeAndYear, "SpendNoiseR6", subproject.getSpendNoiseR6().getAnnual());
+//            accumulateAnnualSums(sumsByTypeAndYear, "SpendPublicizeR6", subproject.getSpendPublicizeR6().getAnnual());
+//        }
+//        spendVO.setAnnualSumsByTypeAndYear(sumsByTypeAndYear);
+//    }
+//
+//    private void accumulateAnnualSums(Map<String, Map<Integer, BigDecimal>> sumsByTypeAndYear, String type, List<Annualspend> annuals) {
+//        if (annuals != null) {
+//            sumsByTypeAndYear.putIfAbsent(type, new HashMap<>());
+//            Map<Integer, BigDecimal> sumsByYear = sumsByTypeAndYear.get(type);
+//            for (Annualspend annual : annuals) {
+//                sumsByYear.merge(annual.getYear(), annual.getAmount(), BigDecimal::add);
+//            }
+//        } else {
+//            System.out.println("Warning: " + type + " annuals list is null, skipping.");
+//        }
+//    }
+
     /**
      * 计算每一种支出类别每一年总和的年度数据 （纵向求和）
      * @param spendVO
      */
     public void calculateAnnualSumsByTypeAndYear(SpendVO spendVO) {
         Map<String, Map<Integer, BigDecimal>> sumsByTypeAndYear = new HashMap<>();
+        BigDecimal totalSumWithoutR = BigDecimal.ZERO;
+        BigDecimal totalSumWithR = BigDecimal.ZERO;
 
         for (SpendVO.SubprojectSpendVO subproject : spendVO.getSubprojectSpendVOList()) {
-            accumulateAnnualSums(sumsByTypeAndYear, "SpendSafeguard", subproject.getSpendSafeguard().getAnnual());
-            accumulateAnnualSums(sumsByTypeAndYear, "SpendUpkeep", subproject.getSpendUpkeep().getAnnual());
-            accumulateAnnualSums(sumsByTypeAndYear, "SpendArtifical", subproject.getSpendArtifical().getAnnual());
-            accumulateAnnualSums(sumsByTypeAndYear, "SpendOther", subproject.getSpendOther().getAnnual());
-            accumulateAnnualSums(sumsByTypeAndYear, "SpendNoise", subproject.getSpendNoise().getAnnual());
-            accumulateAnnualSums(sumsByTypeAndYear, "SpendPublicize", subproject.getSpendPublicize().getAnnual());
+            totalSumWithoutR = totalSumWithoutR.add(accumulateAnnualSums(sumsByTypeAndYear, "SpendSafeguard", subproject.getSpendSafeguard().getAnnual()));
+            totalSumWithoutR = totalSumWithoutR.add(accumulateAnnualSums(sumsByTypeAndYear, "SpendUpkeep", subproject.getSpendUpkeep().getAnnual()));
+            totalSumWithoutR = totalSumWithoutR.add(accumulateAnnualSums(sumsByTypeAndYear, "SpendArtifical", subproject.getSpendArtifical().getAnnual()));
+            totalSumWithoutR = totalSumWithoutR.add(accumulateAnnualSums(sumsByTypeAndYear, "SpendOther", subproject.getSpendOther().getAnnual()));
+            totalSumWithoutR = totalSumWithoutR.add(accumulateAnnualSums(sumsByTypeAndYear, "SpendNoise", subproject.getSpendNoise().getAnnual()));
+            totalSumWithoutR = totalSumWithoutR.add(accumulateAnnualSums(sumsByTypeAndYear, "SpendPublicize", subproject.getSpendPublicize().getAnnual()));
+
+            totalSumWithR = totalSumWithR.add(accumulateAnnualSums(sumsByTypeAndYear, "SpendSafeguardR9", subproject.getSpendSafeguardR9().getAnnual()));
+            totalSumWithR = totalSumWithR.add(accumulateAnnualSums(sumsByTypeAndYear, "SpendUpkeepR6", subproject.getSpendUpkeepR6().getAnnual()));
+            totalSumWithR = totalSumWithR.add(accumulateAnnualSums(sumsByTypeAndYear, "SpendArtificalR9", subproject.getSpendArtificalR9().getAnnual()));
+            totalSumWithR = totalSumWithR.add(accumulateAnnualSums(sumsByTypeAndYear, "SpendOtherR9", subproject.getSpendOtherR9().getAnnual()));
+            totalSumWithR = totalSumWithR.add(accumulateAnnualSums(sumsByTypeAndYear, "SpendNoiseR6", subproject.getSpendNoiseR6().getAnnual()));
+            totalSumWithR = totalSumWithR.add(accumulateAnnualSums(sumsByTypeAndYear, "SpendPublicizeR6", subproject.getSpendPublicizeR6().getAnnual()));
         }
+
         spendVO.setAnnualSumsByTypeAndYear(sumsByTypeAndYear);
+        spendVO.setTotalSumWithoutR(totalSumWithoutR);
+        spendVO.setTotalSumWithR(totalSumWithR);
     }
 
-    private void accumulateAnnualSums(Map<String, Map<Integer, BigDecimal>> sumsByTypeAndYear, String type, List<Annualspend> annuals) {
+    private BigDecimal accumulateAnnualSums(Map<String, Map<Integer, BigDecimal>> sumsByTypeAndYear, String type, List<Annualspend> annuals) {
+        BigDecimal sum = BigDecimal.ZERO;
+
         if (annuals != null) {
             sumsByTypeAndYear.putIfAbsent(type, new HashMap<>());
             Map<Integer, BigDecimal> sumsByYear = sumsByTypeAndYear.get(type);
             for (Annualspend annual : annuals) {
                 sumsByYear.merge(annual.getYear(), annual.getAmount(), BigDecimal::add);
+                sum = sum.add(annual.getAmount());
             }
+        } else {
+            System.out.println("Warning: " + type + " annuals list is null, skipping.");
         }
+
+        return sum;
     }
+
+
 
     /**
      * 计算每一种产品代码所有年度的总和（横向求和），使用反射
@@ -428,56 +491,91 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
             e.printStackTrace();
         }
     }
-
     /**
-     * 使用反射计算含税金额,并更新到原对象中
-     * @param spendVO
+     * 直接在 VO 对象中计算含税金额。
+     * @param spendVO 包含所有子项目支出数据的 SpendVO 对象。
      */
-    public void applyTaxRatesUsingReflection(SpendVO spendVO) {
+    public void applyTaxRates(SpendVO spendVO) {
         for (SpendVO.SubprojectSpendVO subproject : spendVO.getSubprojectSpendVOList()) {
-            try {
-                // 遍历所有支出类型字段
-                Field[] fields = subproject.getClass().getDeclaredFields();
-                for (Field field : fields) {
-                    field.setAccessible(true);
-                    // 只处理非含税字段且对应含税字段存在的情况
-                    if (!field.getName().endsWith("R6") && !field.getName().endsWith("R9")) {
-                        String taxFieldName = field.getName() + (field.getName().contains("Safeguard") ? "R9" : "R6");
-                        Field taxField = null;
-                        try {
-                            taxField = subproject.getClass().getDeclaredField(taxFieldName);
-                        } catch (NoSuchFieldException e) {
-                            continue;  // 如果对应的含税字段不存在，跳过
-                        }
-                        taxField.setAccessible(true);
-
-                        Object fieldValue = field.get(subproject);
-                        if (fieldValue != null) {
-                            BigDecimal taxRate = new BigDecimal(field.getName().contains("Safeguard") ? "1.09" : "1.06");
-                            mapWithTaxUsingReflection((SpendVO.SubprojectSpendVO.SpendSafeguard)fieldValue, taxField, subproject, taxRate);
-                        }
-                    }
+            // 处理保障支出的含税计算
+            if (subproject.getSpendSafeguard() != null) {
+                if (subproject.getSpendSafeguardR9() == null) {
+                    subproject.setSpendSafeguardR9(new SpendVO.SubprojectSpendVO.SpendSafeguardR9());
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                subproject.getSpendSafeguardR9().setAnnual(
+                        applyTaxRate(subproject.getSpendSafeguard().getAnnual(), new BigDecimal("1.09"))
+                );
+            }
+
+            // 处理维护支出的含税计算
+            if (subproject.getSpendUpkeep() != null) {
+                if (subproject.getSpendUpkeepR6() == null) {
+                    subproject.setSpendUpkeepR6(new SpendVO.SubprojectSpendVO.SpendUpkeepR6());
+                }
+                subproject.getSpendUpkeepR6().setAnnual(
+                        applyTaxRate(subproject.getSpendUpkeep().getAnnual(), new BigDecimal("1.06"))
+                );
+            }
+
+            // 处理人工成本的含税计算
+            if (subproject.getSpendArtifical() != null) {
+                if (subproject.getSpendArtificalR9() == null) {
+                    subproject.setSpendArtificalR9(new SpendVO.SubprojectSpendVO.SpendArtificalR9());
+                }
+                subproject.getSpendArtificalR9().setAnnual(
+                        applyTaxRate(subproject.getSpendArtifical().getAnnual(), new BigDecimal("1.09"))
+                );
+            }
+
+            // 处理其他支出的含税计算
+            if (subproject.getSpendOther() != null) {
+                if (subproject.getSpendOtherR9() == null) {
+                    subproject.setSpendOtherR9(new SpendVO.SubprojectSpendVO.SpendOtherR9());
+                }
+                subproject.getSpendOtherR9().setAnnual(
+                        applyTaxRate(subproject.getSpendOther().getAnnual(), new BigDecimal("1.09"))
+                );
+            }
+
+            // 处理噪音支出的含税计算
+            if (subproject.getSpendNoise() != null) {
+                if (subproject.getSpendNoiseR6() == null) {
+                    subproject.setSpendNoiseR6(new SpendVO.SubprojectSpendVO.SpendNoiseR6());
+                }
+                subproject.getSpendNoiseR6().setAnnual(
+                        applyTaxRate(subproject.getSpendNoise().getAnnual(), new BigDecimal("1.06"))
+                );
+            }
+
+            // 处理宣传支出的含税计算
+            if (subproject.getSpendPublicize() != null) {
+                if (subproject.getSpendPublicizeR6() == null) {
+                    subproject.setSpendPublicizeR6(new SpendVO.SubprojectSpendVO.SpendPublicizeR6());
+                }
+                subproject.getSpendPublicizeR6().setAnnual(
+                        applyTaxRate(subproject.getSpendPublicize().getAnnual(), new BigDecimal("1.06"))
+                );
             }
         }
     }
 
-    private void mapWithTaxUsingReflection(SpendVO.SubprojectSpendVO.SpendSafeguard source, Field targetField, SpendVO.SubprojectSpendVO subproject, BigDecimal taxRate) throws IllegalAccessException {
-        List<Annualspend> sourceAnnuals = source.getAnnual();
-        List<Annualspend> targetAnnuals = new ArrayList<>();
-        for (Annualspend annual : sourceAnnuals) {
-            BigDecimal taxedAmount = annual.getAmount().multiply(taxRate);
-            targetAnnuals.add(new Annualspend(annual.getYear(), taxedAmount));
+    /**
+     * 辅助方法，用于对一组 Annualspend 应用税率。
+     * @param originalList 原始的 Annualspend 列表。
+     * @param taxRate 要应用的税率。
+     * @return 一个包含已税金额的 Annualspend 列表。
+     */
+    private List<Annualspend> applyTaxRate(List<Annualspend> originalList, BigDecimal taxRate) {
+        List<Annualspend> taxedList = new ArrayList<>();
+        if (originalList != null) {
+            for (Annualspend original : originalList) {
+                BigDecimal taxedAmount = original.getAmount().multiply(taxRate);
+                taxedList.add(new Annualspend(original.getYear(), taxedAmount));
+            }
         }
-        SpendVO.SubprojectSpendVO.SpendSafeguard target = (SpendVO.SubprojectSpendVO.SpendSafeguard)targetField.get(subproject);
-        if (target == null) {
-            target = new SpendVO.SubprojectSpendVO.SpendSafeguard();
-            targetField.set(subproject, target);
-        }
-        target.setAnnual(targetAnnuals);
+        return taxedList;
     }
+
 }
 
 

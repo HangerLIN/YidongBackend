@@ -17,6 +17,10 @@ public class SpendVO {
 
     private Map<String, Map<Integer, BigDecimal>> annualSumsByTypeAndYear;
 
+    private BigDecimal totalSumWithoutR = BigDecimal.ZERO;
+
+    private BigDecimal totalSumWithR = BigDecimal.ZERO;
+
     @NoArgsConstructor
     @Data
     public static class SubprojectSpendVO {

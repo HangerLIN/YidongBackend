@@ -1,0 +1,1350 @@
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "subprojectSpendVOList": [
+      {
+        "subprojectId": "3232456431",
+        "spendSafeguard": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 150000
+            },
+            {
+              "year": 2025,
+              "amount": 250000
+            },
+            {
+              "year": 2026,
+              "amount": 1200000
+            },
+            {
+              "year": 2027,
+              "amount": 1115000
+            },
+            {
+              "year": 2028,
+              "amount": 1005000
+            },
+            {
+              "year": 2029,
+              "amount": 1150000
+            },
+            {
+              "year": 2030,
+              "amount": 11050000
+            },
+            {
+              "year": 2031,
+              "amount": 115000
+            }
+          ],
+          "sum": 1141480.08
+        },
+        "spendUpkeep": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 25600
+            },
+            {
+              "year": 2025,
+              "amount": 241500
+            },
+            {
+              "year": 2026,
+              "amount": 250000
+            },
+            {
+              "year": 2027,
+              "amount": 15500
+            },
+            {
+              "year": 2028,
+              "amount": 165000
+            },
+            {
+              "year": 2029,
+              "amount": 135000
+            },
+            {
+              "year": 2030,
+              "amount": 145000
+            },
+            {
+              "year": 2031,
+              "amount": 110000
+            }
+          ],
+          "sum": 780333.84
+        },
+        "spendArtifical": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 15000
+            },
+            {
+              "year": 2025,
+              "amount": 100000
+            },
+            {
+              "year": 2026,
+              "amount": 120000
+            },
+            {
+              "year": 2027,
+              "amount": 100000
+            },
+            {
+              "year": 2028,
+              "amount": 100000
+            },
+            {
+              "year": 2029,
+              "amount": 100000
+            },
+            {
+              "year": 2030,
+              "amount": 100000
+            },
+            {
+              "year": 2031,
+              "amount": 100000
+            }
+          ],
+          "sum": 1141480.08
+        },
+        "spendOther": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 21000
+            },
+            {
+              "year": 2025,
+              "amount": 100000
+            },
+            {
+              "year": 2026,
+              "amount": 100000
+            },
+            {
+              "year": 2027,
+              "amount": 100000
+            },
+            {
+              "year": 2028,
+              "amount": 100000
+            },
+            {
+              "year": 2029,
+              "amount": 100000
+            },
+            {
+              "year": 2030,
+              "amount": 100000
+            },
+            {
+              "year": 2031,
+              "amount": 100000
+            }
+          ],
+          "sum": 780333.84
+        },
+        "spendNoise": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 260
+            },
+            {
+              "year": 2025,
+              "amount": 230
+            },
+            {
+              "year": 2026,
+              "amount": 210
+            },
+            {
+              "year": 2027,
+              "amount": 200
+            },
+            {
+              "year": 2028,
+              "amount": 200
+            },
+            {
+              "year": 2029,
+              "amount": 200
+            },
+            {
+              "year": 2030,
+              "amount": 200
+            },
+            {
+              "year": 2031,
+              "amount": 200
+            }
+          ],
+          "sum": 3105
+        },
+        "spendPublicize": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 260
+            },
+            {
+              "year": 2025,
+              "amount": 230
+            },
+            {
+              "year": 2026,
+              "amount": 210
+            },
+            {
+              "year": 2027,
+              "amount": 200
+            },
+            {
+              "year": 2028,
+              "amount": 200
+            },
+            {
+              "year": 2029,
+              "amount": 200
+            },
+            {
+              "year": 2030,
+              "amount": 200
+            },
+            {
+              "year": 2031,
+              "amount": 200
+            }
+          ],
+          "sum": 641385.89
+        },
+        "spendSafeguardR9": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 150000
+            },
+            {
+              "year": 2025,
+              "amount": 250000
+            },
+            {
+              "year": 2026,
+              "amount": 1200000
+            },
+            {
+              "year": 2027,
+              "amount": 1115000
+            },
+            {
+              "year": 2028,
+              "amount": 1005000
+            },
+            {
+              "year": 2029,
+              "amount": 1150000
+            },
+            {
+              "year": 2030,
+              "amount": 11050000
+            },
+            {
+              "year": 2031,
+              "amount": 115000
+            }
+          ],
+          "sum": 1141480.08
+        },
+        "spendUpkeepR6": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 25600
+            },
+            {
+              "year": 2025,
+              "amount": 241500
+            },
+            {
+              "year": 2026,
+              "amount": 250000
+            },
+            {
+              "year": 2027,
+              "amount": 15500
+            },
+            {
+              "year": 2028,
+              "amount": 165000
+            },
+            {
+              "year": 2029,
+              "amount": 135000
+            },
+            {
+              "year": 2030,
+              "amount": 145000
+            },
+            {
+              "year": 2031,
+              "amount": 110000
+            }
+          ],
+          "sum": 780333.84
+        },
+        "spendArtificalR9": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 15000
+            },
+            {
+              "year": 2025,
+              "amount": 100000
+            },
+            {
+              "year": 2026,
+              "amount": 120000
+            },
+            {
+              "year": 2027,
+              "amount": 100000
+            },
+            {
+              "year": 2028,
+              "amount": 100000
+            },
+            {
+              "year": 2029,
+              "amount": 100000
+            },
+            {
+              "year": 2030,
+              "amount": 100000
+            },
+            {
+              "year": 2031,
+              "amount": 100000
+            }
+          ],
+          "sum": 1141480.08
+        },
+        "spendOtherR9": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 21000
+            },
+            {
+              "year": 2025,
+              "amount": 100000
+            },
+            {
+              "year": 2026,
+              "amount": 100000
+            },
+            {
+              "year": 2027,
+              "amount": 100000
+            },
+            {
+              "year": 2028,
+              "amount": 100000
+            },
+            {
+              "year": 2029,
+              "amount": 100000
+            },
+            {
+              "year": 2030,
+              "amount": 100000
+            },
+            {
+              "year": 2031,
+              "amount": 100000
+            }
+          ],
+          "sum": 780333.84
+        },
+        "spendNoiseR6": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 260
+            },
+            {
+              "year": 2025,
+              "amount": 230
+            },
+            {
+              "year": 2026,
+              "amount": 210
+            },
+            {
+              "year": 2027,
+              "amount": 200
+            },
+            {
+              "year": 2028,
+              "amount": 200
+            },
+            {
+              "year": 2029,
+              "amount": 200
+            },
+            {
+              "year": 2030,
+              "amount": 200
+            },
+            {
+              "year": 2031,
+              "amount": 200
+            }
+          ],
+          "sum": 3105
+        },
+        "spendPublicizeR6": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 260
+            },
+            {
+              "year": 2025,
+              "amount": 230
+            },
+            {
+              "year": 2026,
+              "amount": 210
+            },
+            {
+              "year": 2027,
+              "amount": 200
+            },
+            {
+              "year": 2028,
+              "amount": 200
+            },
+            {
+              "year": 2029,
+              "amount": 200
+            },
+            {
+              "year": 2030,
+              "amount": 200
+            },
+            {
+              "year": 2031,
+              "amount": 200
+            }
+          ],
+          "sum": 641385.89
+        }
+      },
+      {
+        "subprojectId": "3232456432",
+        "spendSafeguard": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 150000
+            },
+            {
+              "year": 2025,
+              "amount": 250000
+            },
+            {
+              "year": 2026,
+              "amount": 1200000
+            },
+            {
+              "year": 2027,
+              "amount": 1115000
+            },
+            {
+              "year": 2028,
+              "amount": 1005000
+            },
+            {
+              "year": 2029,
+              "amount": 1150000
+            },
+            {
+              "year": 2030,
+              "amount": 11050000
+            },
+            {
+              "year": 2031,
+              "amount": 115000
+            }
+          ],
+          "sum": 1141480.08
+        },
+        "spendUpkeep": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 25600
+            },
+            {
+              "year": 2025,
+              "amount": 241500
+            },
+            {
+              "year": 2026,
+              "amount": 250000
+            },
+            {
+              "year": 2027,
+              "amount": 15500
+            },
+            {
+              "year": 2028,
+              "amount": 165000
+            },
+            {
+              "year": 2029,
+              "amount": 135000
+            },
+            {
+              "year": 2030,
+              "amount": 145000
+            },
+            {
+              "year": 2031,
+              "amount": 110000
+            }
+          ],
+          "sum": 780333.84
+        },
+        "spendArtifical": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 15000
+            },
+            {
+              "year": 2025,
+              "amount": 100000
+            },
+            {
+              "year": 2026,
+              "amount": 120000
+            },
+            {
+              "year": 2027,
+              "amount": 100000
+            },
+            {
+              "year": 2028,
+              "amount": 100000
+            },
+            {
+              "year": 2029,
+              "amount": 100000
+            },
+            {
+              "year": 2030,
+              "amount": 100000
+            },
+            {
+              "year": 2031,
+              "amount": 100000
+            }
+          ],
+          "sum": 1141480.08
+        },
+        "spendOther": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 21000
+            },
+            {
+              "year": 2025,
+              "amount": 100000
+            },
+            {
+              "year": 2026,
+              "amount": 100000
+            },
+            {
+              "year": 2027,
+              "amount": 100000
+            },
+            {
+              "year": 2028,
+              "amount": 100000
+            },
+            {
+              "year": 2029,
+              "amount": 100000
+            },
+            {
+              "year": 2030,
+              "amount": 100000
+            },
+            {
+              "year": 2031,
+              "amount": 100000
+            }
+          ],
+          "sum": 780333.84
+        },
+        "spendNoise": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 260
+            },
+            {
+              "year": 2025,
+              "amount": 230
+            },
+            {
+              "year": 2026,
+              "amount": 210
+            },
+            {
+              "year": 2027,
+              "amount": 200
+            },
+            {
+              "year": 2028,
+              "amount": 200
+            },
+            {
+              "year": 2029,
+              "amount": 200
+            },
+            {
+              "year": 2030,
+              "amount": 200
+            },
+            {
+              "year": 2031,
+              "amount": 200
+            }
+          ],
+          "sum": 3105
+        },
+        "spendPublicize": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 260
+            },
+            {
+              "year": 2025,
+              "amount": 230
+            },
+            {
+              "year": 2026,
+              "amount": 210
+            },
+            {
+              "year": 2027,
+              "amount": 200
+            },
+            {
+              "year": 2028,
+              "amount": 200
+            },
+            {
+              "year": 2029,
+              "amount": 200
+            },
+            {
+              "year": 2030,
+              "amount": 200
+            },
+            {
+              "year": 2031,
+              "amount": 200
+            }
+          ],
+          "sum": 641385.89
+        },
+        "spendSafeguardR9": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 150000
+            },
+            {
+              "year": 2025,
+              "amount": 250000
+            },
+            {
+              "year": 2026,
+              "amount": 1200000
+            },
+            {
+              "year": 2027,
+              "amount": 1115000
+            },
+            {
+              "year": 2028,
+              "amount": 1005000
+            },
+            {
+              "year": 2029,
+              "amount": 1150000
+            },
+            {
+              "year": 2030,
+              "amount": 11050000
+            },
+            {
+              "year": 2031,
+              "amount": 115000
+            }
+          ],
+          "sum": 1141480.08
+        },
+        "spendUpkeepR6": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 25600
+            },
+            {
+              "year": 2025,
+              "amount": 241500
+            },
+            {
+              "year": 2026,
+              "amount": 250000
+            },
+            {
+              "year": 2027,
+              "amount": 15500
+            },
+            {
+              "year": 2028,
+              "amount": 165000
+            },
+            {
+              "year": 2029,
+              "amount": 135000
+            },
+            {
+              "year": 2030,
+              "amount": 145000
+            },
+            {
+              "year": 2031,
+              "amount": 110000
+            }
+          ],
+          "sum": 780333.84
+        },
+        "spendArtificalR9": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 15000
+            },
+            {
+              "year": 2025,
+              "amount": 100000
+            },
+            {
+              "year": 2026,
+              "amount": 120000
+            },
+            {
+              "year": 2027,
+              "amount": 100000
+            },
+            {
+              "year": 2028,
+              "amount": 100000
+            },
+            {
+              "year": 2029,
+              "amount": 100000
+            },
+            {
+              "year": 2030,
+              "amount": 100000
+            },
+            {
+              "year": 2031,
+              "amount": 100000
+            }
+          ],
+          "sum": 1141480.08
+        },
+        "spendOtherR9": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 21000
+            },
+            {
+              "year": 2025,
+              "amount": 100000
+            },
+            {
+              "year": 2026,
+              "amount": 100000
+            },
+            {
+              "year": 2027,
+              "amount": 100000
+            },
+            {
+              "year": 2028,
+              "amount": 100000
+            },
+            {
+              "year": 2029,
+              "amount": 100000
+            },
+            {
+              "year": 2030,
+              "amount": 100000
+            },
+            {
+              "year": 2031,
+              "amount": 100000
+            }
+          ],
+          "sum": 780333.84
+        },
+        "spendNoiseR6": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 260
+            },
+            {
+              "year": 2025,
+              "amount": 230
+            },
+            {
+              "year": 2026,
+              "amount": 210
+            },
+            {
+              "year": 2027,
+              "amount": 200
+            },
+            {
+              "year": 2028,
+              "amount": 200
+            },
+            {
+              "year": 2029,
+              "amount": 200
+            },
+            {
+              "year": 2030,
+              "amount": 200
+            },
+            {
+              "year": 2031,
+              "amount": 200
+            }
+          ],
+          "sum": 3105
+        },
+        "spendPublicizeR6": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 260
+            },
+            {
+              "year": 2025,
+              "amount": 230
+            },
+            {
+              "year": 2026,
+              "amount": 210
+            },
+            {
+              "year": 2027,
+              "amount": 200
+            },
+            {
+              "year": 2028,
+              "amount": 200
+            },
+            {
+              "year": 2029,
+              "amount": 200
+            },
+            {
+              "year": 2030,
+              "amount": 200
+            },
+            {
+              "year": 2031,
+              "amount": 200
+            }
+          ],
+          "sum": 641385.89
+        }
+      },
+      {
+        "subprojectId": "3232456433",
+        "spendSafeguard": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 150000
+            },
+            {
+              "year": 2025,
+              "amount": 250000
+            },
+            {
+              "year": 2026,
+              "amount": 1200000
+            },
+            {
+              "year": 2027,
+              "amount": 1115000
+            },
+            {
+              "year": 2028,
+              "amount": 1005000
+            },
+            {
+              "year": 2029,
+              "amount": 1150000
+            },
+            {
+              "year": 2030,
+              "amount": 11050000
+            },
+            {
+              "year": 2031,
+              "amount": 115000
+            }
+          ],
+          "sum": 1141480.08
+        },
+        "spendUpkeep": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 25600
+            },
+            {
+              "year": 2025,
+              "amount": 241500
+            },
+            {
+              "year": 2026,
+              "amount": 250000
+            },
+            {
+              "year": 2027,
+              "amount": 15500
+            },
+            {
+              "year": 2028,
+              "amount": 165000
+            },
+            {
+              "year": 2029,
+              "amount": 135000
+            },
+            {
+              "year": 2030,
+              "amount": 145000
+            },
+            {
+              "year": 2031,
+              "amount": 110000
+            }
+          ],
+          "sum": 780333.84
+        },
+        "spendArtifical": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 15000
+            },
+            {
+              "year": 2025,
+              "amount": 100000
+            },
+            {
+              "year": 2026,
+              "amount": 120000
+            },
+            {
+              "year": 2027,
+              "amount": 100000
+            },
+            {
+              "year": 2028,
+              "amount": 100000
+            },
+            {
+              "year": 2029,
+              "amount": 100000
+            },
+            {
+              "year": 2030,
+              "amount": 100000
+            },
+            {
+              "year": 2031,
+              "amount": 100000
+            }
+          ],
+          "sum": 1141480.08
+        },
+        "spendOther": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 21000
+            },
+            {
+              "year": 2025,
+              "amount": 100000
+            },
+            {
+              "year": 2026,
+              "amount": 100000
+            },
+            {
+              "year": 2027,
+              "amount": 100000
+            },
+            {
+              "year": 2028,
+              "amount": 100000
+            },
+            {
+              "year": 2029,
+              "amount": 100000
+            },
+            {
+              "year": 2030,
+              "amount": 100000
+            },
+            {
+              "year": 2031,
+              "amount": 100000
+            }
+          ],
+          "sum": 780333.84
+        },
+        "spendNoise": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 260
+            },
+            {
+              "year": 2025,
+              "amount": 230
+            },
+            {
+              "year": 2026,
+              "amount": 210
+            },
+            {
+              "year": 2027,
+              "amount": 200
+            },
+            {
+              "year": 2028,
+              "amount": 200
+            },
+            {
+              "year": 2029,
+              "amount": 200
+            },
+            {
+              "year": 2030,
+              "amount": 200
+            },
+            {
+              "year": 2031,
+              "amount": 200
+            }
+          ],
+          "sum": 3105
+        },
+        "spendPublicize": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 260
+            },
+            {
+              "year": 2025,
+              "amount": 230
+            },
+            {
+              "year": 2026,
+              "amount": 210
+            },
+            {
+              "year": 2027,
+              "amount": 200
+            },
+            {
+              "year": 2028,
+              "amount": 200
+            },
+            {
+              "year": 2029,
+              "amount": 200
+            },
+            {
+              "year": 2030,
+              "amount": 200
+            },
+            {
+              "year": 2031,
+              "amount": 200
+            }
+          ],
+          "sum": 641385.89
+        },
+        "spendSafeguardR9": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 150000
+            },
+            {
+              "year": 2025,
+              "amount": 250000
+            },
+            {
+              "year": 2026,
+              "amount": 1200000
+            },
+            {
+              "year": 2027,
+              "amount": 1115000
+            },
+            {
+              "year": 2028,
+              "amount": 1005000
+            },
+            {
+              "year": 2029,
+              "amount": 1150000
+            },
+            {
+              "year": 2030,
+              "amount": 11050000
+            },
+            {
+              "year": 2031,
+              "amount": 115000
+            }
+          ],
+          "sum": 1141480.08
+        },
+        "spendUpkeepR6": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 25600
+            },
+            {
+              "year": 2025,
+              "amount": 241500
+            },
+            {
+              "year": 2026,
+              "amount": 250000
+            },
+            {
+              "year": 2027,
+              "amount": 15500
+            },
+            {
+              "year": 2028,
+              "amount": 165000
+            },
+            {
+              "year": 2029,
+              "amount": 135000
+            },
+            {
+              "year": 2030,
+              "amount": 145000
+            },
+            {
+              "year": 2031,
+              "amount": 110000
+            }
+          ],
+          "sum": 780333.84
+        },
+        "spendArtificalR9": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 15000
+            },
+            {
+              "year": 2025,
+              "amount": 100000
+            },
+            {
+              "year": 2026,
+              "amount": 120000
+            },
+            {
+              "year": 2027,
+              "amount": 100000
+            },
+            {
+              "year": 2028,
+              "amount": 100000
+            },
+            {
+              "year": 2029,
+              "amount": 100000
+            },
+            {
+              "year": 2030,
+              "amount": 100000
+            },
+            {
+              "year": 2031,
+              "amount": 100000
+            }
+          ],
+          "sum": 1141480.08
+        },
+        "spendOtherR9": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 21000
+            },
+            {
+              "year": 2025,
+              "amount": 100000
+            },
+            {
+              "year": 2026,
+              "amount": 100000
+            },
+            {
+              "year": 2027,
+              "amount": 100000
+            },
+            {
+              "year": 2028,
+              "amount": 100000
+            },
+            {
+              "year": 2029,
+              "amount": 100000
+            },
+            {
+              "year": 2030,
+              "amount": 100000
+            },
+            {
+              "year": 2031,
+              "amount": 100000
+            }
+          ],
+          "sum": 780333.84
+        },
+        "spendNoiseR6": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 260
+            },
+            {
+              "year": 2025,
+              "amount": 230
+            },
+            {
+              "year": 2026,
+              "amount": 210
+            },
+            {
+              "year": 2027,
+              "amount": 200
+            },
+            {
+              "year": 2028,
+              "amount": 200
+            },
+            {
+              "year": 2029,
+              "amount": 200
+            },
+            {
+              "year": 2030,
+              "amount": 200
+            },
+            {
+              "year": 2031,
+              "amount": 200
+            }
+          ],
+          "sum": 3105
+        },
+        "spendPublicizeR6": {
+          "annual": [
+            {
+              "year": 2024,
+              "amount": 260
+            },
+            {
+              "year": 2025,
+              "amount": 230
+            },
+            {
+              "year": 2026,
+              "amount": 210
+            },
+            {
+              "year": 2027,
+              "amount": 200
+            },
+            {
+              "year": 2028,
+              "amount": 200
+            },
+            {
+              "year": 2029,
+              "amount": 200
+            },
+            {
+              "year": 2030,
+              "amount": 200
+            },
+            {
+              "year": 2031,
+              "amount": 200
+            }
+          ],
+          "sum": 641385.89
+        }
+      }
+    ],
+    "annualSumsByTypeAndYear": null
+  }
+}

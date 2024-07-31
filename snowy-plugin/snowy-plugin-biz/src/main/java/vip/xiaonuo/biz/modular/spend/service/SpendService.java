@@ -12,7 +12,7 @@ import vip.xiaonuo.biz.modular.spend.vo.SpendVO;
 */
 public interface SpendService extends IService<Spend> {
 
-    boolean saveSubjectSpendInfo(SpendParam spendParam) throws Exception;
+    SpendVO saveSubjectSpendInfo(SpendParam spendParam) throws Exception;
 
     boolean saveSpendInfo(SpendVO spendVO) throws Exception;
 
