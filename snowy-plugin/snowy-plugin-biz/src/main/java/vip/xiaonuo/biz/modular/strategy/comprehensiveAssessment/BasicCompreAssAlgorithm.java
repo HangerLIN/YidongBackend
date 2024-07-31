@@ -1,35 +1,44 @@
 package vip.xiaonuo.biz.modular.strategy.comprehensiveAssessment;
 
 import org.springframework.stereotype.Component;
+import vip.xiaonuo.biz.modular.income.vo.IncomeVO;
+import vip.xiaonuo.biz.modular.spend.vo.SpendVO;
 import vip.xiaonuo.biz.modular.strategy.dto.*;
 import vip.xiaonuo.biz.modular.strategy.utils.Pair;
-import vip.xiaonuo.biz.modular.strategy.vo.CompreAssResp;
-import vip.xiaonuo.biz.modular.strategy.vo.InvestResp;
+import vip.xiaonuo.biz.modular.strategy.vo.CompreAssVO;
+import vip.xiaonuo.biz.modular.strategy.vo.InvestVO;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Component(value = "BasicCompreAssAlgorithm")
 public class BasicCompreAssAlgorithm implements CompreAssAlgorithm{
-    public CompreAssResp compreAssResult(BasicInfoForCompreAssReq basicReq, InvestResp investResp, IncomeForCompreAssReq incomeReq,
-                                  SpendForCompreAssReq spendReq, StreamForCompreAssReq streamReq){
+    public CompreAssVO compreAssResult(BasicInfoForCompreAssReq basicVO, InvestVO investVO, IncomeVO incomeVO,
+                                       SpendVO spendVO, StreamForCompreAssReq streamVO){
 
-        CompreAssResp compreAssResp = new CompreAssResp();
+        CompreAssVO compreAssResp = new CompreAssVO();
         List<Pair<Integer, BigDecimal>> annualInvest = new ArrayList<>();   //每年详细投入
         List<Pair<Integer, BigDecimal>> annualProduce = new ArrayList<>();  //每年详细产出
         List<Pair<Integer, BigDecimal>> annualProfit = new ArrayList<>();   //每年详细利润
         List<Pair<Integer, BigDecimal>> annualProfitNet = new ArrayList<>(); //每年详细净利润
         List<BigDecimal> spendEveryYear = new ArrayList<>();
 
-        List<InvestResp.ProjectUnincludeTotal> projectUnincludeTotalPerYear = investResp.getProjectUnincludeTotal(); //每年各个子产品不含税投资金额总和
-        List<Pair<Integer, BigDecimal>> spendSafeguard = spendReq.getSpendSafeguard();  //路面后期维护费用
-        List<Pair<Integer, BigDecimal>> spendUpkeep = spendReq.getSpendUpkeep();     //路面保养费用
-        List<Pair<Integer, BigDecimal>> spendArtificial = spendReq.getSpendArtificial(); //人工服务费用
-        List<Pair<Integer, BigDecimal>> spendOther = spendReq.getSpendOther();      //其他费用
-        List<Pair<Integer, BigDecimal>> spendNoise = spendReq.getSpendNoise();      //噪音污染补偿
-        List<Pair<Integer, BigDecimal>> spendPublicize = spendReq.getSpendPublicize();  //宣传推广费用
+        List<InvestVO.ProjectUnincludeTotal> projectUnincludeTotalPerYear = investVO.getProjectUnincludeTotal(); //每年各个子产品不含税投资金额总和
+
+        IncomeVO.UnincludeSum unincludeSum = incomeVO.getUnincludeSum();
+        List<IncomeVO.Annual> incomeUnincludeSumAnnual = unincludeSum.getAnnual();
+
+        Map<String, Map<Integer, BigDecimal>> sumsByTypeAndYear = spendVO.getAnnualSumsByTypeAndYear();
+        Map<Integer, BigDecimal> spendSafeguard = sumsByTypeAndYear.get("SpendSafeguard");  //路面后期维护费用
+        Map<Integer, BigDecimal> spendUpkeep = sumsByTypeAndYear.get("SpendUpkeep");     //路面保养费用
+        Map<Integer, BigDecimal> spendArtificial = sumsByTypeAndYear.get("SpendArtifical"); //人工服务费用
+        Map<Integer, BigDecimal> spendOther = sumsByTypeAndYear.get("SpendOther");      //其他费用
+        Map<Integer, BigDecimal> spendNoise = sumsByTypeAndYear.get("SpendNoise");      //噪音污染补偿
+        Map<Integer, BigDecimal> spendPublicize = sumsByTypeAndYear.get("SpendPublicized");  //宣传推广费用
+
 
         BigDecimal projectUnincludeTotal = BigDecimal.ZERO; //2. 投入明细的不含税投资额合计
         BigDecimal spendSafeguardTotal = BigDecimal.ZERO;  //4. 开支明细的路面后期维护费用合计
@@ -44,9 +53,10 @@ public class BasicCompreAssAlgorithm implements CompreAssAlgorithm{
         BigDecimal annualProfitNetTotal = BigDecimal.ZERO;
 
         int construct_cycle = projectUnincludeTotalPerYear.size(); //1.基础信息页的建设周期
+        int construct_start = basicVO.getConstructStart(); //1.基础信息页的项目开始年份
         int evaluate_cycle = spendSafeguard.size(); //1.基础信息页的评估周期
-        int single_ae_cycle = basicReq.getSingleAeCycle(); //1.基础信息页的单批资产评估周期
-        BigDecimal approvedTaxRate = streamReq.getApprovedTaxRate(); //6. 流水测试的审定税率
+        int single_ae_cycle = basicVO.getSingleAeCycle(); //1.基础信息页的单批资产评估周期
+        BigDecimal approvedTaxRate = streamVO.getApprovedTaxRate(); //6. 流水测试的审定税率
         BigDecimal tenK = new BigDecimal(10000);
         BigDecimal single_cycle = new BigDecimal(single_ae_cycle);
 
@@ -57,16 +67,17 @@ public class BasicCompreAssAlgorithm implements CompreAssAlgorithm{
         System.out.println(projectUnincludeTotal);
 
         for(int i = 0; i < evaluate_cycle; i++){
-            spendSafeguardTotal.add(spendSafeguard.get(i).getSecond());
-            spendUpkeepTotal.add(spendUpkeep.get(i).getSecond());
-            spendArtificialTotal.add(spendArtificial.get(i).getSecond());
-            spendOtherTotal.add(spendOther.get(i).getSecond());
-            spendNoiseTotal.add(spendNoise.get(i).getSecond());
-            spendPublicizeTotal.add(spendPublicize.get(i).getSecond());
+            int year = construct_start + i;
+            spendSafeguardTotal.add(spendSafeguard.get(i));
+            spendUpkeepTotal.add(spendUpkeep.get(i));
+            spendArtificialTotal.add(spendArtificial.get(i));
+            spendOtherTotal.add(spendOther.get(i));
+            spendNoiseTotal.add(spendNoise.get(i));
+            spendPublicizeTotal.add(spendPublicize.get(i));
 
-            spendEveryYear.add(spendSafeguard.get(i).getSecond().add(spendUpkeep.get(i).getSecond())
-                          .add(spendArtificial.get(i).getSecond()).add(spendOther.get(i).getSecond())
-                          .add(spendNoise.get(i).getSecond()).add(spendPublicize.get(i).getSecond()));
+            spendEveryYear.add(spendSafeguard.get(i).add(spendUpkeep.get(i))
+                          .add(spendArtificial.get(i)).add(spendOther.get(i))
+                          .add(spendNoise.get(i)).add(spendPublicize.get(i)));
         }
 
         BigDecimal tmp = BigDecimal.ZERO;
@@ -76,7 +87,7 @@ public class BasicCompreAssAlgorithm implements CompreAssAlgorithm{
                 tmp = tmp.subtract(projectUnincludeTotalPerYear.get(i - single_ae_cycle).getAmount());
             }
             BigDecimal annualInvestEveryYear = tmp.divide(single_cycle,2, BigDecimal.ROUND_HALF_UP).add(spendEveryYear.get(i)).divide(tenK,2, BigDecimal.ROUND_HALF_UP);
-            BigDecimal annualProduceEveryYear = incomeReq.getUnincludeTotal().get(i).getSecond().divide(tenK,2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal annualProduceEveryYear = incomeUnincludeSumAnnual.get(i).getAmount().divide(tenK,2, BigDecimal.ROUND_HALF_UP);
             BigDecimal annualProfitEveryYear = annualProduceEveryYear.subtract(annualInvestEveryYear);
             BigDecimal annualProfitNetEveryYear = BigDecimal.ONE.subtract(approvedTaxRate).multiply(annualProfitEveryYear);
 
@@ -102,7 +113,7 @@ public class BasicCompreAssAlgorithm implements CompreAssAlgorithm{
         compreAssResp.setAnnualAvgProfitRate(annualProfitNetTotal.divide(annualProduceTotal,2, BigDecimal.ROUND_HALF_UP));
         compreAssResp.setRoi(annualProfitNetTotal.divide(approvalCost, 2, BigDecimal.ROUND_HALF_UP));
         compreAssResp.setPaybackPeriod(BigDecimal.ONE.setScale(2, RoundingMode.HALF_UP));
-        compreAssResp.setCumulativeNPV(streamReq.getAnnualNetCashFlowPv().setScale(2, RoundingMode.HALF_UP));
+        compreAssResp.setCumulativeNPV(streamVO.getAnnualNetCashFlowPv().setScale(2, RoundingMode.HALF_UP));
 
 
         return compreAssResp;

@@ -1,9 +1,11 @@
 package vip.xiaonuo.biz.modular.income.controller;
 
 
+import cn.hutool.json.JSONUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +26,10 @@ public class IncomeController {
     @Resource
     private IncomeService incomeService;
 
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
+
 
     @Operation(summary = "保存并返回子项目使用情况")
     @PostMapping("/biz/income/saveAndReturn")
@@ -35,6 +41,9 @@ public class IncomeController {
 
         // 2. 响应返回
         IncomeVO incomeVO = incomeService.returnSubProjetIncomeInfo(incomeList);
+
+        stringRedisTemplate.opsForValue().set("projectID:income", JSONUtil.toJsonStr(incomeVO));
+
 
         return CommonResult.data(incomeVO);
     }

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import vip.xiaonuo.biz.modular.strategy.dto.InvestReq;
-import vip.xiaonuo.biz.modular.strategy.vo.CompreAssResp;
-import vip.xiaonuo.biz.modular.strategy.vo.InvestResp;
+import vip.xiaonuo.biz.modular.strategy.vo.CompreAssVO;
+import vip.xiaonuo.biz.modular.strategy.vo.InvestVO;
 import vip.xiaonuo.biz.modular.subjectinfo.dto.SubProjcetParam;
 import vip.xiaonuo.biz.modular.subjectinfo.service.SubprojectService;
 import vip.xiaonuo.common.pojo.CommonResult;
@@ -82,9 +82,9 @@ public class SubProjectInfoController {
 
     @Operation(summary = "投入明细表的计算")
     @PostMapping("/biz/subjectinfoinfo/investAmount")
-    public CommonResult<InvestResp> CalculateInvestAmout(@RequestBody InvestReq req)  {
+    public CommonResult<InvestVO> CalculateInvestAmout(@RequestBody InvestReq req)  {
         System.out.println(req.getType());
-        InvestResp resp = subprojectService.calculateInvestAmout(req);
+        InvestVO resp = subprojectService.calculateInvestAmout(req);
 
         return CommonResult.data(resp);
 
@@ -92,8 +92,8 @@ public class SubProjectInfoController {
 
     @Operation(summary = "综合评估表的计算")
     @PostMapping("/biz/subjectinfoinfo/compreAssAmount")
-    public CommonResult<CompreAssResp> CalculateInvestAmout()  {
-        CompreAssResp resp = subprojectService.calculateCompreAssessment();
+    public CommonResult<CompreAssVO> CalculateInvestAmout()  {
+        CompreAssVO resp = subprojectService.calculateCompreAssessment();
 
         return CommonResult.data(resp);
 

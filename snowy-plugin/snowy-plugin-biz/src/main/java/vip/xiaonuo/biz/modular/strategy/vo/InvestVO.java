@@ -8,7 +8,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
-public class InvestResp {
+public class InvestVO {
 
     private Long projectId;
     private List<SubProjectInvest> subProjectInvest;

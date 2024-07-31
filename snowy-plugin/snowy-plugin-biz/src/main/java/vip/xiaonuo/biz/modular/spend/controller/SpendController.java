@@ -6,6 +6,7 @@ import cn.hutool.json.JSONUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,11 +25,15 @@ public class SpendController {
     @Resource
     private SpendService service;
 
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
     @Operation(summary = "保存并返回子项目开支情况")
     @PostMapping("/biz/spend/save")
     public CommonResult<SpendVO> saveSpendInfo(@RequestBody SpendParam spendParam) throws Exception {
         //1.保存子项目花费信息到数据库
         SpendVO spendVO = service.saveSubjectSpendInfo(spendParam);
+        stringRedisTemplate.opsForValue().set("projectID:spend", JSONUtil.toJsonStr(spendVO));
         return CommonResult.data(spendVO);
     }
 

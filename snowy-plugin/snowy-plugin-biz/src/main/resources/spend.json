@@ -2,8 +2,281 @@
   "subprojectSpendInfoList":[
     {
       "subprojectId": "3232456431",
-      "spendSafeguard": [],
-      "spendUpkeep": [],
+      "spendSafeguard": [
+        {
+          "year": 2024,
+          "amount": 383454.96
+        },
+        {
+          "year": 2025,
+          "amount": 1135949.28
+        },
+        {
+          "year": 2026,
+          "amount": 1085494.68
+        },
+        {
+          "year": 2027,
+          "amount": 1013416.68
+        },
+        {
+          "year": 2028,
+          "amount": 941338.68
+        },
+        {
+          "year": 2029,
+          "amount": 890884.08
+        },
+        {
+          "year": 2030,
+          "amount": 818806.08
+        },
+        {
+          "year": 2031,
+          "amount": 1866822.02
+        }
+      ],
+      "spendUpkeep": [
+        {
+          "year": 2024,
+          "amount": 254881.20
+        },
+        {
+          "year": 2025,
+          "amount": 755061.60
+        },
+        {
+          "year": 2026,
+          "amount": 721524.60
+        },
+        {
+          "year": 2027,
+          "amount": 673614.60
+        },
+        {
+          "year": 2028,
+          "amount": 625704.60
+        },
+        {
+          "year": 2029,
+          "amount": 592167.60
+        },
+        {
+          "year": 2030,
+          "amount": 544257.60
+        },
+        {
+          "year": 2031,
+          "amount": 124086.90
+        }
+      ],
+      "spendArtifical": [
+        {
+          "year": 2024,
+          "amount": 67798.08
+        },
+        {
+          "year": 2025,
+          "amount": 200845.44
+        },
+        {
+          "year": 2026,
+          "amount": 191924.64
+        },
+        {
+          "year": 2027,
+          "amount": 179180.64
+        },
+        {
+          "year": 2028,
+          "amount": 166436.64
+        },
+        {
+          "year": 2029,
+          "amount": 157515.84
+        },
+        {
+          "year": 2030,
+          "amount": 144771.84
+        },
+        {
+          "year": 2031,
+          "amount": 33006.96
+        }
+      ],
+      "spendOther": [
+        {
+          "year": 2024,
+          "amount": 46347.84
+        },
+        {
+          "year": 2025,
+          "amount": 137301.12
+        },
+        {
+          "year": 2026,
+          "amount": 131202.72
+        },
+        {
+          "year": 2027,
+          "amount": 122490.72
+        },
+        {
+          "year": 2028,
+          "amount": 113778.72
+        },
+        {
+          "year": 2029,
+          "amount": 107680.32
+        },
+        {
+          "year": 2030,
+          "amount": 98968.32
+        },
+        {
+          "year": 2031,
+          "amount": 22564.08
+        }
+      ],
+      "spendNoise": [
+        {
+          "year": 2024,
+          "amount": 400.00
+        },
+        {
+          "year": 2025,
+          "amount": 395.00
+        },
+        {
+          "year": 2026,
+          "amount": 385.00
+        },
+        {
+          "year": 2027,
+          "amount": 385.00
+        },
+        {
+          "year": 2028,
+          "amount": 385.00
+        },
+        {
+          "year": 2029,
+          "amount": 200.00
+        },
+        {
+          "year": 2030,
+          "amount": 385.00
+        },
+        {
+          "year": 2031,
+          "amount": 385.00
+        }
+      ],
+      "spendPublish": [
+        {
+          "year": 2024,
+          "amount": 24344.32
+        },
+        {
+          "year": 2025,
+          "amount": 107276.31
+        },
+        {
+          "year": 2026,
+          "amount": 100596.50
+        },
+        {
+          "year": 2027,
+          "amount": 93989.90
+        },
+        {
+          "year": 2028,
+          "amount": 87383.30
+        },
+        {
+          "year": 2029,
+          "amount": 82098.02
+        },
+        {
+          "year": 2030,
+          "amount": 76812.74
+        },
+        {
+          "year": 2031,
+          "amount": 68884.82
+        }
+      ]
+    },
+    {
+      "subprojectId": "3232456432",
+      "spendSafeguard": [
+        {
+          "year": 2024,
+          "amount": 169598.00
+        },
+        {
+          "year": 2025,
+          "amount": 665346.00
+        },
+        {
+          "year": 2026,
+          "amount": 947139.60
+        },
+        {
+          "year": 2027,
+          "amount": 1060639.80
+        },
+        {
+          "year": 2028,
+          "amount": 1037157.00
+        },
+        {
+          "year": 2029,
+          "amount": 1013674.20
+        },
+        {
+          "year": 2030,
+          "amount": 990191.40
+        },
+        {
+          "year": 2031,
+          "amount": 241677.15
+        }
+      ],
+      "spendUpkeep": [
+        {
+          "year": 2024,
+          "amount": 75804.00
+        },
+        {
+          "year": 2025,
+          "amount": 301308.00
+        },
+        {
+          "year": 2026,
+          "amount": 428920.80
+        },
+        {
+          "year": 2027,
+          "amount":480320.40
+        },
+        {
+          "year": 2028,
+          "amount": 469689.00
+        },
+        {
+          "year": 2029,
+          "amount": 459051.60
+        },
+        {
+          "year": 2030,
+          "amount": 448417.20
+        },
+        {
+          "year": 2031,
+          "amount": 109445.70
+        }
+      ],
       "spendArtifical": [],
       "spendOther": [],
       "spendNoise": [
@@ -39,46 +312,39 @@
           "year": 2031,
           "amount": 200.00
         }
-      ]
-    },
-    {
-      "subprojectId": "3232456432",
-      "spendSafeguard": [],
-      "spendUpkeep": [],
-      "spendArtifical": [],
-      "spendOther": [],
-      "spendNoise": [
+      ],
+      "spendPublish": [
         {
           "year": 2024,
-          "amount": 260.00
+          "amount": 24786.67
         },
         {
           "year": 2025,
-          "amount": 230.00
+          "amount": 107536.00
         },
         {
           "year": 2026,
-          "amount": 210.00
+          "amount": 138938.80
         },
         {
           "year": 2027,
-          "amount": 200.00
+          "amount": 163363.20
         },
         {
           "year": 2028,
-          "amount": 200.00
+          "amount": 159759.60
         },
         {
           "year": 2029,
-          "amount": 200.00
+          "amount": 156156.00
         },
         {
           "year": 2030,
-          "amount": 200.00
+          "amount": 152552.40
         },
         {
           "year": 2031,
-          "amount": 200.00
+          "amount": 148948.80
         }
       ]
     },
@@ -253,6 +519,40 @@
         {
           "year": 2031,
           "amount": 200.00
+        }
+      ],
+      "spendPublish": [
+        {
+          "year": 2024,
+          "amount": 12126.40
+        },
+        {
+          "year": 2025,
+          "amount": 65551.20
+        },
+        {
+          "year": 2026,
+          "amount": 95409.60
+        },
+        {
+          "year": 2027,
+          "amount": 110510.40
+        },
+        {
+          "year": 2028,
+          "amount": 108451.20
+        },
+        {
+          "year": 2029,
+          "amount": 106392.00
+        },
+        {
+          "year": 2030,
+          "amount": 104332.80
+        },
+        {
+          "year": 2031,
+          "amount": 102273.60
         }
       ]
     }

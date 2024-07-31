@@ -2,9 +2,7 @@ package vip.xiaonuo.biz.modular.strategy.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.BeansException;
-import vip.xiaonuo.biz.modular.strategy.vo.InvestResp;
-import vip.xiaonuo.biz.modular.subjectinfo.dto.SubProjcetParam;
+import vip.xiaonuo.biz.modular.strategy.vo.InvestVO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,7 +16,7 @@ public class InvestReq {
       type = TaxRate  计算13%税率投资额（不含税），6%，9%，13%税率投资额（含税），含税投资额合计
      */
     private String type;
-    private List<InvestResp.ProjectUnincludeTotal> projectUnincludeTotal;
+    private List<InvestVO.ProjectUnincludeTotal> projectUnincludeTotal;
     private List<ProjectUnincludeTaxRate6> projectUnincludeTaxRate6;
     private List<ProjectUnincludeTaxRate9> projectUnincludeTaxRate9;
     private List<SubProjectScheduleAndCost> subProjectScheduleAndCosts;
