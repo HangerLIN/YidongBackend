@@ -2,6 +2,8 @@ import { baseRequest } from '@/utils/request'
 
 const request = (url, ...arg) => baseRequest(`/biz/basicinfo/` + url, ...arg)
 const request1 = (url, ...arg) => baseRequest(`/biz/subjectinfoinfo/` + url, ...arg)
+const saveAndReturn = (url, ...arg) => baseRequest(`/biz/income/` + url, ...arg)
+
 /**
  * 项目基础信息Api接口管理器
  *
@@ -30,4 +32,13 @@ export default {
 	addSubProject(data, edit = false) {
 		return request1(edit ? 'edit' : 'add', data)
 	},
+
+	//子项目计算（不含）saveAndReturn
+	investAmountSubject(data) {
+		return request1('investAmount',data)
+	},
+	saveAndReturn(data) {
+		return saveAndReturn('saveAndReturn',data)
+	},
 }
+

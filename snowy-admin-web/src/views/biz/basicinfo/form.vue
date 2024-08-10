@@ -60,7 +60,7 @@
 		</template>
 	</xn-form-container>
 	<xn-form-container
-		:title="formData.id ? '编辑项目基础信息' : '增加项目基础信息'"
+		title="投资明细"
 		:width="700"
 		v-model:open="open1"
 		:destroy-on-close="true"
@@ -112,7 +112,33 @@
 <!--			</a-form-item>-->
 <!--		</a-form>-->
 <!--		<el-input v-model="input" placeholder="请输入内容"></el-input>-->
-		<touzi :cycle="cyc"></touzi>
+		<div>
+			<touzi :cycle="cyc" @totalevent="handleDataUpdate" @ScheduleAndCosts="handleDataUpdate1"></touzi>
+		</div>
+		<div>
+			<touzi-money :cycle="cyc" style="margin-top: 30px"></touzi-money>
+		</div>
+		<template #footer>
+			<a-button style="margin-right: 8px" @click="onClose">关闭</a-button>
+			<a-button type="primary" @click="onSubmit" :loading="submitLoading">保存</a-button>
+			<a-button type="primary" @click="nextshoru" :loading="submitLoading">下一步</a-button>
+		</template>
+	</xn-form-container>
+	<xn-form-container
+		title="收入明细"
+		:width="700"
+		v-model:open="open2"
+		:destroy-on-close="true"
+		@close="onClose"
+	>
+		<div>
+			<shouru :shouru_cycle="shouru_cycle" @totalevent="handleDataUpdate" @ScheduleAndCosts="handleDataUpdate1"></shouru>
+		</div>
+		<div>
+			<touzi-money :cycle="cyc" style="margin-top: 30px"></touzi-money>
+		</div>
+
+
 		<template #footer>
 			<a-button style="margin-right: 8px" @click="onClose">关闭</a-button>
 			<a-button type="primary" @click="onSubmit" :loading="submitLoading">保存</a-button>
@@ -126,10 +152,30 @@
 	import { required } from '@/utils/formRules'
 	import projectBasicInfoApi from '@/api/biz/projectBasicInfoApi'
 	import Touzi from "@/views/biz/basicinfo/touzi.vue";
+	import TouziMoney from "@/views/biz/basicinfo/touziMoney.vue";
+	import Shouru from "@/views/biz/basicinfo/shouru.vue";
+
+	const totaluniclude = ref()
+	const scheduleAndCosts = ref()
+	const handleDataUpdate=(data)=>{
+		console.log(11111111111111)
+		totaluniclude.value = data
+		console.log(totaluniclude); // 输出：Hello from Child
+	}
+	const handleDataUpdate1=(data)=>{
+		console.log(22222222222222)
+		scheduleAndCosts.value=data
+		console.log(scheduleAndCosts); // 输出：Hello from Child
+	}
+
+	provide('sharedData', totaluniclude);
+	provide('sharedData1', scheduleAndCosts);
 	// 抽屉状态
-	let cyc=ref()
+	let cyc=ref(0)
+	let shouru_cycle=ref(0)
 	const open = ref(false)
 	const open1 = ref(false)
+	const open2 = ref(false)
 	const emit = defineEmits({ successful: null })
 	const formRef = ref()
 	const TouziformRef = ref()
@@ -195,6 +241,13 @@
 			formData.value = Object.assign({}, recordData)
 		}
 	}
+	const onOpen2 = (record) => {
+		open2.value = true
+		if (record) {
+			let recordData = cloneDeep(record)
+			formData.value = Object.assign({}, recordData)
+		}
+	}
 	// 关闭抽屉
 	const onClose = () => {
 		// formRef.value.resetFields()
@@ -228,46 +281,34 @@
 	// 抛出函数
 	defineExpose({
 		onOpen,
-		onOpen1
+		onOpen1,
+		onOpen2
+
 	})
 
 
 
 	//投资明细
 	const nextTouzi = () => {
+		console.log(formData.value.buildPeriod)
+		cyc.value=formData.value.buildPeriod
+		shouru_cycle.value=formData.value.evaluationPeriod
+		console.log('next'+cyc.value)
 		onClose()
 		console.log('next')
 		onOpen1()
 		console.log('next')
-		// TouziformRef.value
-		// 	.validate()
-		// 	.then(() => {
-		// 		/*下一步是否存储信息*/
-		// 		// submitLoading.value = true
-		// 		// const formDataParam = cloneDeep(formData.value)
-		// 		// projectBasicInfoApi
-		// 		// 	.projectBasicInfoSubmitForm(formDataParam, formDataParam.id)
-		// 		// 	.then(() => {
-		// 		// 		onClose()
-		// 		// 		emit('successful')
-		// 		// 	})
-		// 		// 	.finally(() => {
-		// 		// 		submitLoading.value = false
-		// 		// 	})
-		// 		onClose()
-		// 		console.log('next')
-		// 		onOpen1()
-		// 		console.log('next')
-		// 	})
-		// 	.catch(() => {})
 	}
 	//nextMingxi
-	const nextMingxi = () => {
+	const nextshoru = () => {
 		// onClose()
 		// console.log('next')
 		// onOpen1()
-		cyc.value='5'
 		console.log('next'+cyc.value)
+		onClose()
+		console.log('next')
+		onOpen2()
+		console.log('next')
 		// console.log(questionChoiceVOlist.value)
 		// TouziformRef.value
 		// 	.validate()
