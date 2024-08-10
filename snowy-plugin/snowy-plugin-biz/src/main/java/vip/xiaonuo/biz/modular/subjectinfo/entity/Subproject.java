@@ -53,6 +53,7 @@ public class Subproject implements Serializable {
     /**
      * 收益税率
      */
+    @TableField("TaxRate")
     private BigDecimal taxRate;
 
     @TableField(exist = false)
