@@ -108,9 +108,9 @@
 				</template>
 			</el-table-column>
 		</el-table>
-		<el-button @click="con">测试</el-button>
-		<el-button @click="con1">测试1</el-button>
-		<el-button @click="con2">测试2</el-button>
+		<el-button @click="con">不含税合计</el-button>
+		<el-button @click="con1">含税计算</el-button>
+<!--		<el-button @click="con2">测试2</el-button>-->
 
 
 
@@ -162,7 +162,7 @@
 		<!-- 输入框 -->
 		<div v-show="showEditInput1" id="editInput">
 			<el-input
-				ref="iptRef"
+				ref="iptRef1"
 				placeholder="请输入内容"
 				v-model="curTarget.val"
 				clearable
@@ -203,19 +203,20 @@
 import { ref, reactive, computed, toRefs, nextTick } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { DeleteFilled, CaretBottom, CaretTop, EditPen } from '@element-plus/icons-vue';
+import projectBasicInfoApi from "@/api/biz/projectBasicInfoApi";
 
 
 //
-
-
+const sharedData = inject('sharedData');
+const sharedData1 = inject('sharedData1');
 //
 
 
 const props = defineProps({
 	cycle: {
-		type: String,
-		default: "",
-	},
+		type: Number,
+		default: 0,
+	}
 })
 
 // Tips： locateMenuOrEditInput 可调整编辑框位置
@@ -264,54 +265,20 @@ const state = reactive({
 	questionChoiceVOlist: [
 		{
 			类型: '不含税投资额合计',
-			// 产品名称: '双向双车道',
-			// 规格型号: '有绿植',
-			// itemScore: 1,
-			// isClickCheckBtn: true,
-			// 单位: '条',
-			// riskIds: '46',
-			// id: 1,
 		},
 		{
 			类型: '6%税率投资额',
-			// 产品名称: '双向双车道',
-			// 规格型号: '有绿植',
-			// 单位: '条',
-			// choiceCode: 'B',
-			// choiceContent: '否',
-			// riskIds: '46',
-			// itemScore: 4,
-			// isClickCheckBtn: true,
-			// id: 2,
 		},
 		{
 			类型: '9%税率投资额',
-			// 产品名称: '双向双车道',
-			// 规格型号: '有绿植',
-			// 单位: '条',
-			// choiceCode: 'C',
-			// choiceContent: '否',
-			// riskIds: '',
-			// itemScore: 4,
-			// isClickCheckBtn: true,
-			// id: 3,
 		},
 		{
 			类型: '13%税率投资额',
-			// 产品名称: '双向双车道',
-			// 规格型号: '有绿植',
-			// 单位: '条',
-			// choiceCode: 'C',
-			// choiceContent: '否',
-			// riskIds: '',
-			// itemScore: 4,
-			// isClickCheckBtn: true,
-			// id: 3,
 		},
 	] as Data[],
 	questionChoiceVOlist1: [
 		{
-			类型: '不含税投资额合计',
+			类型: '含税投资额合计',
 			// 产品名称: '双向双车道',
 			// 规格型号: '有绿植',
 			// itemScore: 1,
@@ -370,7 +337,7 @@ const state = reactive({
 	countCol: 0, // 新建列计数
 });
 const iptRef = ref();
-
+const iptRef1 = ref();
 const { columnList, questionChoiceVOlist1,questionChoiceVOlist, showMenu, showEditInput1, showEditInput, curTarget } = toRefs(state);
 
 // 当前列
@@ -455,11 +422,11 @@ const cellClick1 = (
 	// 如果是风险点或选项分值，不执行后续代码
 	if (isPop(column)) return;
 
-	iptRef.value.focus();
+	iptRef1.value.focus();
 	if (column.index == null) return;
 	locateMenuOrEditInput('editInput', -300, event); // 左键输入框定位 Y
 	showEditInput1.value = true;
-	iptRef.value.focus();
+	iptRef1.value.focus();
 
 	// 当前目标
 	curTarget.value = {
@@ -670,72 +637,33 @@ const locateMenuOrEditInput = (eleId: string, distance: number, event: MouseEven
 const addYearColumns = () => {
 
 	showMenu.value = false; // 关闭菜单（如果需要）
-
-
-
-	for (let i = 0; i < 5; i++) {
-
+	for (let i = 0; i < props.cycle; i++) {
 		// 计算年份（从当前年份开始，每次循环递增5年）
-
 		const year = 2024 + i ;
-
-
-
 		// 创建新列的配置对象（这里我们使用年份作为prop）
-
 		const colStr = {
-
 			prop: `${year}`, // 使用年份作为prop的一部分，以便唯一标识
-
 			label: `${year}年` // 列的显示标签
-
 		};
-
-
-
 		// 向列列表中添加新列
-
 		columnList.value.splice(columnList.value.length, 0, colStr);
-
-
-
 		// 初始化新列的数据（假设questionChoiceVOlist的每个对象都需要这个新属性）
-
 		questionChoiceVOlist.value.forEach(p => {
-
 			// 如果p对象之前没有这个属性，则添加它并设置为空字符串或null等
-
 			// 但在这个例子中，我们直接设置年份（或空字符串，如果你想要）
-
 			// 注意：这里可能需要根据实际情况调整，因为通常你不会在数据行中存储年份列的值
-
 			// 除非这是一个特殊的用例，比如需要记录每行数据的“创建年份”或类似的东西
-
 			// 但在这个例子中，我们只是为了演示如何添加列
-
 			p[colStr.prop] = ''; // 或者你可以设置为year，但这可能不是你想要的行为
-
 		});
-
 		questionChoiceVOlist1.value.forEach(p => {
-
 			p[colStr.prop] = ''; // 或者你可以设置为year，但这可能不是你想要的行为
-
 		});
-
 		// 注意：在实际应用中，你可能不需要在数据行的每个对象中设置这个新属性
-
 		// 除非你有特定的理由要这样做（比如用于筛选、显示等）
-
 	}
-
-
-
-	// 如果你只是想递增countCol来追踪列的数量（尽管在这个例子中我们没有直接使用它）
-
-	// state.countCol += cycles;
-
 };
+onMounted(addYearColumns);
 let resultArray = [];
 let newArray = Object.keys(JSON.parse(JSON.stringify(questionChoiceVOlist.value))[0]).map(key => ({
 
@@ -746,12 +674,32 @@ let newArray = Object.keys(JSON.parse(JSON.stringify(questionChoiceVOlist.value)
 }));
 //测试
 const con = () =>{
-	addYearColumns()
+	// addYearColumns()
 	console.log(questionChoiceVOlist.value)
 	console.log(props.cycle)
+	console.log(sharedData.value)
+	const total = JSON.parse(JSON.stringify(sharedData.value))
+	console.log(total)
+	// state.questionChoiceVOlist[0] = JSON.parse(JSON.stringify(sharedData.value))
+	const result = total.reduce((acc, curr) => {
+		// 将年份字符串转换为数字
+		const year = parseInt(curr.year, 10);
+		// 由于 amount 也是字符串，同样转换为数字
+		const amount = parseInt(curr.amount, 10);
+		// 将当前年份和金额添加到累加器对象中
+		acc[year] = amount;
+		// 返回累加器对象以便在下一次迭代中使用
+		return acc;
+	}, {});
+	console.log(result)
+	// state.questionChoiceVOlist[0] = result
+	Object.assign(state.questionChoiceVOlist[0], result);
 }
 const con1 = () =>{
 	console.log(11111)
+	console.log(JSON.parse(JSON.stringify(questionChoiceVOlist.value)))
+	console.log(JSON.parse(JSON.stringify(sharedData.value))[0])
+
 	console.log(JSON.parse(JSON.stringify(questionChoiceVOlist.value)))
 	let resultArray = [];
 	questionChoiceVOlist.value.forEach(obj => {
@@ -776,12 +724,115 @@ const con1 = () =>{
 			}
 		});
 		// 将basicInformation数组添加到resultArray中
-		resultArray.push({ Basic_information: basicInformation,SubProject_schedule: yearinfo });
+		resultArray.push({ basicInformation: basicInformation,projectUnincludeTotal: yearinfo });
 	});
 	console.log(resultArray)
 	console.log(questionChoiceVOlist.value)
 	console.log(newArray)
 	console.log(props.cycle)
+	let shandcost= JSON.parse(JSON.stringify(sharedData1.value))
+	console.log('aaaaaaaaaaa')
+	console.log(shandcost)
+	let investAmount = {
+		type: "TaxRate",
+		subProjectScheduleAndCosts: shandcost.subProjectScheduleAndCosts,
+		projectUnincludeTotal: resultArray[0].projectUnincludeTotal,
+		projectUnincludeTaxRate6: resultArray[1].projectUnincludeTotal,
+		projectUnincludeTaxRate9: resultArray[2].projectUnincludeTotal
+	}
+	console.log(investAmount)
+	projectBasicInfoApi
+		.investAmountSubject(investAmount)
+		.then((res) => {
+			console.log(res)
+			alert("success")
+			//含税投资合计
+			const result = res.projectIncludeTotal.reduce((acc, curr) => {
+				// 将年份字符串转换为数字
+				const year = parseInt(curr.year, 10);
+				// 由于 amount 也是字符串，同样转换为数字
+				const amount = parseInt(curr.amount, 10);
+				// 将当前年份和金额添加到累加器对象中
+				acc[year] = amount;
+				// 返回累加器对象以便在下一次迭代中使用
+				return acc;
+			}, {});
+			console.log('##################')
+			console.log(result)
+			// state.questionChoiceVOlist[0] = result
+			Object.assign(state.questionChoiceVOlist1[0], result);
+
+			//含6%税投资合计
+			const result1 = res.projectIncludeTaxRate6.reduce((acc, curr) => {
+				// 将年份字符串转换为数字
+				const year = parseInt(curr.year, 10);
+				// 由于 amount 也是字符串，同样转换为数字
+				const amount = parseInt(curr.amount, 10);
+				// 将当前年份和金额添加到累加器对象中
+				acc[year] = amount;
+				// 返回累加器对象以便在下一次迭代中使用
+				return acc;
+			}, {});
+			console.log('##################')
+			console.log(result1)
+			// state.questionChoiceVOlist[0] = result
+			Object.assign(state.questionChoiceVOlist1[1], result1);
+
+			//含9%税投资合计
+			const result2 = res.projectIncludeTaxRate9.reduce((acc, curr) => {
+				// 将年份字符串转换为数字
+				const year = parseInt(curr.year, 10);
+				// 由于 amount 也是字符串，同样转换为数字
+				const amount = parseInt(curr.amount, 10);
+				// 将当前年份和金额添加到累加器对象中
+				acc[year] = amount;
+				// 返回累加器对象以便在下一次迭代中使用
+				return acc;
+			}, {});
+			console.log('##################')
+			console.log(result2)
+			// state.questionChoiceVOlist[0] = result
+			Object.assign(state.questionChoiceVOlist1[2], result2);
+
+			//含13%税投资合计
+			const result3 = res.projectIncludeTaxRate13.reduce((acc, curr) => {
+				// 将年份字符串转换为数字
+				const year = parseInt(curr.year, 10);
+				// 由于 amount 也是字符串，同样转换为数字
+				const amount = parseInt(curr.amount, 10);
+				// 将当前年份和金额添加到累加器对象中
+				acc[year] = amount;
+				// 返回累加器对象以便在下一次迭代中使用
+				return acc;
+			}, {});
+			console.log('##################')
+			console.log(result2)
+			// state.questionChoiceVOlist[0] = result
+			Object.assign(state.questionChoiceVOlist1[3], result3);
+
+
+			//不含13%税投资合计
+			const result4 = res.projectUnincludeTaxRate13.reduce((acc, curr) => {
+				// 将年份字符串转换为数字
+				const year = parseInt(curr.year, 10);
+				// 由于 amount 也是字符串，同样转换为数字
+				const amount = parseInt(curr.amount, 10);
+				// 将当前年份和金额添加到累加器对象中
+				acc[year] = amount;
+				// 返回累加器对象以便在下一次迭代中使用
+				return acc;
+			}, {});
+			console.log('##################')
+			console.log(result4)
+			// state.questionChoiceVOlist[0] = result
+			Object.assign(state.questionChoiceVOlist[3], result4);
+
+		})
+		.finally(() => {
+			// alert("fail")
+			// submitLoading.value = false
+		})
+
 }
 
 const con2 = () =>{
@@ -811,7 +862,7 @@ const con2 = () =>{
 			}
 		});
 		// 将basicInformation数组添加到resultArray中
-		resultArray.push({ Basic_information: basicInformation,SubProject_schedule: yearinfo });
+		resultArray.push({ basicInformation: basicInformation,subprojectSchedule: yearinfo });
 	});
 	console.log(resultArray)
 	console.log(questionChoiceVOlist.value)
@@ -850,21 +901,21 @@ const con2 = () =>{
 			}
 		});
 		// 将basicInformation数组添加到resultArray中
-		resultArray1.push({ SubProject_singlePrice: yearinfo });
+		resultArray1.push({ subprojectSingleprice: yearinfo });
 	});
 
 
 
 	// 假设两个数组按ID对应，我们可以直接按索引遍历
-	let SubProject_singleCost = [];
+	let subprojectSinglecost = [];
 // 遍历数组（假设它们按ID对齐且长度相同）
 	for (let i = 0; i < resultArray.length; i++) {
 
 		let costForProject = [];
 
-		let schedule = resultArray[i].SubProject_schedule;
+		let schedule = resultArray[i].subprojectSchedule;
 
-		let price = resultArray1[i].SubProject_singlePrice;
+		let price = resultArray1[i].subprojectSingleprice;
 
 		console.log("--------------------------")
 		console.log(price)
@@ -897,18 +948,18 @@ const con2 = () =>{
 
 		// 将成本添加到最终结果中，可以包含其他项目信息（如ID）
 
-		SubProject_singleCost.push({
+		subprojectSinglecost.push({
 
 			// 假设你想要包含ID或其他信息
 
 			// id: resultArray[i].id,
 
-			SubProject_singleCost: costForProject
+			subprojectSinglecost: costForProject
 
 		});
 
 	}
-	console.log(SubProject_singleCost);
+	console.log(subprojectSinglecost);
 // 输出将包含每个项目的成本，按年份组织
 
 
@@ -918,7 +969,7 @@ const con2 = () =>{
 		...item, // 保留resultArray1的元素
 
 		...resultArray[index] ,// 添加resultArray的对应元素
-		...SubProject_singleCost[index]
+		...subprojectSinglecost[index]
 
 	}));
 	console.log(resultArray1)

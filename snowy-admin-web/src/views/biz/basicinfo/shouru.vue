@@ -1,6 +1,6 @@
 <template>
 	<div id="table-wrap">
-		<h2>建设进度表：</h2>
+		<h2>新增投入道路条数：</h2>
 		<!-- 可编辑表格-Vue3 + ElementPlus -->
 		<el-table
 			:data="questionChoiceVOlist"
@@ -55,7 +55,7 @@
 			</el-table-column>
 		</el-table>
 		<h2></h2>
-		<h2>单条造价表（不含税）：</h2>
+		<h2>每年废弃道路条数：</h2>
 		<el-table
 			:data="questionChoiceVOlist1"
 			stripe
@@ -217,7 +217,7 @@ const emit = defineEmits(['totalevent']);
 
 
 const props = defineProps({
-	cycle: {
+	shouru_cycle: {
 		type: Number,
 		default: 0,
 	},
@@ -286,7 +286,7 @@ const state = reactive({
 			规格型号: '有绿植1',
 			// itemScore: 1,
 			// isClickCheckBtn: true,
-			单位: '元/条',
+			单位: '条',
 			// riskIds: '46',
 			// id: 1,
 		},
@@ -608,7 +608,7 @@ const addYearColumns = () => {
 
 
 
-	for (let i = 0; i < props.cycle; i++) {
+	for (let i = 0; i < props.shouru_cycle; i++) {
 
 		// 计算年份（从当前年份开始，每次循环递增5年）
 
@@ -841,7 +841,7 @@ const onSubmit = () => {
 	console.log(dataform)
 	//子项目信息提交
 	projectBasicInfoApi
-		.addSubProject(dataform)
+		.saveAndReturn(dataform)
 		.then(() => {
 			alert("success")
 			// onClose()
