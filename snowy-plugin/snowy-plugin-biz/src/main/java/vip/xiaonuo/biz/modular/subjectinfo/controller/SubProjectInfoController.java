@@ -12,6 +12,7 @@ import vip.xiaonuo.biz.modular.strategy.vo.CompreAssVO;
 import vip.xiaonuo.biz.modular.strategy.vo.InvestVO;
 import vip.xiaonuo.biz.modular.subjectinfo.dto.SubProjcetParam;
 import vip.xiaonuo.biz.modular.subjectinfo.service.SubprojectService;
+import vip.xiaonuo.biz.modular.subjectinfo.vo.SubProjcetParamVO;
 import vip.xiaonuo.common.pojo.CommonResult;
 
 import java.util.List;
@@ -48,19 +49,19 @@ public class SubProjectInfoController {
 
     @Operation(summary = "查询子项目信息")
     @GetMapping("/biz/subjectinfoinfo/select")
-    public CommonResult<SubProjcetParam> selectbyProuctId(Long ProuctId) throws Exception {
+    public CommonResult<SubProjcetParamVO> selectbyProuctId(Long ProuctId) throws Exception {
         if (ProuctId <= 0) {
             throw new Exception("项目不存在！");
         }
 
-        List<SubProjcetParam.SubprojectInfo> list = subprojectService.selectbyProuctId(ProuctId);
+        List<SubProjcetParamVO.SubprojectInfo> list = subprojectService.selectbyProuctId(ProuctId);
         if (list == null) {
             throw new Exception("项目不存在！");
         }
-        SubProjcetParam subProjcetParam = new SubProjcetParam();
-        subProjcetParam.setSubproject(list);
+        SubProjcetParamVO subProjcetParamVO = new SubProjcetParamVO();
+        subProjcetParamVO.setSubproject(list);
 
-        return CommonResult.data(subProjcetParam);
+        return CommonResult.data(subProjcetParamVO);
 
     }
 
@@ -72,17 +73,16 @@ public class SubProjectInfoController {
         }
 
         boolean s = subprojectService.deleteSubProject(SubProuctId);
-        if(s){
+        if (s) {
             return CommonResult.ok("子项目删除成功！");
-        }
-        else {
+        } else {
             return CommonResult.error("子项目删除失败！");
         }
     }
 
     @Operation(summary = "投入明细表的计算")
     @PostMapping("/biz/subjectinfoinfo/investAmount")
-    public CommonResult<InvestVO> CalculateInvestAmout(@RequestBody InvestReq req)  {
+    public CommonResult<InvestVO> CalculateInvestAmout(@RequestBody InvestReq req) {
         System.out.println(req.getType());
         InvestVO resp = subprojectService.calculateInvestAmout(req);
 
@@ -92,14 +92,12 @@ public class SubProjectInfoController {
 
     @Operation(summary = "综合评估表的计算")
     @PostMapping("/biz/subjectinfoinfo/compreAssAmount")
-    public CommonResult<CompreAssVO> CalculateInvestAmout()  {
+    public CommonResult<CompreAssVO> CalculateInvestAmout() {
         CompreAssVO resp = subprojectService.calculateCompreAssessment();
 
         return CommonResult.data(resp);
 
     }
-
-
 
 
 }

@@ -18,11 +18,12 @@ import vip.xiaonuo.biz.modular.strategy.invest.InvestAlgorithmFactory;
 import vip.xiaonuo.biz.modular.strategy.utils.Pair;
 import vip.xiaonuo.biz.modular.strategy.vo.CompreAssVO;
 import vip.xiaonuo.biz.modular.subjectinfo.dto.SubProjcetParam;
-import vip.xiaonuo.biz.modular.subjectinfo.dto.SubProjcetParam.SubprojectInfo;
+import vip.xiaonuo.biz.modular.subjectinfo.vo.SubProjcetParamVO.SubprojectInfo;
 import vip.xiaonuo.biz.modular.subjectinfo.entity.Subproject;
 import vip.xiaonuo.biz.modular.subjectinfo.mapper.SubprojectMapper;
 import vip.xiaonuo.biz.modular.subjectinfo.service.SubprojectService;
 import vip.xiaonuo.biz.modular.strategy.vo.InvestVO;
+import vip.xiaonuo.biz.modular.subjectinfo.vo.SubProjcetParamVO;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class SubprojectServiceImpl extends ServiceImpl<SubprojectMapper, Subproj
 
 
     @Override
-    public List<SubProjcetParam.SubprojectInfo> selectbyProuctId(Long projectId) {
+    public List<SubProjcetParamVO.SubprojectInfo> selectbyProuctId(Long projectId) {
 
         // 1. 创建查询条件构造器
         QueryWrapper<Subproject> wrapper = new QueryWrapper<>();
@@ -92,10 +93,10 @@ public class SubprojectServiceImpl extends ServiceImpl<SubprojectMapper, Subproj
 
         List<Subproject> subprojectList = subprojectMapper.selectList(wrapper);
 
-        List<SubProjcetParam.SubprojectInfo> list = new ArrayList<>();
+        List<SubProjcetParamVO.SubprojectInfo> list = new ArrayList<>();
 
         for (Subproject subproject : subprojectList) {
-            SubProjcetParam.SubprojectInfo subprojectInfo = new SubProjcetParam.SubprojectInfo();
+            SubProjcetParamVO.SubprojectInfo subprojectInfo = new SubProjcetParamVO.SubprojectInfo();
 
             // 从数据库获取信息，将其转为vo数组形式
             List<SubprojectInfo.BasicInformation> basicInformation = JSONUtil.toList(subproject.getBasicInformation(), SubprojectInfo.BasicInformation.class);
@@ -103,6 +104,7 @@ public class SubprojectServiceImpl extends ServiceImpl<SubprojectMapper, Subproj
             List<SubprojectInfo.SubProjectSingleCost> singlecost = JSONUtil.toList(subproject.getSubprojectSinglecost(), SubprojectInfo.SubProjectSingleCost.class);
             List<SubprojectInfo.SubProjectSinglePrice> singleprice = JSONUtil.toList(subproject.getSubprojectSingleprice(), SubprojectInfo.SubProjectSinglePrice.class);
 
+            subprojectInfo.setSubprojectId(subproject.getSubprojectId());
             subprojectInfo.setProjectId(projectId);
             subprojectInfo.setBasicInformation(basicInformation);
             subprojectInfo.setSubprojectSchedule(schedule);
