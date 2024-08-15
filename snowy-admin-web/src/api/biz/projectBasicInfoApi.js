@@ -2,8 +2,8 @@ import { baseRequest } from '@/utils/request'
 
 const request = (url, ...arg) => baseRequest(`/biz/basicinfo/` + url, ...arg)
 const request1 = (url, ...arg) => baseRequest(`/biz/subjectinfoinfo/` + url, ...arg)
-const saveAndReturn = (url, ...arg) => baseRequest(`/biz/income/` + url, ...arg)
-
+const saveAndReturn = (url, ...arg) => baseRequest(`/biz/income/` + url,  ...arg)
+const request2 = (url, ...arg) => baseRequest(`/biz/subjectinfoinfo/` + url, ...arg,"get")
 /**
  * 项目基础信息Api接口管理器
  *
@@ -39,6 +39,9 @@ export default {
 	},
 	saveAndReturn(data) {
 		return saveAndReturn('saveAndReturn',data)
+	},
+	searchSubProject(data, edit = false) {
+		return request2('select',data)
 	},
 }
 

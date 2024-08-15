@@ -134,9 +134,9 @@
 		<div>
 			<shouru :shouru_cycle="shouru_cycle" @totalevent="handleDataUpdate" @ScheduleAndCosts="handleDataUpdate1"></shouru>
 		</div>
-		<div>
-			<touzi-money :cycle="cyc" style="margin-top: 30px"></touzi-money>
-		</div>
+<!--		<div>-->
+<!--			<touzi-money :cycle="cyc" style="margin-top: 30px"></touzi-money>-->
+<!--		</div>-->
 
 
 		<template #footer>
