@@ -68,13 +68,12 @@ public class ProjectBasicInfoController {
      * @author lth
      * @date  2024/07/19 21:16
      */
-
     @CommonLog("添加项目基础信息")
     @SaCheckPermission("/biz/basicinfo/add")
     @PostMapping("/biz/basicinfo/add")
     public CommonResult<String> add(@RequestBody @Valid ProjectBasicInfoAddParam projectBasicInfoAddParam) {
-        projectBasicInfoService.add(projectBasicInfoAddParam);
-        return CommonResult.ok();
+        Long projectId = projectBasicInfoService.add(projectBasicInfoAddParam);
+        return CommonResult.ok(projectId.toString());
     }
 
     /**

@@ -5,6 +5,8 @@ import vip.xiaonuo.biz.modular.spend.entity.Spend;
 import com.baomidou.mybatisplus.extension.service.IService;
 import vip.xiaonuo.biz.modular.spend.vo.SpendVO;
 
+import java.util.List;
+
 /**
 * @author M
 * @description 针对表【spend】的数据库操作Service
@@ -16,4 +18,5 @@ public interface SpendService extends IService<Spend> {
 
     boolean saveSpendInfo(SpendVO spendVO) throws Exception;
 
+    List<Spend> getSpendDetailsBySubprojectId(Long subprojectId);
 }

@@ -3,6 +3,7 @@ package vip.xiaonuo.biz.modular.spend.service.impl;
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import vip.xiaonuo.biz.modular.income.vo.IncomeVO;
 import vip.xiaonuo.biz.modular.spend.dto.SpendParam;
@@ -14,8 +15,6 @@ import vip.xiaonuo.biz.modular.spend.service.SpendService;
 import vip.xiaonuo.biz.modular.spend.mapper.SpendMapper;
 import org.springframework.stereotype.Service;
 import vip.xiaonuo.biz.modular.spend.vo.SpendVO;
-
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.*;
@@ -100,6 +99,13 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
         }
         return spendVO;
     }
+
+    public List<Spend> getSpendDetailsBySubprojectId(Long subprojectId) {
+        QueryWrapper<Spend> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("SubProject_id", subprojectId);
+        return this.list(queryWrapper);
+    }
+
 
     /**
      * 保存支出信息,将数据序列化存储

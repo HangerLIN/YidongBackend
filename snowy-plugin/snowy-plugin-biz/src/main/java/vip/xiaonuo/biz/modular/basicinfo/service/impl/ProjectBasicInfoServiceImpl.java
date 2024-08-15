@@ -67,9 +67,10 @@ public class ProjectBasicInfoServiceImpl extends ServiceImpl<ProjectBasicInfoMap
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void add(ProjectBasicInfoAddParam projectBasicInfoAddParam) {
+    public Long add(ProjectBasicInfoAddParam projectBasicInfoAddParam) {
         ProjectBasicInfo projectBasicInfo = BeanUtil.toBean(projectBasicInfoAddParam, ProjectBasicInfo.class);
         this.save(projectBasicInfo);
+        return projectBasicInfo.getId(); // 保存后获取自增ID
     }
 
     @Transactional(rollbackFor = Exception.class)

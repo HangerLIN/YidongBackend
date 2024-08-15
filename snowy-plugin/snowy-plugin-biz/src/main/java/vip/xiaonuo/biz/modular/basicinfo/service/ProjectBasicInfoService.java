@@ -44,7 +44,7 @@ public interface ProjectBasicInfoService extends IService<ProjectBasicInfo> {
      * @author lth
      * @date  2024/07/19 21:16
      */
-    void add(ProjectBasicInfoAddParam projectBasicInfoAddParam);
+    Long add(ProjectBasicInfoAddParam projectBasicInfoAddParam);
 
     /**
      * 编辑项目基础信息
