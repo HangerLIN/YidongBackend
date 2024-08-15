@@ -102,4 +102,7 @@ public class ProjectBasicInfo {
     /** 评估时间 */
     @Schema(description = "评估结束日期")
     private Date Evaluate_end;
+
+    @Schema(description = "是否草稿")
+    private int isDraft;
 }
