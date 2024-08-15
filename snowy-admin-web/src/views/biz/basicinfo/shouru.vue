@@ -1,6 +1,6 @@
 <template>
 	<div id="table-wrap">
-		<h2>建设进度表：</h2>
+		<h2>新增投入道路条数：</h2>
 		<!-- 可编辑表格-Vue3 + ElementPlus -->
 		<el-table
 			:data="questionChoiceVOlist"
@@ -55,7 +55,7 @@
 			</el-table-column>
 		</el-table>
 		<h2></h2>
-		<h2>单条造价表（不含税）：</h2>
+		<h2>每年废弃道路条数：</h2>
 		<el-table
 			:data="questionChoiceVOlist1"
 			stripe
@@ -111,9 +111,171 @@
 <!--		<el-button @click="con">测试</el-button>-->
 <!--		<el-button @click="con1">测试1</el-button>-->
 		<el-button @click="con2">保存&计算</el-button>
+		<h2></h2>
+		<h2>每年投入使用道路条数：</h2>
+		<el-table
+			:data="questionChoiceVOlist2"
+			stripe
+			border
+			@cell-click="cellClick2"
+			@row-contextmenu="rightClick"
+			:row-class-name="tableRowClassName"
+			@header-contextmenu="(column: any, event: MouseEvent) => rightClick(null, column, event)"
+		>
+			<el-table-column
+				type="index"
+				label="序号"
+				align="center"
+				:resizable="false"
+				width="70"
+			/>
+
+			<template #empty>
+				<el-empty description="暂无数据" />
+			</template>
+
+			<el-table-column
+				:resizable="false"
+				align="center"
+				v-for="(col, idx) in columnList"
+				:key="col.prop"
+				:prop="col.prop"
+				:label="col.label"
+				:index="idx"
+			>
+				<template #default="{ row }">
+					<!--					<div-->
+					<!--						v-if="col.type === 'button'"-->
+					<!--						style="height: 75px; padding-top: 26px; width: 100%"-->
+					<!--					>-->
+					<!--&lt;!&ndash;						<el-badge type="warning" :value="getRiskLenght(row.riskIds)">&ndash;&gt;-->
+					<!--&lt;!&ndash;							<el-button size="small">&ndash;&gt;-->
+					<!--&lt;!&ndash;								{{ paramsIdType == 'detail' ? '查看' : '选择' }}&ndash;&gt;-->
+					<!--&lt;!&ndash;							</el-button>&ndash;&gt;-->
+					<!--&lt;!&ndash;						</el-badge>&ndash;&gt;-->
+					<!--					</div>-->
+					<el-input-number
+						v-if="col.type === 'input-number'"
+						v-model.number="row[col.prop]"
+						:min="0"
+						:max="10"
+						:step="0.1"
+						:precision="2"
+					/>
+				</template>
+			</el-table-column>
+		</el-table>
 <!--		<el-button @click="onSubmit">提交</el-button>-->
 		<h2></h2>
 		<h2></h2>
+		<h2></h2>
+		<h2>收入（不含税）：</h2>
+		<el-table
+			:data="questionChoiceVOlist3"
+			stripe
+			border
+			@cell-click="cellClick3"
+			@row-contextmenu="rightClick"
+			:row-class-name="tableRowClassName"
+			@header-contextmenu="(column: any, event: MouseEvent) => rightClick(null, column, event)"
+		>
+			<el-table-column
+				type="index"
+				label="序号"
+				align="center"
+				:resizable="false"
+				width="70"
+			/>
+
+			<template #empty>
+				<el-empty description="暂无数据" />
+			</template>
+
+			<el-table-column
+				:resizable="false"
+				align="center"
+				v-for="(col, idx) in columnList"
+				:key="col.prop"
+				:prop="col.prop"
+				:label="col.label"
+				:index="idx"
+			>
+				<template #default="{ row }">
+					<!--					<div-->
+					<!--						v-if="col.type === 'button'"-->
+					<!--						style="height: 75px; padding-top: 26px; width: 100%"-->
+					<!--					>-->
+					<!--&lt;!&ndash;						<el-badge type="warning" :value="getRiskLenght(row.riskIds)">&ndash;&gt;-->
+					<!--&lt;!&ndash;							<el-button size="small">&ndash;&gt;-->
+					<!--&lt;!&ndash;								{{ paramsIdType == 'detail' ? '查看' : '选择' }}&ndash;&gt;-->
+					<!--&lt;!&ndash;							</el-button>&ndash;&gt;-->
+					<!--&lt;!&ndash;						</el-badge>&ndash;&gt;-->
+					<!--					</div>-->
+					<el-input-number
+						v-if="col.type === 'input-number'"
+						v-model.number="row[col.prop]"
+						:min="0"
+						:max="10"
+						:step="0.1"
+						:precision="2"
+					/>
+				</template>
+			</el-table-column>
+		</el-table>
+		<h2></h2>
+		<h2>收入（含税）：</h2>
+		<el-table
+			:data="questionChoiceVOlist4"
+			stripe
+			border
+			@cell-click="cellClick4"
+			@row-contextmenu="rightClick"
+			:row-class-name="tableRowClassName"
+			@header-contextmenu="(column: any, event: MouseEvent) => rightClick(null, column, event)"
+		>
+			<el-table-column
+				type="index"
+				label="序号"
+				align="center"
+				:resizable="false"
+				width="70"
+			/>
+
+			<template #empty>
+				<el-empty description="暂无数据" />
+			</template>
+
+			<el-table-column
+				:resizable="false"
+				align="center"
+				v-for="(col, idx) in columnList"
+				:key="col.prop"
+				:prop="col.prop"
+				:label="col.label"
+				:index="idx"
+			>
+				<template #default="{ row }">
+					<!--					<div-->
+					<!--						v-if="col.type === 'button'"-->
+					<!--						style="height: 75px; padding-top: 26px; width: 100%"-->
+					<!--					>-->
+					<!--&lt;!&ndash;						<el-badge type="warning" :value="getRiskLenght(row.riskIds)">&ndash;&gt;-->
+					<!--&lt;!&ndash;							<el-button size="small">&ndash;&gt;-->
+					<!--&lt;!&ndash;								{{ paramsIdType == 'detail' ? '查看' : '选择' }}&ndash;&gt;-->
+					<!--&lt;!&ndash;							</el-button>&ndash;&gt;-->
+					<!--&lt;!&ndash;						</el-badge>&ndash;&gt;-->
+					<!--					</div>-->
+					<el-input-number
+						v-if="col.type === 'input-number'"
+						v-model.number="row[col.prop]"
+						:min="0"
+						:max="10"
+						:step="0.1"
+						:precision="2"
+					/>
+				</template>
+			</el-table-column>
+		</el-table>
 <!--		<touzi-money></touzi-money>-->
 
 		<!-- 右键菜单框 -->
@@ -175,6 +337,45 @@
 				<template #prepend>{{ curColumn.label || curColumn.prop }}</template>
 			</el-input>
 		</div>
+		<div v-show="showEditInput2" id="editInput">
+			<el-input
+				ref="iptRef2"
+				placeholder="请输入内容"
+				v-model="curTarget.val"
+				clearable
+				@change="updTbCellOrHeader2"
+				@blur="showEditInput2 = false"
+				@keyup="onKeyUp($event)"
+			>
+				<template #prepend>{{ curColumn.label || curColumn.prop }}</template>
+			</el-input>
+		</div>
+		<div v-show="showEditInput3" id="editInput">
+			<el-input
+				ref="iptRef3"
+				placeholder="请输入内容"
+				v-model="curTarget.val"
+				clearable
+				@change="updTbCellOrHeader3"
+				@blur="showEditInput3 = false"
+				@keyup="onKeyUp($event)"
+			>
+				<template #prepend>{{ curColumn.label || curColumn.prop }}</template>
+			</el-input>
+		</div>
+		<div v-show="showEditInput4" id="editInput">
+			<el-input
+				ref="iptRef4"
+				placeholder="请输入内容"
+				v-model="curTarget.val"
+				clearable
+				@change="updTbCellOrHeader4"
+				@blur="showEditInput4 = false"
+				@keyup="onKeyUp($event)"
+			>
+				<template #prepend>{{ curColumn.label || curColumn.prop }}</template>
+			</el-input>
+		</div>
 		<!-- 实时数据展示 Start-->
 		<!--
 		第二个和第三个参数来格式化JSON输出，其中null作为替换函数（这里不进行替换），2表示缩进级别。
@@ -217,7 +418,7 @@ const emit = defineEmits(['totalevent']);
 
 
 const props = defineProps({
-	cycle: {
+	shouru_cycle: {
 		type: Number,
 		default: 0,
 	},
@@ -261,39 +462,77 @@ const paramsIdType = 'detail';
 const state = reactive({
 	columnList: [
 		{ prop: '产品代码', label: '产品代码' },
-		{ prop: '产品名称', label: '产品名称' },
-		{ prop: '规格型号', label: '规格型号' },
-		{ prop: '单位', label: '单位' },
+		// { prop: '产品名称', label: '产品名称' },
+		// { prop: '规格型号', label: '规格型号' },
+		// { prop: '单位', label: '单位' },
 		// { prop: 'itemScore', label: '合计', type: 'input-number' },
 	] as Column[],
 	questionChoiceVOlist: [
 		{
-			产品代码: '310101',
-			产品名称: '双向双车道',
-			规格型号: '有绿植',
-			// itemScore: 1,
-			// isClickCheckBtn: true,
-			单位: '条',
-			// riskIds: '46',
-			// id: 1,
+			// 产品代码: '310101',
+			// 产品名称: '双向双车道',
+			// 规格型号: '有绿植',
+			// // itemScore: 1,
+			// // isClickCheckBtn: true,
+			// 单位: '条',
+			// // riskIds: '46',
+			// // id: 1,
 		},
-
 	] as Data[],
 	questionChoiceVOlist1: [
 		{
-			产品代码: '40101',
-			产品名称: '双向双车道1',
-			规格型号: '有绿植1',
-			// itemScore: 1,
-			// isClickCheckBtn: true,
-			单位: '元/条',
-			// riskIds: '46',
-			// id: 1,
+			// 产品代码: '40101',
+			// 产品名称: '双向双车道1',
+			// 规格型号: '有绿植1',
+			// // itemScore: 1,
+			// // isClickCheckBtn: true,
+			// 单位: '条',
+			// // riskIds: '46',
+			// // id: 1,
+		},
+	] as Data[],
+	questionChoiceVOlist2: [
+		{
+			// 产品代码: '40101',
+			// 产品名称: '双向双车道1',
+			// 规格型号: '有绿植1',
+			// // itemScore: 1,
+			// // isClickCheckBtn: true,
+			// 单位: '条',
+			// // riskIds: '46',
+			// // id: 1,
+		},
+	] as Data[],
+	questionChoiceVOlist3: [
+		{
+			// 产品代码: '40101',
+			// 产品名称: '双向双车道1',
+			// 规格型号: '有绿植1',
+			// // itemScore: 1,
+			// // isClickCheckBtn: true,
+			// 单位: '条',
+			// // riskIds: '46',
+			// // id: 1,
+		},
+	] as Data[],
+	questionChoiceVOlist4: [
+		{
+			// 产品代码: '40101',
+			// 产品名称: '双向双车道1',
+			// 规格型号: '有绿植1',
+			// // itemScore: 1,
+			// // isClickCheckBtn: true,
+			// 单位: '条',
+			// // riskIds: '46',
+			// // id: 1,
 		},
 	] as Data[],
 	showMenu: false, // 显示右键菜单
 	showEditInput: false, // 显示单元格/表头内容编辑输入框
 	showEditInput1: false, // 显示单元格/表头内容编辑输入框
+	showEditInput2: false, // 显示单元格/表头内容编辑输入框
+	showEditInput3: false, // 显示单元格/表头内容编辑输入框
+	showEditInput4: false, // 显示单元格/表头内容编辑输入框
 	curTarget: {
 		// 当前目标信息
 		rowIdx: null, // 行下标
@@ -305,8 +544,10 @@ const state = reactive({
 });
 const iptRef = ref();
 const iptRef1 = ref();
-
-const { columnList, questionChoiceVOlist1,questionChoiceVOlist, showMenu, showEditInput1, showEditInput, curTarget } = toRefs(state);
+const iptRef2 = ref();
+const iptRef3 = ref();
+const iptRef4 = ref();
+const { columnList, questionChoiceVOlist1,questionChoiceVOlist2,questionChoiceVOlist3,questionChoiceVOlist4,questionChoiceVOlist, showMenu, showEditInput1,showEditInput2, showEditInput3, showEditInput4,showEditInput, curTarget } = toRefs(state);
 
 // 当前列
 const curColumn = computed(() => {
@@ -404,6 +645,79 @@ const cellClick1 = (
 		isHead: false,
 	};
 };
+
+// 左键输入框
+const cellClick2 = (
+	row: { [x: string]: any; row_index: any },
+	column: { index: null; property: string | number; label: string },
+	_cell: any,
+	event: MouseEvent
+) => {
+	// 如果是风险点或选项分值，不执行后续代码
+	if (isPop(column)) return;
+
+	iptRef2.value.focus();
+	if (column.index == null) return;
+	locateMenuOrEditInput('editInput', -300, event); // 左键输入框定位 Y
+	showEditInput2.value = true;
+	iptRef2.value.focus();
+
+	// 当前目标
+	curTarget.value = {
+		rowIdx: row.row_index,
+		colIdx: column.index,
+		val: row[column.property],
+		isHead: false,
+	};
+};
+
+const cellClick3 = (
+	row: { [x: string]: any; row_index: any },
+	column: { index: null; property: string | number; label: string },
+	_cell: any,
+	event: MouseEvent
+) => {
+	// 如果是风险点或选项分值，不执行后续代码
+	if (isPop(column)) return;
+
+	iptRef3.value.focus();
+	if (column.index == null) return;
+	locateMenuOrEditInput('editInput', -300, event); // 左键输入框定位 Y
+	showEditInput3.value = true;
+	iptRef3.value.focus();
+
+	// 当前目标
+	curTarget.value = {
+		rowIdx: row.row_index,
+		colIdx: column.index,
+		val: row[column.property],
+		isHead: false,
+	};
+};
+const cellClick4 = (
+	row: { [x: string]: any; row_index: any },
+	column: { index: null; property: string | number; label: string },
+	_cell: any,
+	event: MouseEvent
+) => {
+	// 如果是风险点或选项分值，不执行后续代码
+	if (isPop(column)) return;
+
+	iptRef4.value.focus();
+	if (column.index == null) return;
+	locateMenuOrEditInput('editInput', -300, event); // 左键输入框定位 Y
+	showEditInput4.value = true;
+	iptRef4.value.focus();
+
+	// 当前目标
+	curTarget.value = {
+		rowIdx: row.row_index,
+		colIdx: column.index,
+		val: row[column.property],
+		isHead: false,
+	};
+};
+
 // 表头右击事件 - 打开菜单
 const rightClick = (row: any, column: any, event: MouseEvent) => {
 	event.preventDefault();
@@ -486,6 +800,101 @@ const updTbCellOrHeader1 = (val: string) => {
 		}
 	}
 };
+const updTbCellOrHeader2 = (val: string) => {
+	if (!curTarget.value.isHead) {
+		if (curTarget.value.rowIdx !== null) {
+			(questionChoiceVOlist2.value[curTarget.value.rowIdx] as Data)[curColumn.value.prop] =
+				val;
+		}
+	} else {
+		console.log(1111111111)
+		if (!val) return;
+		if (curTarget.value.colIdx !== null) {
+
+			questionChoiceVOlist.value.forEach((p) => {
+				delete p[curColumn.value.prop];
+			});
+			questionChoiceVOlist1.value.forEach((p) => {
+				delete p[curColumn.value.prop];
+			});
+			questionChoiceVOlist2.value.forEach((p) => {
+				delete p[curColumn.value.prop];
+			});
+
+			columnList.value[curTarget.value.colIdx].prop = val;
+			columnList.value[curTarget.value.colIdx].label = val;
+
+			console.log(1111111111)
+			console.log(columnList)
+		}
+	}
+};
+const updTbCellOrHeader3 = (val: string) => {
+	if (!curTarget.value.isHead) {
+		if (curTarget.value.rowIdx !== null) {
+			(questionChoiceVOlist3.value[curTarget.value.rowIdx] as Data)[curColumn.value.prop] =
+				val;
+		}
+	} else {
+		console.log(1111111111)
+		if (!val) return;
+		if (curTarget.value.colIdx !== null) {
+
+			questionChoiceVOlist.value.forEach((p) => {
+				delete p[curColumn.value.prop];
+			});
+			questionChoiceVOlist1.value.forEach((p) => {
+				delete p[curColumn.value.prop];
+			});
+			questionChoiceVOlist2.value.forEach((p) => {
+				delete p[curColumn.value.prop];
+			});
+			questionChoiceVOlist3.value.forEach((p) => {
+				delete p[curColumn.value.prop];
+			});
+
+			columnList.value[curTarget.value.colIdx].prop = val;
+			columnList.value[curTarget.value.colIdx].label = val;
+
+			console.log(1111111111)
+			console.log(columnList)
+		}
+	}
+};
+const updTbCellOrHeader4 = (val: string) => {
+	if (!curTarget.value.isHead) {
+		if (curTarget.value.rowIdx !== null) {
+			(questionChoiceVOlist4.value[curTarget.value.rowIdx] as Data)[curColumn.value.prop] =
+				val;
+		}
+	} else {
+		console.log(1111111111)
+		if (!val) return;
+		if (curTarget.value.colIdx !== null) {
+
+			questionChoiceVOlist.value.forEach((p) => {
+				delete p[curColumn.value.prop];
+			});
+			questionChoiceVOlist1.value.forEach((p) => {
+				delete p[curColumn.value.prop];
+			});
+			questionChoiceVOlist2.value.forEach((p) => {
+				delete p[curColumn.value.prop];
+			});
+			questionChoiceVOlist3.value.forEach((p) => {
+				delete p[curColumn.value.prop];
+			});
+			questionChoiceVOlist4.value.forEach((p) => {
+				delete p[curColumn.value.prop];
+			});
+			columnList.value[curTarget.value.colIdx].prop = val;
+			columnList.value[curTarget.value.colIdx].label = val;
+
+			console.log(1111111111)
+			console.log(columnList)
+		}
+	}
+};
 // 新增行
 const addRow = (later: boolean) => {
 	showMenu.value = false;
@@ -513,20 +922,35 @@ const addRow1 = (later: boolean) => {
 	columnList.value.forEach((p) => obj[p.prop]);
 	questionChoiceVOlist.value.splice(idx, 0, obj);
 	questionChoiceVOlist1.value.splice(idx, 0, obj);
+	questionChoiceVOlist2.value.splice(idx, 0, obj);
+	questionChoiceVOlist3.value.splice(idx, 0, obj);
+	questionChoiceVOlist4.value.splice(idx, 0, obj);
 	console.log('addrow')
 	console.log(columnList.value)
 	// 设置新增行数据默认值
-	questionChoiceVOlist.value[idx] = {
-		// 产品代码: '',
-		// 产品名称: '',
-		// 规格型号: '',
-		// 条: '',
-		// choiceCode: '',
-		// choiceContent: '',
-		// // riskIds: '',
-		// // itemScore: 0,
-		// id: Math.floor(Math.random() * 100000),
-	};
+	questionChoiceVOlist.value[idx] = {};
+	questionChoiceVOlist1.value[idx] = {};
+	questionChoiceVOlist2.value[idx] = {};
+	questionChoiceVOlist3.value[idx] = {};
+};
+const addRow2 = (id) => {
+	showMenu.value = false;
+	const idx = true ? curTarget.value.rowIdx! + 0 : curTarget.value.rowIdx!;
+	let obj: any = {};
+	columnList.value.forEach((p) => obj[p.prop]);
+	questionChoiceVOlist.value.splice(idx, 0, obj);
+	questionChoiceVOlist1.value.splice(idx, 0, obj);
+	questionChoiceVOlist2.value.splice(idx, 0, obj);
+	questionChoiceVOlist3.value.splice(idx, 0, obj);
+	questionChoiceVOlist4.value.splice(idx, 0, obj);
+	console.log('addrow')
+	console.log(columnList.value)
+	// 设置新增行数据默认值
+	questionChoiceVOlist.value[idx] = {产品代码: id};
+	questionChoiceVOlist1.value[idx] = {产品代码: id};
+	questionChoiceVOlist2.value[idx] = {产品代码: id};
+	questionChoiceVOlist3.value[idx] = {产品代码: id};
+	questionChoiceVOlist4.value[idx] = {产品代码: id};
 };
 
 
@@ -553,6 +977,11 @@ const delRow = () => {
 	showMenu.value = false;
 	curTarget.value.rowIdx !== null &&
 	questionChoiceVOlist.value.splice(curTarget.value.rowIdx!, 1);
+	questionChoiceVOlist.value.splice(curTarget.value.rowIdx!, 1);
+	questionChoiceVOlist1.value.splice(curTarget.value.rowIdx!, 1);
+	questionChoiceVOlist2.value.splice(curTarget.value.rowIdx!, 1);
+	questionChoiceVOlist3.value.splice(curTarget.value.rowIdx!, 1);
+	questionChoiceVOlist4.value.splice(curTarget.value.rowIdx!, 1);
 };
 
 // 新增列
@@ -563,6 +992,9 @@ const addColumn = (later: boolean) => {
 	columnList.value.splice(idx, 0, colStr);
 	questionChoiceVOlist.value.forEach((p) => (p[colStr.prop] = ''));
 	questionChoiceVOlist1.value.forEach((p) => (p[colStr.prop] = ''));
+	questionChoiceVOlist2.value.forEach((p) => (p[colStr.prop] = ''));
+	questionChoiceVOlist3.value.forEach((p) => (p[colStr.prop] = ''));
+	questionChoiceVOlist4.value.forEach((p) => (p[colStr.prop] = ''));
 };
 
 // 删除列
@@ -605,10 +1037,7 @@ const locateMenuOrEditInput = (eleId: string, distance: number, event: MouseEven
 const addYearColumns = () => {
 
 	showMenu.value = false; // 关闭菜单（如果需要）
-
-
-
-	for (let i = 0; i < props.cycle; i++) {
+	for (let i = 0; i < props.shouru_cycle; i++) {
 
 		// 计算年份（从当前年份开始，每次循环递增5年）
 
@@ -700,7 +1129,7 @@ const con1 = () =>{
 			if (typeof key === 'string') {
 				if (key.indexOf('20') !== -1) { // 使用indexOf作为替代方案
 					// 如果是，将键值对作为一个对象添加到basicInformation数组中
-					yearinfo.push({ year: key, amount: obj[key] });
+					yearinfo.push({ year: key, number: obj[key] });
 					console.log(yearinfo)
 				}else if(key.indexOf('row') == -1){ // 使用indexOf作为替代方案
 					// 如果是，将键值对作为一个对象添加到basicInformation数组中
@@ -712,20 +1141,38 @@ const con1 = () =>{
 			}
 		});
 		// 将basicInformation数组添加到resultArray中
-		resultArray.push({ basicInformation: basicInformation,subprojectSchedule: yearinfo });
+		resultArray.push({ basicInformation: basicInformation,annualAdd: yearinfo });
 	});
 	console.log(resultArray)
 	console.log(questionChoiceVOlist.value)
 	console.log(newArray)
 	console.log(props.cycle)
 }
-
+let searchSubProjectInfo={}
+const searchsubinfo=()=>{
+	// let searchSubProjectInfo=[];
+	console.log('0000000000000000000')
+	// console.log(JSON.parse(JSON.stringify(questionChoiceVOlist.value)))
+	projectBasicInfoApi.searchSubProject({
+		ProuctId:35603
+	}).then((res)=>{
+		searchSubProjectInfo=res
+		delRow()
+		searchSubProjectInfo.subproject.reverse().forEach((obj,index) => {
+			console.log(searchSubProjectInfo.subproject[index].basicInformation[0].value)
+			addRow2(searchSubProjectInfo.subproject[index].basicInformation[0].value)
+		})
+		console.log('0000000000000000000')
+		console.log(searchSubProjectInfo)
+	})
+}
+onMounted(searchsubinfo);
+// let searchSubProjectInfo=ref()
 const con2 = () =>{
-
-	console.log(11111)
-	console.log(JSON.parse(JSON.stringify(questionChoiceVOlist.value)))
+	console.log('0000000000000000000')
+	console.log(searchSubProjectInfo)
 	let resultArray = [];
-	questionChoiceVOlist.value.forEach(obj => {
+	questionChoiceVOlist.value.forEach((obj,index) => {
 		let basicInformation = []; // 创建一个新数组来存储含有'basic'的键值对
 		let yearinfo = []; // 创建一个新数组来存储含有'basic'的键值对
 		// 遍历对象的每个键
@@ -735,7 +1182,7 @@ const con2 = () =>{
 			if (typeof key === 'string') {
 				if (key.indexOf('20') !== -1) { // 使用indexOf作为替代方案
 					// 如果是，将键值对作为一个对象添加到basicInformation数组中
-					yearinfo.push({ year: key, amount: obj[key] });
+					yearinfo.push({ year: key, number: obj[key] });
 					console.log(yearinfo)
 				}else if(key.indexOf('row') == -1){ // 使用indexOf作为替代方案
 					// 如果是，将键值对作为一个对象添加到basicInformation数组中
@@ -746,8 +1193,7 @@ const con2 = () =>{
 				console.error('Key is not a string:', key);
 			}
 		});
-		// 将basicInformation数组添加到resultArray中
-		resultArray.push({ projectId:"12345",basicInformation: basicInformation,subprojectSchedule: yearinfo });
+		resultArray.push({subprojectId: searchSubProjectInfo.subproject[index].subprojectId,annualAdd: yearinfo });
 	});
 	console.log(resultArray)
 	console.log(questionChoiceVOlist.value)
@@ -775,7 +1221,7 @@ const con2 = () =>{
 				// }
 				if (key.indexOf('20') !== -1) { // 使用indexOf作为替代方案
 					// 如果是，将键值对作为一个对象添加到basicInformation数组中
-					yearinfo.push({ year: key, amount: obj[key] });
+					yearinfo.push({ year: key, number: obj[key] });
 				}else if(key.indexOf('row') == -1){ // 使用indexOf作为替代方案
 					// 如果是，将键值对作为一个对象添加到basicInformation数组中
 					basicInformation.push({ key: key, value: obj[key] });
@@ -786,7 +1232,7 @@ const con2 = () =>{
 			}
 		});
 		// 将basicInformation数组添加到resultArray中
-		resultArray1.push({ subprojectSingleprice: yearinfo });
+		resultArray1.push({ annualDiscard: yearinfo });
 	});
 
 
@@ -796,27 +1242,27 @@ const con2 = () =>{
    // 遍历数组（假设它们按ID对齐且长度相同）
 	for (let i = 0; i < resultArray.length; i++) {
 		let costForProject = [];
-		let schedule = resultArray[i].subprojectSchedule;
-		let price = resultArray1[i].subprojectSingleprice;
+		let schedule = resultArray[i].annualAdd;
+		let price = resultArray1[i].annualDiscard;
 		console.log("--------------------------")
 		console.log(price)
 		// 创建一个映射来快速查找价格
 		let priceMap = price.reduce((acc, item) => {
-			acc[item.year] = item.amount;
+			acc[item.year] = item.number;
 			return acc;
 		}, {});
 		// 遍历计划，查找价格并计算成本
 		schedule.forEach(item => {
 			let priceValue = priceMap[item.year] || 0; // 如果年份不匹配，则默认为0
-			let cost = item.amount * priceValue;
-			costForProject.push({ year: item.year, amount: cost });
+			let cost = item.number * priceValue;
+			costForProject.push({ year: item.year, number: cost });
 		});
 		// 将成本添加到最终结果中，可以包含其他项目信息（如ID）
-		subprojectSinglecost.push({
-			// 假设你想要包含ID或其他信息
-			// id: resultArray[i].id,
-			subprojectSinglecost: costForProject
-		});
+		// subprojectSinglecost.push({
+		// 	// 假设你想要包含ID或其他信息
+		// 	// id: resultArray[i].id,
+		// 	subprojectSinglecost: costForProject
+		// });
 
 	}
 	console.log(subprojectSinglecost);
@@ -829,7 +1275,7 @@ const con2 = () =>{
 		...subprojectSinglecost[index]
 
 	}));
-	dataform = {subproject:resultArray1}
+	dataform = {subprojectIncome:resultArray1}
 
 	console.log(resultArray1)
 	console.log(questionChoiceVOlist.value)
@@ -838,24 +1284,61 @@ const con2 = () =>{
 	onSubmit()
 }
 const onSubmit = () => {
+	let a=[]
 	console.log(dataform)
 	//子项目信息提交
 	projectBasicInfoApi
-		.addSubProject(dataform)
-		.then(() => {
+		.saveAndReturn(dataform)
+		.then((res) => {
+			a=res.subprojectIncomeVO
+			console.log(a)
 			alert("success")
-			// onClose()
-			// emit('successful')
+			// 假设 subprojectIncomeVO 和 state.questionChoiceVOlist2 的长度相同
+			for (let i = 0; i < res.subprojectIncomeVO.length; i++) {
+				const result = res.subprojectIncomeVO[i].yearEndUse.reduce((acc, curr) => {
+					const year = parseInt(curr.year, 10);
+					const amount = parseInt(curr.number, 10); // 注意：这里假设字段名为 'number'，如果字段名不是这个，请替换为正确的字段名
+					acc[year] = amount;
+					return acc;
+				}, {});
+				// 将结果合并到 state.questionChoiceVOlist2 的对应元素中
+				// 假设 state.questionChoiceVOlist2[i] 是一个对象，我们可以直接扩展它
+				Object.assign(state.questionChoiceVOlist2[i], result);
+
+				const result1 = res.subprojectIncomeVO[i].unincludeTotal.annual.reduce((acc, curr) => {
+					const year = parseInt(curr.year, 10);
+					const amount = parseInt(curr.amount, 10); // 注意：这里假设字段名为 'number'，如果字段名不是这个，请替换为正确的字段名
+					acc[year] = amount;
+					return acc;
+				}, {});
+				// 将结果合并到 state.questionChoiceVOlist2 的对应元素中
+				// 假设 state.questionChoiceVOlist2[i] 是一个对象，我们可以直接扩展它
+				Object.assign(state.questionChoiceVOlist3[i], result1);
+
+				const result2 = res.subprojectIncomeVO[i].includeTaxRate6.annual.reduce((acc, curr) => {
+					const year = parseInt(curr.year, 10);
+					const amount = parseInt(curr.amount, 10); // 注意：这里假设字段名为 'number'，如果字段名不是这个，请替换为正确的字段名
+					acc[year] = amount;
+					return acc;
+				}, {});
+				// 将结果合并到 state.questionChoiceVOlist2 的对应元素中
+				// 假设 state.questionChoiceVOlist2[i] 是一个对象，我们可以直接扩展它
+				Object.assign(state.questionChoiceVOlist4[i], result2);
+			}
+// 如果需要查看结果，可以在循环后打印 state.questionChoiceVOlist2
+			console.log(state.questionChoiceVOlist3);
 		})
 		.finally(() => {
 			// alert("fail")
 			// submitLoading.value = false
 		})
 	//子项总投入目计算，，，，dataform过滤并重命名属性
+	console.log(a)
 
-	let filteredData = dataform.subproject.map(obj => {
+
+	let filteredData = dataform.subprojectIncome.map(obj => {
 		// 使用解构来提取需要的属性（如果存在）
-		const { projectId: projectId=null , subprojectSchedule: schedule = null, subprojectSingleprice: cost = null } = obj;
+		const { projectId: projectId=null , annualAdd: schedule = null, annualDiscard: cost = null } = obj;
 		// 创建一个新对象，只包含需要的属性，并且已经重命名
 		return {
 			projectId,

@@ -9,7 +9,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
-public class CompreAssResp {
+public class CompreAssVO {
     private BigDecimal approvalCost; //立项支出
     private BigDecimal otherCost; //其他支出
     private BigDecimal directIncome; //直接收入

@@ -84,7 +84,7 @@ public class IncomeServiceImpl extends ServiceImpl<IncomeMapper, Income>
             income.setIncludeTaxrate6(includeTaxRate6_jsonStr);
 
             // 存入数据库
-//            incomeMapper.insert(income);
+            incomeMapper.insert(income);
 
             IncomeList.add(income);
 

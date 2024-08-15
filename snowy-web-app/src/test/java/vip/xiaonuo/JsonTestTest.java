@@ -38,14 +38,4 @@ class JsonTestTest {
         System.out.println(Meta);
 
     }
-
-    @Test
-    void TestSelectbyProuctId() {
-
-        Long ProuctId = 35600L;
-
-        List<SubProjcetParam.SubprojectInfo> subprojectInfos = subprojectService.selectbyProuctId(ProuctId);
-
-
-    }
 }
