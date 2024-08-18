@@ -91,4 +91,16 @@ public class ProjectBasicInfoAddParam {
     @Schema(description = "评估时间")
     private String evaluationTime;
 
+    /** 项目开始时间 */
+    @Schema(description = "项目开始时间")
+    private String evaluateStart;
+
+    /** 项目结束时间 */
+    @Schema(description = "项目结束时间")
+    private String evaluateEnd;
+
+    /** 是否草稿 */
+    @Schema(description = "是否草稿")
+    private Integer isDraft;
+
 }
