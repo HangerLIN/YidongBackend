@@ -73,7 +73,7 @@ public class ProjectBasicInfoController {
     @PostMapping("/biz/basicinfo/add")
     public CommonResult<String> add(@RequestBody @Valid ProjectBasicInfoAddParam projectBasicInfoAddParam) {
         Long projectId = projectBasicInfoService.add(projectBasicInfoAddParam);
-        return CommonResult.ok(projectId.toString());
+        return CommonResult.data(projectId.toString());
     }
 
     /**

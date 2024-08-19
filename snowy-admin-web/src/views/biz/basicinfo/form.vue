@@ -52,6 +52,12 @@
 			<a-form-item label="评估时间：" name="evaluationTime">
 				<a-input v-model:value="formData.evaluationTime" placeholder="请输入评估时间" allow-clear />
 			</a-form-item>
+			<a-form-item label="评估开始时间：" name="evaluateStart">
+				<a-input v-model:value="formData.evaluateStart" placeholder="请输入评估开始时间" allow-clear />
+			</a-form-item>
+			<a-form-item label="评估结束时间：" name="evaluateEnd">
+				<a-input v-model:value="formData.evaluateEnd" placeholder="请输入评估结束时间" allow-clear />
+			</a-form-item>
 		</a-form>
 		<template #footer>
 			<a-button style="margin-right: 8px" @click="onClose">关闭</a-button>
@@ -113,7 +119,7 @@
 <!--		</a-form>-->
 <!--		<el-input v-model="input" placeholder="请输入内容"></el-input>-->
 		<div>
-			<touzi :cycle="cyc" @totalevent="handleDataUpdate" @ScheduleAndCosts="handleDataUpdate1"></touzi>
+			<touzi :cycle="cyc" :proId="projectId" @totalevent="handleDataUpdate" @ScheduleAndCosts="handleDataUpdate1"></touzi>
 		</div>
 		<div>
 			<touzi-money :cycle="cyc" style="margin-top: 30px"></touzi-money>
@@ -132,7 +138,7 @@
 		@close="onClose"
 	>
 		<div>
-			<shouru :shouru_cycle="shouru_cycle" @totalevent="handleDataUpdate" @ScheduleAndCosts="handleDataUpdate1"></shouru>
+			<shouru :shouru_cycle="shouru_cycle" :proId="projectId" @totalevent="handleDataUpdate" @ScheduleAndCosts="handleDataUpdate1"></shouru>
 		</div>
 <!--		<div>-->
 <!--			<touzi-money :cycle="cyc" style="margin-top: 30px"></touzi-money>-->
@@ -173,6 +179,7 @@
 	// 抽屉状态
 	let cyc=ref(0)
 	let shouru_cycle=ref(0)
+	let projectId=ref()
 	const open = ref(false)
 	const open1 = ref(false)
 	const open2 = ref(false)
@@ -268,8 +275,10 @@
 				const formDataParam = cloneDeep(formData.value)
 				projectBasicInfoApi
 					.projectBasicInfoSubmitForm(formDataParam, formDataParam.id)
-					.then(() => {
-						onClose()
+					.then((res) => {
+						// onClose()
+						console.log(res)
+						projectId=res
 						emit('successful')
 					})
 					.finally(() => {

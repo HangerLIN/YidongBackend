@@ -288,6 +288,10 @@ const props = defineProps({
 		type: Number,
 		default: 0,
 	},
+	proId: {
+		type: Number,
+		default: 0,
+	},
 })
 
 // Tips： locateMenuOrEditInput 可调整编辑框位置
@@ -826,7 +830,7 @@ const con2 = () =>{
 			}
 		});
 		// 将basicInformation数组添加到resultArray中
-		resultArray.push({ projectId:"8082",basicInformation: basicInformation,subprojectSchedule: yearinfo });
+		resultArray.push({ projectId:props.proId,basicInformation: basicInformation,subprojectSchedule: yearinfo });
 	});
 	console.log(resultArray)
 	console.log(questionChoiceVOlist.value)

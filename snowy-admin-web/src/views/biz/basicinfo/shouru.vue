@@ -422,6 +422,10 @@ const props = defineProps({
 		type: Number,
 		default: 0,
 	},
+	proId: {
+		type: Number,
+		default: 0,
+	},
 })
 
 // Tips： locateMenuOrEditInput 可调整编辑框位置
@@ -1154,7 +1158,7 @@ const searchsubinfo=()=>{
 	console.log('0000000000000000000')
 	// console.log(JSON.parse(JSON.stringify(questionChoiceVOlist.value)))
 	projectBasicInfoApi.searchSubProject({
-		ProuctId:8082
+		ProuctId:props.proId
 	}).then((res)=>{
 		searchSubProjectInfo=res
 		delRow()
@@ -1336,37 +1340,37 @@ const onSubmit = () => {
 	console.log(a)
 
 
-	let filteredData = dataform.subprojectIncome.map(obj => {
-		// 使用解构来提取需要的属性（如果存在）
-		const { projectId: projectId=null , annualAdd: schedule = null, annualDiscard: cost = null } = obj;
-		// 创建一个新对象，只包含需要的属性，并且已经重命名
-		return {
-			projectId,
-			schedule,
-			cost
-		};
-	});
-	let filteredData1={}
-	filteredData1={
-		type: "InvestAmount",
-		subProjectScheduleAndCosts: filteredData
-	},
-	console.log(filteredData1)
-	emit('ScheduleAndCosts', filteredData1)
-	projectBasicInfoApi
-		.investAmountSubject(filteredData1)
-		.then((res) => {
-			console.log(res.projectUnincludeTotal)
-			emit('totalevent', res.projectUnincludeTotal)
-			emit('ScheduleAndCosts', filteredData1)
-			alert("success")
-			// onClose()
-			// emit('successful')
-		})
-		.finally(() => {
-			// alert("fail")
-			// submitLoading.value = false
-		})
+	// let filteredData = dataform.subprojectIncome.map(obj => {
+	// 	// 使用解构来提取需要的属性（如果存在）
+	// 	const { projectId: projectId=null , annualAdd: schedule = null, annualDiscard: cost = null } = obj;
+	// 	// 创建一个新对象，只包含需要的属性，并且已经重命名
+	// 	return {
+	// 		projectId,
+	// 		schedule,
+	// 		cost
+	// 	};
+	// });
+	// let filteredData1={}
+	// filteredData1={
+	// 	type: "InvestAmount",
+	// 	subProjectScheduleAndCosts: filteredData
+	// },
+	// console.log(filteredData1)
+	// emit('ScheduleAndCosts', filteredData1)
+	// projectBasicInfoApi
+	// 	.investAmountSubject(filteredData1)
+	// 	.then((res) => {
+	// 		console.log(res.projectUnincludeTotal)
+	// 		emit('totalevent', res.projectUnincludeTotal)
+	// 		emit('ScheduleAndCosts', filteredData1)
+	// 		alert("success")
+	// 		// onClose()
+	// 		// emit('successful')
+	// 	})
+	// 	.finally(() => {
+	// 		// alert("fail")
+	// 		// submitLoading.value = false
+	// 	})
 
 
 }
