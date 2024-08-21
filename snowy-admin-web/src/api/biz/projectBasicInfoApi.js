@@ -4,6 +4,8 @@ const request = (url, ...arg) => baseRequest(`/biz/basicinfo/` + url, ...arg)
 const request1 = (url, ...arg) => baseRequest(`/biz/subjectinfoinfo/` + url, ...arg)
 const saveAndReturn = (url, ...arg) => baseRequest(`/biz/income/` + url,  ...arg)
 const request2 = (url, ...arg) => baseRequest(`/biz/subjectinfoinfo/` + url, ...arg,"get")
+
+const subprojectSpend = (url, ...arg) => baseRequest(`/biz/spend/` + url,  ...arg)
 /**
  * 项目基础信息Api接口管理器
  *
@@ -43,5 +45,8 @@ export default {
 	searchSubProject(data, edit = false) {
 		return request2('select',data)
 	},
+	subprojectSpend(data){
+		return subprojectSpend('save',data)
+	}
 }
 

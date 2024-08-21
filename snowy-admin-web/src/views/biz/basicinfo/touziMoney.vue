@@ -814,9 +814,9 @@ const con1 = () =>{
 			//不含13%税投资合计
 			const result4 = res.projectUnincludeTaxRate13.reduce((acc, curr) => {
 				// 将年份字符串转换为数字
-				const year = parseInt(curr.year, 10);
+				const year = parseFloat(curr.year);
 				// 由于 amount 也是字符串，同样转换为数字
-				const amount = parseInt(curr.amount, 10);
+				const amount = parseFloat(curr.amount);
 				// 将当前年份和金额添加到累加器对象中
 				acc[year] = amount;
 				// 返回累加器对象以便在下一次迭代中使用

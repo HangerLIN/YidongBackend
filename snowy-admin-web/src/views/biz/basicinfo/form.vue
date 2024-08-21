@@ -72,52 +72,6 @@
 		:destroy-on-close="true"
 		@close="onClose"
 	>
-<!--		<a-form ref="TouziformRef" :model="formData" :rules="formRules" layout="vertical">-->
-<!--			<p style="font-size: large">基础信息：</p>-->
-<!--			<a-form-item label="" name="name" rules="[{ required: true, message: '请输入或选择名称!' }]"  :wrapper-col="{ span: 16 }">-->
-<!--				<a-row>-->
-<!--					<a-col :span="12">-->
-<!--						<a-select v-model:value="BasicInformation.key1" placeholder="请选择名称" allow-clear  style="width: 100%;">-->
-<!--							<a-select-option v-for="item in calendarTypeOptions" :key="item.value" :value="item.value">-->
-<!--								{{ item.label }}-->
-<!--							</a-select-option>-->
-<!--						</a-select>-->
-<!--					</a-col>-->
-<!--					<a-col :span="12">-->
-<!--						<a-input v-model:value="BasicInformation.value1" :placeholder="`请输入${BasicInformation.key1}`" allow-clear style="width: 100%;" />-->
-<!--					</a-col>-->
-<!--				</a-row>-->
-<!--			</a-form-item>-->
-<!--			<a-form-item label="" name="name" rules="[{ required: true, message: '请输入或选择名称!' }]"  :wrapper-col="{ span: 16 }">-->
-<!--				<a-row>-->
-<!--					<a-col :span="12">-->
-<!--						<a-select v-model:value="BasicInformation.key2" placeholder="请选择名称" allow-clear style="width: 100%;">-->
-<!--							<a-select-option v-for="item in calendarTypeOptions" :key="item.value" :value="item.value">-->
-<!--								{{ item.label }}-->
-<!--							</a-select-option>-->
-<!--						</a-select>-->
-<!--					</a-col>-->
-<!--					<a-col :span="12">-->
-<!--						<a-input v-model:value="BasicInformation.value2" :placeholder="`请输入${BasicInformation.key2}`" allow-clear style="width: 100%;" />-->
-<!--					</a-col>-->
-<!--				</a-row>-->
-<!--			</a-form-item>-->
-<!--			<a-form-item label="" name="name" rules="[{ required: true, message: '请输入或选择名称!' }]"  :wrapper-col="{ span: 16 }">-->
-<!--				<a-row>-->
-<!--					<a-col :span="12">-->
-<!--						<a-select v-model:value="BasicInformation.key3" placeholder="请选择名称" allow-clear style="width: 100%;">-->
-<!--							<a-select-option v-for="item in calendarTypeOptions" :key="item.value" :value="item.value">-->
-<!--								{{ item.label }}-->
-<!--							</a-select-option>-->
-<!--						</a-select>-->
-<!--					</a-col>-->
-<!--					<a-col :span="12">-->
-<!--						<a-input v-model:value="BasicInformation.value3" :placeholder="`请输入${BasicInformation.key3}`" allow-clear style="width: 100%;" />-->
-<!--					</a-col>-->
-<!--				</a-row>-->
-<!--			</a-form-item>-->
-<!--		</a-form>-->
-<!--		<el-input v-model="input" placeholder="请输入内容"></el-input>-->
 		<div>
 			<touzi :cycle="cyc" :proId="projectId" @totalevent="handleDataUpdate" @ScheduleAndCosts="handleDataUpdate1"></touzi>
 		</div>
@@ -148,6 +102,25 @@
 		<template #footer>
 			<a-button style="margin-right: 8px" @click="onClose">关闭</a-button>
 			<a-button type="primary" @click="onSubmit" :loading="submitLoading">保存</a-button>
+			<a-button type="primary" @click="nextKaizhi" :loading="submitLoading">下一步</a-button>
+		</template>
+	</xn-form-container>
+	<xn-form-container
+		title="开支明细"
+		:width="700"
+		v-model:open="open3"
+		:destroy-on-close="true"
+		@close="onClose"
+	>
+		<div>
+			<kaizhi :shouru_cycle="shouru_cycle" :proId="projectId" @totalevent="handleDataUpdate" @ScheduleAndCosts="handleDataUpdate1"></kaizhi>
+		</div>
+		<!--		<div>-->
+		<!--			<touzi-money :cycle="cyc" style="margin-top: 30px"></touzi-money>-->
+		<!--		</div>-->
+		<template #footer>
+			<a-button style="margin-right: 8px" @click="onClose">关闭</a-button>
+			<a-button type="primary" @click="onSubmit" :loading="submitLoading">保存</a-button>
 			<a-button type="primary" @click="nextMingxi" :loading="submitLoading">下一步</a-button>
 		</template>
 	</xn-form-container>
@@ -160,6 +133,7 @@
 	import Touzi from "@/views/biz/basicinfo/touzi.vue";
 	import TouziMoney from "@/views/biz/basicinfo/touziMoney.vue";
 	import Shouru from "@/views/biz/basicinfo/shouru.vue";
+	import Kaizhi from "@/views/biz/basicinfo/kaizhi.vue";
 
 	const totaluniclude = ref()
 	const scheduleAndCosts = ref()
@@ -183,6 +157,7 @@
 	const open = ref(false)
 	const open1 = ref(false)
 	const open2 = ref(false)
+	const open3 = ref(false)
 	const emit = defineEmits({ successful: null })
 	const formRef = ref()
 	const TouziformRef = ref()
@@ -255,13 +230,21 @@
 			formData.value = Object.assign({}, recordData)
 		}
 	}
+	const onOpen3 = (record) => {
+		open3.value = true
+		if (record) {
+			let recordData = cloneDeep(record)
+			formData.value = Object.assign({}, recordData)
+		}
+	}
 	// 关闭抽屉
 	const onClose = () => {
 		// formRef.value.resetFields()
 		// TouziformRef.value.resetFields()
 		formData.value = {}
-		open.value = false
-		open1.value = false
+		// open.value = false
+		// open1.value = false
+		// open2.value = false
 	}
 	// 默认要校验的
 	const formRules = {
@@ -291,7 +274,8 @@
 	defineExpose({
 		onOpen,
 		onOpen1,
-		onOpen2
+		onOpen2,
+		onOpen3
 
 	})
 
@@ -318,27 +302,15 @@
 		console.log('next')
 		onOpen2()
 		console.log('next')
-		// console.log(questionChoiceVOlist.value)
-		// TouziformRef.value
-		// 	.validate()
-		// 	.then(() => {
-		// 		/*下一步是否存储信息*/
-		// 		// submitLoading.value = true
-		// 		// const formDataParam = cloneDeep(formData.value)
-		// 		// projectBasicInfoApi
-		// 		// 	.projectBasicInfoSubmitForm(formDataParam, formDataParam.id)
-		// 		// 	.then(() => {
-		// 		// 		onClose()
-		// 		// 		emit('successful')
-		// 		// 	})
-		// 		// 	.finally(() => {
-		// 		// 		submitLoading.value = false
-		// 		// 	})
-		// 		onClose()
-		// 		console.log('next')
-		// 		onOpen1()
-		// 		console.log('next')
-		// 	})
-		// 	.catch(() => {})
+	}
+	const nextKaizhi = () => {
+		// onClose()
+		// console.log('next')
+		// onOpen1()
+		console.log('next'+cyc.value)
+		onClose()
+		console.log('next')
+		onOpen3()
+		console.log('next')
 	}
 </script>
