@@ -73,7 +73,7 @@ public class SpendServiceImpl extends ServiceImpl<SpendMapper, Spend>
             BigDecimal depreciationRate4 = benchmark.getDepreciationRate4();
 
             IncomeVO incomeVO = new IncomeVO(); //TODO 后续需要调用service获取数据,这里只是模拟数据
-            String JsonMessage = ResourceUtil.readUtf8Str("incomeVO.json");
+            String JsonMessage = ResourceUtil.readUtf8Str("Old/incomeVO.json");
             incomeVO = JSONUtil.toBean(JsonMessage, IncomeVO.class);
 
             // 获得收入数据，使用HashMap完成数据的解耦

@@ -42,7 +42,7 @@ public class TransactionController {
         return CommonResult.data(transactionService.getById(id));
     }
 
-    @GetMapping
+    @GetMapping("/biz/new/transaction/page")
     @Operation(summary = "获取业务分页信息")
     public CommonResult<Page<Transaction>> listTransactions(
             @RequestParam(value = "page", defaultValue = "1") int page,
