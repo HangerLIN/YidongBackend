@@ -35,8 +35,8 @@ public class Subtemplate implements Serializable {
     /**
      * 子模版名称
      */
-    @TableField(value = "Subtemplat_name")
-    private String subtemplatName;
+    @TableField(value = "Subtemplate_name")
+    private String subtemplateName;
 
     /**
      * 子模版类型（0:涉及计算，1：不涉及计算）
@@ -80,7 +80,7 @@ public class Subtemplate implements Serializable {
         return (this.getSubtemplateId() == null ? other.getSubtemplateId() == null : this.getSubtemplateId().equals(other.getSubtemplateId()))
             && (this.getTemplateId() == null ? other.getTemplateId() == null : this.getTemplateId().equals(other.getTemplateId()))
             && (this.getSubtemplateSerial() == null ? other.getSubtemplateSerial() == null : this.getSubtemplateSerial().equals(other.getSubtemplateSerial()))
-            && (this.getSubtemplatName() == null ? other.getSubtemplatName() == null : this.getSubtemplatName().equals(other.getSubtemplatName()))
+            && (this.getSubtemplateName() == null ? other.getSubtemplateName() == null : this.getSubtemplateName().equals(other.getSubtemplateName()))
             && (this.getTemplateType() == null ? other.getTemplateType() == null : this.getTemplateType().equals(other.getTemplateType()))
             && (this.getBasicInformation() == null ? other.getBasicInformation() == null : this.getBasicInformation().equals(other.getBasicInformation()))
             && (this.getStartyearEq() == null ? other.getStartyearEq() == null : this.getStartyearEq().equals(other.getStartyearEq()))
@@ -94,7 +94,7 @@ public class Subtemplate implements Serializable {
         result = prime * result + ((getSubtemplateId() == null) ? 0 : getSubtemplateId().hashCode());
         result = prime * result + ((getTemplateId() == null) ? 0 : getTemplateId().hashCode());
         result = prime * result + ((getSubtemplateSerial() == null) ? 0 : getSubtemplateSerial().hashCode());
-        result = prime * result + ((getSubtemplatName() == null) ? 0 : getSubtemplatName().hashCode());
+        result = prime * result + ((getSubtemplateName() == null) ? 0 : getSubtemplateName().hashCode());
         result = prime * result + ((getTemplateType() == null) ? 0 : getTemplateType().hashCode());
         result = prime * result + ((getBasicInformation() == null) ? 0 : getBasicInformation().hashCode());
         result = prime * result + ((getStartyearEq() == null) ? 0 : getStartyearEq().hashCode());
@@ -111,7 +111,7 @@ public class Subtemplate implements Serializable {
         sb.append(", subtemplateId=").append(subtemplateId);
         sb.append(", templateId=").append(templateId);
         sb.append(", subtemplateSerial=").append(subtemplateSerial);
-        sb.append(", subtemplatName=").append(subtemplatName);
+        sb.append(", subtemplateName=").append(subtemplateName);
         sb.append(", templateType=").append(templateType);
         sb.append(", basicInformation=").append(basicInformation);
         sb.append(", startyearEq=").append(startyearEq);

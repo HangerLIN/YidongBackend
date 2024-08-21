@@ -1,0 +1,154 @@
+{
+  "submouleList": [
+    {
+      "TemplateId": 1,
+      "Subtemplate_Serial": 1,
+      "SubtemplateName": "建设进度",
+      "TemplateType": 1,
+      "BasicInformation": [
+        {
+          "key": "产品代码",
+          "value": "310300"
+        },
+        {
+          "key": "产品名称",
+          "value": "单向双车道道路"
+        },
+        {
+          "key": "规格型号",
+          "value": "无绿植"
+        },
+        {
+          "key": "单位",
+          "value": "条"
+        }
+      ],
+      "StartYearEq": "",
+      "EndYear_eq": ""
+    },
+    {
+      "TemplateId": 1,
+      "Subtemplate_Serial": 2,
+      "SubtemplateName": "单条造价（不含税）",
+      "TemplateType": 1,
+      "BasicInformation": [
+        {
+          "key": "产品代码",
+          "value": "310300"
+        },
+        {
+          "key": "产品名称",
+          "value": "单向双车道道路"
+        },
+        {
+          "key": "规格型号",
+          "value": "无绿植"
+        },
+        {
+          "key": "单位",
+          "value": "条"
+        }
+      ],
+      "StartYearEq": "",
+      "EndYear_eq": ""
+    },
+    {
+      "TemplateId": 1,
+      "Subtemplate_Serial": 3,
+      "SubtemplateName": "投资金额（不含税）",
+      "TemplateType": 0,
+      "BasicInformation": [
+        {
+          "key": "产品代码",
+          "value": "310300"
+        },
+        {
+          "key": "产品名称",
+          "value": "单向双车道道路"
+        },
+        {
+          "key": "规格型号",
+          "value": "无绿植"
+        },
+        {
+          "key": "单位",
+          "value": "条"
+        }
+      ],
+      "StartYearEq": "1#1*1#3",
+      "EndYear_eq": "1#1*1#3"
+    },
+    {
+      "TemplateId": 1,
+      "Subtemplate_Serial": 4,
+      "SubtemplateName": "投资金额合计（不含税）",
+      "TemplateType": 0,
+      "BasicInformation": [],
+      "StartYearEq": "1#3SUM",
+      "EndYear_eq": "1#3SUM"
+    },
+    {
+      "TemplateId": 1,
+      "Subtemplate_Serial": 5,
+      "SubtemplateName": "6税率投资额(不含税)",
+      "TemplateType": 1,
+      "BasicInformation": [],
+      "StartYearEq": "",
+      "EndYear_eq": ""
+    },
+    {
+      "TemplateId": 1,
+      "Subtemplate_Serial": 6,
+      "SubtemplateName": "9税率投资额(不含税)",
+      "TemplateType": 1,
+      "BasicInformation": [],
+      "StartYearEq": "",
+      "EndYear_eq": ""
+    },
+    {
+      "TemplateId": 1,
+      "Subtemplate_Serial": 7,
+      "SubtemplateName": "13税率投资额(不含税)",
+      "TemplateType": 0,
+      "BasicInformation": [],
+      "StartYearEq": "1#4-1#5-1#6",
+      "EndYear_eq": "1#4-1#5-1#6"
+    },
+    {
+      "TemplateId": 1,
+      "Subtemplate_Serial": 8,
+      "SubtemplateName": "6税率投资额(含税)",
+      "TemplateType": 0,
+      "BasicInformation": [],
+      "StartYearEq": "1#5*1.06",
+      "EndYear_eq": "1#5*1.06"
+    },
+    {
+      "TemplateId": 1,
+      "Subtemplate_Serial": 9,
+      "SubtemplateName": "9税率投资额(含税)",
+      "TemplateType": 0,
+      "BasicInformation": [],
+      "StartYearEq": "1#6*1.09",
+      "EndYear_eq": "1#6*1.09"
+    },
+    {
+      "TemplateId": 1,
+      "Subtemplate_Serial": 10,
+      "SubtemplateName": "13税率投资额(含税)",
+      "TemplateType": 0,
+      "BasicInformation": [],
+      "StartYearEq": "1#7*1.13",
+      "EndYear_eq": "1#7*1.13"
+    },
+    {
+      "TemplateId": 1,
+      "Subtemplate_Serial": 11,
+      "SubtemplateName": "投资金额合计（含税）",
+      "TemplateType": 0,
+      "BasicInformation": [],
+      "StartYearEq": "1#8+1#9+1#10",
+      "EndYear_eq": "1#8+1#9+1#10"
+    }
+  ]
+}
