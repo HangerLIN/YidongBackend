@@ -21,7 +21,7 @@ class JsonTestTest {
     @Test
     void TestAddSubProject() {
 
-        String JsonMessage = ResourceUtil.readUtf8Str("subjectinfo.json");
+        String JsonMessage = ResourceUtil.readUtf8Str("Old/subjectinfo.json");
         SubProjcetParam Meta = JSONUtil.toBean(JsonMessage, SubProjcetParam.class);
 
         // 字段校验

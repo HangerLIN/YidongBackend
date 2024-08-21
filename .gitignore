@@ -32,3 +32,4 @@ logs/
 tmp/
 !DmJdbcDriver18.jar
 !kingbase8-8.6.0.jar
+/snowy-plugin/snowy-plugin-biz/src/main/resources/Old/
