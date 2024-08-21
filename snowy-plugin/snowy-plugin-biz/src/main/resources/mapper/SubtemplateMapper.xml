@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vip.xiaonuo.biz.modular.New.subtemplate.mapper.SubtemplateMapper">
+
+    <resultMap id="BaseResultMap" type="vip.xiaonuo.biz.modular.New.subtemplate.entity.Subtemplate">
+            <id property="subtemplateId" column="Subtemplate_id" jdbcType="BIGINT"/>
+            <result property="templateId" column="Template_id" jdbcType="BIGINT"/>
+            <result property="subtemplateSerial" column="Subtemplate_Serial" jdbcType="INTEGER"/>
+            <result property="subtemplatName" column="Subtemplat_name" jdbcType="VARCHAR"/>
+            <result property="templateType" column="Template_type" jdbcType="INTEGER"/>
+            <result property="basicInformation" column="Basic_information" jdbcType="VARCHAR"/>
+            <result property="startyearEq" column="StartYear_eq" jdbcType="VARCHAR"/>
+            <result property="endyearEq" column="EndYear_eq" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Subtemplate_id,Template_id,Subtemplate_Serial,
+        Subtemplat_name,Template_type,Basic_information,
+        StartYear_eq,EndYear_eq
+    </sql>
+</mapper>

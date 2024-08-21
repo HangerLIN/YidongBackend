@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vip.xiaonuo.biz.modular.New.transaction.mapper.TransactionMapper">
+
+    <resultMap id="BaseResultMap" type="vip.xiaonuo.biz.modular.New.transaction.entity.Transaction">
+            <id property="transactionId" column="Transaction_id" jdbcType="BIGINT"/>
+            <result property="transactionName" column="Transaction_name" jdbcType="VARCHAR"/>
+            <result property="transactionType" column="Transaction_type" jdbcType="TINYINT"/>
+            <result property="templateNum" column="Template_num" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Transaction_id,Transaction_name,Transaction_type,
+        Template_num
+    </sql>
+</mapper>
