@@ -32,7 +32,7 @@ public class AdminController {
     // 查询模版
     @GetMapping("/biz/new/subtemplate/select/{id}")
     @Operation(summary = "查询子模版信息")
-    public CommonResult<List<Subtemplate>> deleteSubTemplate(@PathVariable("id") Long TemplateId) {
+    public CommonResult<List<Subtemplate>> selectSubTemplate(@PathVariable("id") Long TemplateId) {
 
         return CommonResult.data(subtemplateService.getSubtemplatesByTemplateId(TemplateId));
     }
