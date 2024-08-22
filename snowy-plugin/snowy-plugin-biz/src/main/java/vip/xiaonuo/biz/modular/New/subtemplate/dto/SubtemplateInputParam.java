@@ -10,11 +10,11 @@ import java.util.List;
 @Data
 public class SubtemplateInputParam {
 
-    private List<SubmouleDVList> submouleDVList;
+    private List<SubmouleDV> submouleDVList;
 
     @NoArgsConstructor
     @Data
-    public static class SubmouleDVList {
+    public static class SubmouleDV {
         private Integer subtemplateId;
         private Integer projectId;
         private List<Data> data;

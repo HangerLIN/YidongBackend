@@ -19,15 +19,8 @@ public class SubtemplateParam {
         private Integer subtemplateSerial;
         private String subtemplateName;
         private Integer templateType;
-        private List<BasicInformation> basicInformation;
+        private List<String> basicInformation;
         private String startYearEq;
         private String endyearEq;
-
-        @NoArgsConstructor
-        @Data
-        public static class BasicInformation {
-            private String key;
-            private String value;
-        }
     }
 }
