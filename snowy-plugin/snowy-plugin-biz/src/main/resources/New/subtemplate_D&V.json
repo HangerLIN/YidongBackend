@@ -1,0 +1,155 @@
+{
+  "submouleDVList": [
+    {
+    "SubtemplateId": 1,
+    "projectId": 1,
+    "data":[
+      {
+      "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+      "StartYearData": 340.0,
+      "EndYearData": [260.0,198.0]
+      },
+      {
+        "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+        "StartYearData": 150.0,
+        "EndYearData": [140.0,120.0]
+      },
+      {
+        "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+        "StartYearData": 240.0,
+        "EndYearData": [230.0,220.0]
+      }
+    ]
+    },
+    {
+      "SubtemplateId": 2,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+          "StartYearData": 6000.0,
+          "EndYearData": [6000.0,6000.0]
+        },
+        {
+          "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+          "StartYearData": 2000.0,
+          "EndYearData": [2000.0,2000.0]
+        },
+        {
+          "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+          "StartYearData": 3500.0,
+          "EndYearData": [3500.0,3500.0]
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 3,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+          "StartYearData": -1,
+          "EndYearData": []
+        },
+        {
+          "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+          "StartYearData": -1,
+          "EndYearData": []
+        },
+        {
+          "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 4,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": [],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 5,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": [],
+          "StartYearData": 80000.0,
+          "EndYearData": [70000.0,50000.0]
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 6,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": [],
+          "StartYearData": 2300000.0,
+          "EndYearData": [750000.0,560000.0]
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 7,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": [],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 8,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": [],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 9,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": [],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 10,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": [],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 11,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": [],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    }
+  ]
+}
