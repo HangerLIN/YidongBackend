@@ -10,13 +10,13 @@ import java.util.List;
 @Data
 public class SubtemplateOutput {
 
-    private List<SubmouleDVList> submouleDVList;
+    private List<SubmouleOutputDV> submouleDVList;
 
     @NoArgsConstructor
     @Data
-    public static class SubmouleDVList {
-        private Integer subtemplateId;
-        private Integer projectId;
+    public static class SubmouleOutputDV {
+        private Long subtemplateId;
+        private Long projectId;
         private List<Data> data;
 
         @NoArgsConstructor

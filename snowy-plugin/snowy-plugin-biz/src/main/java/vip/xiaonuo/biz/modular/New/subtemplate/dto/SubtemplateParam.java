@@ -15,7 +15,7 @@ public class SubtemplateParam {
     @NoArgsConstructor
     @Data
     public static class Submoule {
-        private Integer templateId;
+        private Long templateId;
         private Integer subtemplateSerial;
         private String subtemplateName;
         private Integer templateType;

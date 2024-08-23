@@ -15,8 +15,8 @@ public class SubtemplateInputParam {
     @NoArgsConstructor
     @Data
     public static class SubmouleDV {
-        private Integer subtemplateId;
-        private Integer projectId;
+        private Long subtemplateId;
+        private Long projectId;
         private List<Data> data;
 
         @NoArgsConstructor
