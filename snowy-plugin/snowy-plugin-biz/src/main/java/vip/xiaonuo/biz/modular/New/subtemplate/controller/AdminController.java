@@ -21,20 +21,20 @@ public class AdminController {
     private SubtemplateService subtemplateService;
 
     // 添加模版
-    @PostMapping("/biz/new/subtemplate/add")
-    @Operation(summary = "增加子模版信息")
-    public CommonResult<String> addSubTemplate(@RequestBody SubtemplateParam subtemplateParam) {
-        subtemplateService.addSubtemplateInfo(subtemplateParam);
-        return CommonResult.ok("添加成功");
-    }
+//    @PostMapping("/biz/new/subtemplate/add")
+//    @Operation(summary = "增加子模版信息")
+//    public CommonResult<String> addSubTemplate(@RequestBody SubtemplateParam subtemplateParam) {
+//        subtemplateService.addSubtemplateInfo(subtemplateParam);
+//        return CommonResult.ok("添加成功");
+//    }
 
 
     // 查询模版
-    @GetMapping("/biz/new/subtemplate/select/{id}")
-    @Operation(summary = "查询子模版信息")
-    public CommonResult<List<Subtemplate>> selectSubTemplate(@PathVariable("id") Long TemplateId) {
-
-        return CommonResult.data(subtemplateService.getSubtemplatesByTemplateId(TemplateId));
-    }
+//    @GetMapping("/biz/new/subtemplate/select/{id}")
+//    @Operation(summary = "查询子模版信息")
+//    public CommonResult<List<Subtemplate>> selectSubTemplate(@PathVariable("id") Long TemplateId) {
+//
+//        return CommonResult.data(subtemplateService.getSubtemplatesByTemplateId(TemplateId));
+//    }
 
 }
