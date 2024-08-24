@@ -33,11 +33,11 @@ public class Subtemplate001 {
     /** 子模版ID */
     @TableId
     @Schema(description = "子模版ID")
-    private Long subtemplateId;
+    private String subtemplateId;
 
     /** 模版ID */
     @Schema(description = "模版ID")
-    private Long templateId;
+    private String templateId;
 
     /** 子模版序号 */
     @Schema(description = "子模版序号")

@@ -54,7 +54,7 @@
 			</template>
 		</s-table>
 	</a-card>
-	<Form ref="formRef" @successful="tableRef.refresh()" />
+	<Form ref="formRef" :TemplateId="props.TemplateId" @successful="tableRef.refresh()" />
 </template>
 
 <script setup name="SubTemplate001">

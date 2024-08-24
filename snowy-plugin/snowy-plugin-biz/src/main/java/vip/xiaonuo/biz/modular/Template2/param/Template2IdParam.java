@@ -30,6 +30,6 @@ public class Template2IdParam {
 
     /** 模版ID */
     @Schema(description = "模版ID", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "templateId不能为空")
-    private Long templateId;
+//    @NotBlank(message = "templateId不能为空")
+    private String templateId;
 }

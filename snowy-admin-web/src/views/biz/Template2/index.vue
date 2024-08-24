@@ -54,7 +54,7 @@
 			</template>
 		</s-table>
 	</a-card>
-	<Form ref="formRef" @successful="tableRef.refresh()" />
+	<Form ref="formRef" :TemplateId="props.TemplateId" @successful="tableRef.refresh()" />
 </template>
 
 <script setup name="Template2">
@@ -66,6 +66,17 @@
 	const tableRef = ref()
 	const formRef = ref()
 	const toolConfig = { refresh: true, height: true, columnSetting: true, striped: false }
+
+	const props = defineProps({
+		TemplateId: {
+			type: Number,
+			default: 0,
+		},
+		proId: {
+			type: Number,
+			default: 0,
+		},
+	})
 	const columns = [
 		{
 			title: '业务ID',
@@ -111,6 +122,8 @@
 	}
 	const loadData = (parameter) => {
 		const searchFormParam = cloneDeep(searchFormState.value)
+		parameter.transactionId=props.TemplateId
+		console.log(parameter)
 		return template2Api.template2Page(Object.assign(parameter, searchFormParam)).then((data) => {
 			return data
 		})

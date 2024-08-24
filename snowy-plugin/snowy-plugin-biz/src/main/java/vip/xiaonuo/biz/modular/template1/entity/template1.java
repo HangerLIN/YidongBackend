@@ -33,7 +33,7 @@ public class template1 {
     /** 业务ID */
     @TableId
     @Schema(description = "业务ID")
-    private Long transactionId;
+    private String transactionId;
 
     /** 业务名称 */
     @Schema(description = "业务名称")
