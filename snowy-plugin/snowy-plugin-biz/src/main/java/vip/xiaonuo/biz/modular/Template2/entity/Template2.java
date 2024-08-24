@@ -33,11 +33,11 @@ public class Template2 {
     /** 模版ID */
     @TableId
     @Schema(description = "模版ID")
-    private Long templateId;
+    private String templateId;
 
     /** 业务ID */
     @Schema(description = "业务ID")
-    private Long transactionId;
+    private  String transactionId;
 
     /** 模版名称 */
     @Schema(description = "模版名称")
