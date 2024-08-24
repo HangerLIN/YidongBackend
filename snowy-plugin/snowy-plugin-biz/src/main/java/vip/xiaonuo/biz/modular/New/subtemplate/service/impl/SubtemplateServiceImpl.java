@@ -23,15 +23,18 @@ import java.util.regex.Pattern;
 public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subtemplate>
     implements SubtemplateService{
 
+    private static Map<Long, List<List<BigDecimal>>> subtemplateIdToStartYearData = new HashMap<>();
+    private static Map<Long, List<List<BigDecimal>>> subtemplateIdToOtherYearData = new HashMap<>();
+    private static Map<List<List<BigDecimal>>, Long> dataTosubtemplateId = new HashMap<>();
+
     @Override
     public SubtemplateOutput calculate(List<Subtemplate> subtemplateList, SubtemplateInputParam subtemplateInputParam) {
 
         Map<Pair<Long,Integer>, Long> idAndSerialToSubtemplateId = new HashMap<>();
-        Map<Long, List<List<BigDecimal>>> subtemplateIdToStartYearData = new HashMap<>();
-        Map<Long, List<List<BigDecimal>>> subtemplateIdToOtherYearData = new HashMap<>();
+
         List<SubtemplateInputParam.SubmouleDV> submouleDVList = subtemplateInputParam.getSubmouleDVList();
-        int numberOfSubtemplates = subtemplateList.size();
-        int numberofSubProject = submouleDVList.get(0).getData().size();
+//        int numberOfSubtemplates = subtemplateList.size();
+//        int numberofSubProject = submouleDVList.get(0).getData().size();
 
         for (Subtemplate subtemplate : subtemplateList) {
             idAndSerialToSubtemplateId.put(new Pair<>(subtemplate.getTemplateId(), subtemplate.getSubtemplateSerial()), subtemplate.getSubtemplateId());
@@ -57,6 +60,7 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
 //        System.out.println(subtemplateIdToOtherYearData);
 
         for (Subtemplate subtemplate : subtemplateList) {
+
             String originalStartYearEq = subtemplate.getStartyearEq();
             String originalOtherYearEq = subtemplate.getEndyearEq();
             Long subtemplateId = subtemplate.getSubtemplateId();
@@ -65,65 +69,78 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
             String startYearEq = convertExpression(originalStartYearEq, idAndSerialToSubtemplateId);
             String otherYearEq = convertExpression(originalOtherYearEq, idAndSerialToSubtemplateId);
 
-//            System.out.println("--------------------------------------------");
-//            System.out.println(startYearEq);
-
             List<List<BigDecimal>> resultStartYear = new ArrayList<>();
             List<List<BigDecimal>> resultOtherYear = new ArrayList<>();
-            List<List<BigDecimal>> result = new ArrayList<>();
+
             //不需要计算（Template_type: 1 or 3），跳过
             if(subtemplate.getTemplateType() != 0) continue;
+
             //Template_type: 0
-            if(!calculateSum(startYearEq)){
+            System.out.println("--------------------------------------------");
+            System.out.println(startYearEq);
+            System.out.println(otherYearEq);
 
-                resultStartYear = calculateExpression(startYearEq, subtemplateIdToStartYearData);
-                resultOtherYear = calculateExpression(otherYearEq, subtemplateIdToOtherYearData);
-                subtemplateIdToStartYearData.put(subtemplateId, resultStartYear);
-                subtemplateIdToOtherYearData.put(subtemplateId, resultOtherYear);
-//                result = merge(resultStartYear, resultOtherYear);
+            resultStartYear = calculateExpression(startYearEq, subtemplateIdToStartYearData, 0);
+            resultOtherYear = calculateExpression(otherYearEq, subtemplateIdToOtherYearData, 1);
 
-//                System.out.println(subtemplate.getSubtemplateName());
-//                System.out.println(resultStartYear);
-//                System.out.println(resultOtherYear);
-//                System.out.println(result);
-//                System.out.println(subtemplateIdToStartYearData);
-//                System.out.println(subtemplateIdToOtherYearData);
-//                System.out.println("--------------------------------------------");
+            subtemplateIdToStartYearData.put(subtemplateId, resultStartYear);
+            subtemplateIdToOtherYearData.put(subtemplateId, resultOtherYear);
+
+            System.out.println(subtemplateIdToStartYearData);
+            System.out.println(subtemplateIdToOtherYearData);
+            System.out.println("--------------------------------------------");
 
 
-
-            }
-            else{
-                List<List<BigDecimal>> addResult = new ArrayList<>();
-
-                Long sumId = Long.parseLong(startYearEq.substring(1,startYearEq.length() - 3));
-//                System.out.println(sumId);
-                List<List<BigDecimal>> data1 = subtemplateIdToStartYearData.get(sumId);
-                List<List<BigDecimal>> data2 = subtemplateIdToOtherYearData.get(sumId);
-                List<List<BigDecimal>> data = merge(data1, data2);
-
-//                System.out.println(subtemplate.getSubtemplateName());
-//                System.out.println(data1);
-//                System.out.println(data2);
-//                System.out.println(data);
-
-                int size = data.size();
-                if(size == 1) addResult = addHorizontally(data);
-                else addResult = addvertically(data);
-//                System.out.println(addResult);
-
-                List<List<BigDecimal>> firstColumn = new ArrayList<>();
-                List<List<BigDecimal>> remainingColumns = new ArrayList<>();
-
-                splitList(addResult, firstColumn, remainingColumns);
-
-                subtemplateIdToStartYearData.put(subtemplateId, firstColumn);
-                subtemplateIdToOtherYearData.put(subtemplateId, remainingColumns);
-
-//                System.out.println(subtemplateIdToStartYearData);
-//                System.out.println(subtemplateIdToOtherYearData);
-//                System.out.println("--------------------------------------------");
-            }
+//            if(!calculateSum(startYearEq)){
+//
+//                resultStartYear = calculateExpression(startYearEq, subtemplateIdToStartYearData, 0);
+//                resultOtherYear = calculateExpression(otherYearEq, subtemplateIdToOtherYearData, 1);
+//                subtemplateIdToStartYearData.put(subtemplateId, resultStartYear);
+//                subtemplateIdToOtherYearData.put(subtemplateId, resultOtherYear);
+////                result = merge(resultStartYear, resultOtherYear);
+//
+////                System.out.println(subtemplate.getSubtemplateName());
+////                System.out.println(resultStartYear);
+////                System.out.println(resultOtherYear);
+////                System.out.println(result);
+////                System.out.println(subtemplateIdToStartYearData);
+////                System.out.println(subtemplateIdToOtherYearData);
+////                System.out.println("--------------------------------------------");
+//
+//
+//
+//            }
+//            else{
+//                List<List<BigDecimal>> addResult = new ArrayList<>();
+//
+//                Long sumId = Long.parseLong(startYearEq.substring(1,startYearEq.length() - 3));
+////                System.out.println(sumId);
+//                List<List<BigDecimal>> data1 = subtemplateIdToStartYearData.get(sumId);
+//                List<List<BigDecimal>> data2 = subtemplateIdToOtherYearData.get(sumId);
+//                List<List<BigDecimal>> data = merge(data1, data2);
+//
+////                System.out.println(subtemplate.getSubtemplateName());
+////                System.out.println(data1);
+////                System.out.println(data2);
+////                System.out.println(data);
+//
+//                int size = data.size();
+//                if(size == 1) addResult = addHorizontally(data);
+//                else addResult = addvertically(data);
+////                System.out.println(addResult);
+//
+//                List<List<BigDecimal>> firstColumn = new ArrayList<>();
+//                List<List<BigDecimal>> remainingColumns = new ArrayList<>();
+//
+//                splitList(addResult, firstColumn, remainingColumns);
+//
+//                subtemplateIdToStartYearData.put(subtemplateId, firstColumn);
+//                subtemplateIdToOtherYearData.put(subtemplateId, remainingColumns);
+//
+////                System.out.println(subtemplateIdToStartYearData);
+////                System.out.println(subtemplateIdToOtherYearData);
+////                System.out.println("--------------------------------------------");
+//            }
 
         }
 
@@ -150,6 +167,12 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
         subtemplateOutput.setSubmouleDVList(subtemplateOutputList);
 
         return subtemplateOutput;
+    }
+
+    private static List<List<BigDecimal>> calculateSum(Long subtemplateId, List<List<BigDecimal>> data, int flag){
+        int size = data.size();
+        if(size == 1) return addHorizontally(data);
+        else return addvertically(data);
     }
 
     private List<List<BigDecimal>> merge(List<List<BigDecimal>> resultStartYear, List<List<BigDecimal>> resultOtherYear){
@@ -179,7 +202,7 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
         }
     }
 
-    private List<List<BigDecimal>> addvertically(List<List<BigDecimal>> data){
+    private static List<List<BigDecimal>> addvertically(List<List<BigDecimal>> data){
         int m = data.size();
         int n = data.get(0).size();
         List<List<BigDecimal>> ans = new ArrayList<>();
@@ -195,7 +218,7 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
         return ans;
     }
 
-    private List<List<BigDecimal>> addHorizontally(List<List<BigDecimal>> data){
+    private static List<List<BigDecimal>> addHorizontally(List<List<BigDecimal>> data){
         int n = data.get(0).size();
         List<List<BigDecimal>> ans = new ArrayList<>(n);
         List<BigDecimal> tmp = new ArrayList<>();
@@ -233,21 +256,21 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
         return sb.toString();
     }
 
-    public static boolean calculateSum(String str) {
-        if (str.length() < 3) {
-            return false; // 字符串长度小于3，肯定不是"SUM"
-        }
-
-        // 获取字符串的后三位
-        String lastThree = str.substring(str.length() - 3);
-
-        // 判断后三位是否为"SUM"
-        return lastThree.equals("SUM");
-    }
+//    public static boolean calculateSum(String str) {
+//        if (str.length() < 3) {
+//            return false; // 字符串长度小于3，肯定不是"SUM"
+//        }
+//
+//        // 获取字符串的后三位
+//        String lastThree = str.substring(str.length() - 3);
+//
+//        // 判断后三位是否为"SUM"
+//        return lastThree.equals("SUM");
+//    }
 
     // 计算表达式
     public static List<List<BigDecimal>> calculateExpression(
-            String expression, Map<Long, List<List<BigDecimal>>> matrixMap) {
+            String expression, Map<Long, List<List<BigDecimal>>> matrixMap, int flag) {
 
         Stack<List<List<BigDecimal>>> values = new Stack<>();
         Stack<Character> operators = new Stack<>();
@@ -266,6 +289,7 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
                 }
                 Long matrixId = Long.parseLong(expression.substring(i + 1, j));
                 values.push(matrixMap.get(matrixId));
+                dataTosubtemplateId.put(matrixMap.get(matrixId), matrixId);
                 i = j - 1;
             } else if (ch == '$') {
                 int j = i + 1;
@@ -288,6 +312,10 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
                     values.push(applyOp(operators.pop(), values.pop(), values.pop()));
                 }
                 operators.push(ch);
+            } else if(i + 2 < expression.length() && expression.substring(i, i + 3).equals("SUM")){
+                List<List<BigDecimal>> data = values.pop();
+                values.push(calculateSum(dataTosubtemplateId.get(data),data,flag));
+                i += 2;
             }
         }
 
