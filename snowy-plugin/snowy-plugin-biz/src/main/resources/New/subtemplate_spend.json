@@ -1,0 +1,103 @@
+{
+  "submouleList": [
+    {
+      "templateId": 2,
+      "subtemplateSerial": 1,
+      "subtemplateName": "建设进度",
+      "templateType": 1,
+      "basicInformation": ["产品代码", "产品名称", "规格型号", "单位"],
+      "startYearEq": "",
+      "endyearEq": ""
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 2,
+      "subtemplateName": "单条造价（不含税）",
+      "templateType": 1,
+      "basicInformation": ["产品代码", "产品名称", "规格型号", "单位"],
+      "startYearEq": "",
+      "endyearEq": ""
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 3,
+      "subtemplateName": "投资金额（不含税）",
+      "templateType": 0,
+      "basicInformation": ["产品代码", "产品名称", "规格型号", "单位"],
+      "startYearEq": "1#1*1#3",
+      "endyearEq": "1#1*1#3"
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 4,
+      "subtemplateName": "投资金额合计（不含税）",
+      "templateType": 0,
+      "basicInformation": [],
+      "startYearEq": "1#3SUM",
+      "endyearEq": "1#3SUM"
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 5,
+      "subtemplateName": "6税率投资额(不含税)",
+      "templateType": 1,
+      "basicInformation": [],
+      "startYearEq": "",
+      "endyearEq": ""
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 6,
+      "subtemplateName": "9税率投资额(不含税)",
+      "templateType": 1,
+      "basicInformation": [],
+      "startYearEq": "",
+      "endyearEq": ""
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 7,
+      "subtemplateName": "13税率投资额(不含税)",
+      "templateType": 0,
+      "basicInformation": [],
+      "startYearEq": "1#4-1#5-1#6",
+      "endyearEq": "1#4-1#5-1#6"
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 8,
+      "subtemplateName": "6税率投资额(含税)",
+      "templateType": 0,
+      "basicInformation": [],
+      "startYearEq": "1#5*1.06",
+      "endyearEq": "1#5*1.06"
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 9,
+      "subtemplateName": "9税率投资额(含税)",
+      "templateType": 0,
+      "basicInformation": [],
+      "startYearEq": "1#6*1.09",
+      "endyearEq": "1#6*1.09"
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 10,
+      "subtemplateName": "13税率投资额(含税)",
+      "templateType": 0,
+      "basicInformation": [],
+      "startYearEq": "1#7*1.13",
+      "endyearEq": "1#7*1.13"
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 11,
+      "subtemplateName": "投资金额合计（含税）",
+      "templateType": 0,
+      "basicInformation": [],
+      "startYearEq": "1#8+1#9+1#10",
+      "endyearEq": "1#8+1#9+1#10"
+    }
+  ]
+}

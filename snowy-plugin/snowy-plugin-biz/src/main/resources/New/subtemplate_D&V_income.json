@@ -1,0 +1,158 @@
+{
+  "submouleDVList": [
+    {
+    "SubtemplateId": 1827184074989514763,
+    "projectId": 1,
+    "data":[
+      {
+      "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+      "StartYearData": 798.0,
+      "EndYearData": [0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+      },
+      {
+        "BasicInformation": ["310301","双向双车道道路","无绿植","条"],
+        "StartYearData": 650.0,
+        "EndYearData": [450.0,350.0,0.0,0.0,0.0,0.0,0.0]
+      },
+      {
+        "BasicInformation": ["310800","单向双车道道路","无绿植","条"],
+        "StartYearData": 530.0,
+        "EndYearData": [350.0,250.0,0.0,0.0,0.0,0.0,0.0]
+      }
+    ]
+    },
+    {
+      "SubtemplateId": 1827184074989514764,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+          "StartYearData": 0.0,
+          "EndYearData": [20.0,50.0,50.0,50.0,20.0,80.0,20.0]
+        },
+        {
+          "BasicInformation": ["310301","双向双车道道路","无绿植","条"],
+          "StartYearData": 0.0,
+          "EndYearData": [50.0,30.0,30.0,30.0,30.0,30.0,30.0]
+        },
+        {
+          "BasicInformation": ["310800","单向双车道道路","无绿植","条"],
+          "StartYearData": 0.0,
+          "EndYearData": [30.0,20.0,20.0,20.0,20.0,20.0,20.0]
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 1827184074989514765,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+          "StartYearData": -1,
+          "EndYearData": []
+        },
+        {
+          "BasicInformation": ["310301","单向双车道道路","无绿植","条"],
+          "StartYearData": -1,
+          "EndYearData": []
+        },
+        {
+          "BasicInformation": ["310800","单向双车道道路","无绿植","条"],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 1827184074989514766,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+          "StartYearData": 400.0,
+          "EndYearData": [395.0,385.0,385.0,385.0,385.0,385.0,385.0]
+        },
+        {
+          "BasicInformation": ["310301","双向双车道道路","无绿植","条"],
+          "StartYearData": 500.0,
+          "EndYearData": [400.0,350.0,350.0,350.0,350.0,350.0,350.0]
+        },
+        {
+          "BasicInformation": ["310800","单向双车道道路","无绿植","条"],
+          "StartYearData": 300.0,
+          "EndYearData": [300.0,300.0,300.0,300.0,300.0,300.0,300.0]
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 1827184074989514767,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": ["310300","单向双车道道路","无绿植","条"],
+          "StartYearData": -1,
+          "EndYearData": []
+        },
+        {
+          "BasicInformation": ["310301","双向双车道道路","无绿植","条"],
+          "StartYearData": -1,
+          "EndYearData": []
+        },
+        {
+          "BasicInformation": ["310800","单向双车道道路","无绿植","条"],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 1827184074989514768,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": [],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 1827184074989514769,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": ["310800","单向双车道道路","无绿植","条"],
+          "StartYearData": -1,
+          "EndYearData": []
+        },
+        {
+          "BasicInformation": ["310800","单向双车道道路","无绿植","条"],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 1827184074989514770,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": ["310800","单向双车道道路","无绿植","条"],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    },
+    {
+      "SubtemplateId": 1827184074989514771,
+      "projectId": 1,
+      "data":[
+        {
+          "BasicInformation": [],
+          "StartYearData": -1,
+          "EndYearData": []
+        }
+      ]
+    }
+  ]
+}

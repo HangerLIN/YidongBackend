@@ -1,0 +1,85 @@
+{
+  "submouleList": [
+    {
+      "templateId": 2,
+      "subtemplateSerial": 1,
+      "subtemplateName": "每年新增投入道路条数",
+      "templateType": 1,
+      "basicInformation": ["产品代码", "产品名称", "规格型号", "单位"],
+      "startYearEq": "",
+      "endyearEq": ""
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 2,
+      "subtemplateName": "每年废弃道路条数",
+      "templateType": 1,
+      "basicInformation": ["产品代码", "产品名称", "规格型号", "单位"],
+      "startYearEq": "",
+      "endyearEq": ""
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 3,
+      "subtemplateName": "年底投入使用的道路条数",
+      "templateType": 0,
+      "basicInformation": ["产品代码", "产品名称", "规格型号", "单位"],
+      "startYearEq": "2#1-2#2",
+      "endyearEq": "2#3`+2#1-2#2"
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 4,
+      "subtemplateName": "单条售价（不含税）",
+      "templateType": 1,
+      "basicInformation": ["产品代码", "产品名称", "规格型号", "单位"],
+      "startYearEq": "",
+      "endyearEq": ""
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 5,
+      "subtemplateName": "收入（不含税）",
+      "templateType": 0,
+      "basicInformation": ["产品代码", "产品名称", "规格型号", "单位"],
+      "startYearEq": "2#3*2#4*8/3",
+      "endyearEq": "2#3`*2#4*12+(2#1-2#2)*2#4*12/3"
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 6,
+      "subtemplateName": "不含税收入合计",
+      "templateType": 1,
+      "basicInformation": [],
+      "startYearEq": "2#5SUM",
+      "endyearEq": "2#5SUM"
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 7,
+      "subtemplateName": "收入（6%含税）",
+      "templateType": 0,
+      "basicInformation": [],
+      "startYearEq": "2#5*1.06",
+      "endyearEq": "2#5*1.06"
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 8,
+      "subtemplateName": "收入（9%含税）",
+      "templateType": 0,
+      "basicInformation": [],
+      "startYearEq": "2#5*1.09",
+      "endyearEq": "2#5*1.09"
+    },
+    {
+      "templateId": 2,
+      "subtemplateSerial": 9,
+      "subtemplateName": "含税收入合计",
+      "templateType": 1,
+      "basicInformation": [],
+      "startYearEq": "2#7SUM+2#8SUM",
+      "endyearEq": "2#7SUM+2#8SUM"
+    }
+  ]
+}

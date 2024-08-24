@@ -1,7 +1,11 @@
 package vip.xiaonuo.biz.modular.New.subtemplate.mapper;
 
+import org.apache.ibatis.annotations.Select;
 import vip.xiaonuo.biz.modular.New.subtemplate.entity.Subtemplate;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
 * @author admin
@@ -10,6 +14,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity vip.xiaonuo.biz.modular.New.subtemplate.entity.Subtemplate
 */
 public interface SubtemplateMapper extends BaseMapper<Subtemplate> {
+
+    @Select("SELECT Subtemplate_id, Subtemplate_Serial FROM SubTemplate WHERE Template_id = #{templateId}")
+    List<HashMap<Long,Integer>> selectSubtemplateIdAndSerialByTemplateId(Long templateId);
 
 }
 

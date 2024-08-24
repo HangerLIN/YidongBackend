@@ -1,6 +1,7 @@
 package vip.xiaonuo.biz.modular.New.subtemplate.service.impl;
 
 import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import vip.xiaonuo.biz.modular.New.subtemplate.dto.SubtemplateParam;
@@ -10,6 +11,7 @@ import vip.xiaonuo.biz.modular.New.subtemplate.service.SubtemplateService;
 import vip.xiaonuo.biz.modular.New.subtemplate.mapper.SubtemplateMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -59,7 +61,16 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
 
     @Override
     public List<Subtemplate> getSubtemplatesByTemplateId(Long templateId) {
-        return this.lambdaQuery().eq(Subtemplate::getTemplateId, templateId).list();
+        // return this.lambdaQuery().eq(Subtemplate::getTemplateId, templateId).list();
+        QueryWrapper<Subtemplate> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("template_id", templateId);
+        queryWrapper.orderByAsc("subtemplate_serial");
+        return subtemplateMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<HashMap<Long,Integer>> getSubtemplateIdByTemplateId(Long templateId) {
+        return subtemplateMapper.selectSubtemplateIdAndSerialByTemplateId(templateId);
     }
 }
 
