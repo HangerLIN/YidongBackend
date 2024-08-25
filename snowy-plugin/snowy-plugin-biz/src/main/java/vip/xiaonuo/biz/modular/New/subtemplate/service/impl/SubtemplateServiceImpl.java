@@ -15,23 +15,27 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
-* @author admin
-* @description 针对表【SubTemplate】的数据库操作Service实现
-* @createDate 2024-08-21 19:49:44
-*/
+ * @author admin
+ * @description 针对表【SubTemplate】的数据库操作Service实现
+ * @createDate 2024-08-21 19:49:44
+ */
 @Service
 public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subtemplate>
-    implements SubtemplateService{
+        implements SubtemplateService{
+
+    private Map<Long, List<List<BigDecimal>>> subtemplateIdToStartYearData = new HashMap<>();
+    private Map<Long, List<List<BigDecimal>>> subtemplateIdToOtherYearData = new HashMap<>();
+    private Map<List<List<BigDecimal>>, Long> dataTosubtemplateId = new HashMap<>();
+    private Long subtemplateId;
+    private BigDecimal f1 = new BigDecimal("-1E+101");
+    private BigDecimal f2 = new BigDecimal("-1E+102");
 
     @Override
     public SubtemplateOutput calculate(List<Subtemplate> subtemplateList, SubtemplateInputParam subtemplateInputParam) {
 
         Map<Pair<Long,Integer>, Long> idAndSerialToSubtemplateId = new HashMap<>();
-        Map<Long, List<List<BigDecimal>>> subtemplateIdToStartYearData = new HashMap<>();
-        Map<Long, List<List<BigDecimal>>> subtemplateIdToOtherYearData = new HashMap<>();
+
         List<SubtemplateInputParam.SubmouleDV> submouleDVList = subtemplateInputParam.getSubmouleDVList();
-        int numberOfSubtemplates = subtemplateList.size();
-        int numberofSubProject = submouleDVList.get(0).getData().size();
 
         for (Subtemplate subtemplate : subtemplateList) {
             idAndSerialToSubtemplateId.put(new Pair<>(subtemplate.getTemplateId(), subtemplate.getSubtemplateSerial()), subtemplate.getSubtemplateId());
@@ -53,78 +57,40 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
             subtemplateIdToStartYearData.put(submouleDV.getSubtemplateId(), startYearData);
             subtemplateIdToOtherYearData.put(submouleDV.getSubtemplateId(), otherYearData);
         }
-//        System.out.println(subtemplateIdToStartYearData);
-//        System.out.println(subtemplateIdToOtherYearData);
+        System.out.println(subtemplateIdToStartYearData);
+        System.out.println(subtemplateIdToOtherYearData);
 
         for (Subtemplate subtemplate : subtemplateList) {
+
             String originalStartYearEq = subtemplate.getStartyearEq();
             String originalOtherYearEq = subtemplate.getEndyearEq();
-            Long subtemplateId = subtemplate.getSubtemplateId();
+            subtemplateId = subtemplate.getSubtemplateId();
 
             // 替换 id#serial 为对应的 subtemplateId：1#1*1#2 -> 34*35
             String startYearEq = convertExpression(originalStartYearEq, idAndSerialToSubtemplateId);
             String otherYearEq = convertExpression(originalOtherYearEq, idAndSerialToSubtemplateId);
 
-//            System.out.println("--------------------------------------------");
-//            System.out.println(startYearEq);
-
             List<List<BigDecimal>> resultStartYear = new ArrayList<>();
             List<List<BigDecimal>> resultOtherYear = new ArrayList<>();
-            List<List<BigDecimal>> result = new ArrayList<>();
+
             //不需要计算（Template_type: 1 or 3），跳过
             if(subtemplate.getTemplateType() != 0) continue;
+
             //Template_type: 0
-            if(!calculateSum(startYearEq)){
-
-                resultStartYear = calculateExpression(startYearEq, subtemplateIdToStartYearData);
-                resultOtherYear = calculateExpression(otherYearEq, subtemplateIdToOtherYearData);
-                subtemplateIdToStartYearData.put(subtemplateId, resultStartYear);
-                subtemplateIdToOtherYearData.put(subtemplateId, resultOtherYear);
-//                result = merge(resultStartYear, resultOtherYear);
-
-//                System.out.println(subtemplate.getSubtemplateName());
-//                System.out.println(resultStartYear);
-//                System.out.println(resultOtherYear);
-//                System.out.println(result);
-//                System.out.println(subtemplateIdToStartYearData);
-//                System.out.println(subtemplateIdToOtherYearData);
-//                System.out.println("--------------------------------------------");
+            System.out.println("--------------------------------------------");
+            System.out.println(startYearEq);
 
 
+            resultStartYear = calculateExpression(startYearEq, subtemplateIdToStartYearData);
+            subtemplateIdToStartYearData.put(subtemplateId, resultStartYear);
 
-            }
-            else{
-                List<List<BigDecimal>> addResult = new ArrayList<>();
+            System.out.println(otherYearEq);
+            resultOtherYear = calculateExpression(otherYearEq, subtemplateIdToOtherYearData);
+            subtemplateIdToOtherYearData.put(subtemplateId, resultOtherYear);
 
-                Long sumId = Long.parseLong(startYearEq.substring(1,startYearEq.length() - 3));
-//                System.out.println(sumId);
-                List<List<BigDecimal>> data1 = subtemplateIdToStartYearData.get(sumId);
-                List<List<BigDecimal>> data2 = subtemplateIdToOtherYearData.get(sumId);
-                List<List<BigDecimal>> data = merge(data1, data2);
-
-//                System.out.println(subtemplate.getSubtemplateName());
-//                System.out.println(data1);
-//                System.out.println(data2);
-//                System.out.println(data);
-
-                int size = data.size();
-                if(size == 1) addResult = addHorizontally(data);
-                else addResult = addvertically(data);
-//                System.out.println(addResult);
-
-                List<List<BigDecimal>> firstColumn = new ArrayList<>();
-                List<List<BigDecimal>> remainingColumns = new ArrayList<>();
-
-                splitList(addResult, firstColumn, remainingColumns);
-
-                subtemplateIdToStartYearData.put(subtemplateId, firstColumn);
-                subtemplateIdToOtherYearData.put(subtemplateId, remainingColumns);
-
-//                System.out.println(subtemplateIdToStartYearData);
-//                System.out.println(subtemplateIdToOtherYearData);
-//                System.out.println("--------------------------------------------");
-            }
-
+            List<List<BigDecimal>> result = merge(resultStartYear, resultOtherYear);
+            System.out.println(result);
+            System.out.println("--------------------------------------------");
         }
 
         SubtemplateOutput subtemplateOutput = new SubtemplateOutput();
@@ -149,7 +115,15 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
         }
         subtemplateOutput.setSubmouleDVList(subtemplateOutputList);
 
+
+
         return subtemplateOutput;
+    }
+
+    private List<List<BigDecimal>> calculateSum(List<List<BigDecimal>> data){
+        int size = data.size();
+        if(size == 1) return addHorizontally(data);
+        else return addvertically(data);
     }
 
     private List<List<BigDecimal>> merge(List<List<BigDecimal>> resultStartYear, List<List<BigDecimal>> resultOtherYear){
@@ -164,20 +138,20 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
         return result;
     }
 
-    public static void splitList(List<List<BigDecimal>> originalList, List<List<BigDecimal>> firstColumn, List<List<BigDecimal>> remainingColumns) {
-        for (List<BigDecimal> row : originalList) {
-            // 提取每一行的第一个元素并存入firstColumn
-            List<BigDecimal> firstElementList = new ArrayList<>();
-            firstElementList.add(row.get(0));
-            firstColumn.add(firstElementList);
-//            System.out.println(firstElementList);
-
-            // 提取每一行剩余的元素并存入remainingColumns
-            List<BigDecimal> remainingList = new ArrayList<>(row.subList(1, row.size()));
-//            System.out.println(remainingList);
-            remainingColumns.add(remainingList);
-        }
-    }
+//    public void splitList(List<List<BigDecimal>> originalList, List<List<BigDecimal>> firstColumn, List<List<BigDecimal>> remainingColumns) {
+//        for (List<BigDecimal> row : originalList) {
+//            // 提取每一行的第一个元素并存入firstColumn
+//            List<BigDecimal> firstElementList = new ArrayList<>();
+//            firstElementList.add(row.get(0));
+//            firstColumn.add(firstElementList);
+////            System.out.println(firstElementList);
+//
+//            // 提取每一行剩余的元素并存入remainingColumns
+//            List<BigDecimal> remainingList = new ArrayList<>(row.subList(1, row.size()));
+////            System.out.println(remainingList);
+//            remainingColumns.add(remainingList);
+//        }
+//    }
 
     private List<List<BigDecimal>> addvertically(List<List<BigDecimal>> data){
         int m = data.size();
@@ -208,7 +182,7 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
         return ans;
     }
 
-    private static String convertExpression(String expression, Map<Pair<Long, Integer>, Long> idAndSerialToSubtemplateId) {
+    private String convertExpression(String expression, Map<Pair<Long, Integer>, Long> idAndSerialToSubtemplateId) {
         // 定义正则表达式，匹配 a#b 格式的部分
         Pattern pattern = Pattern.compile("(\\d+)#(\\d+)");
         Matcher matcher = pattern.matcher(expression);
@@ -233,20 +207,8 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
         return sb.toString();
     }
 
-    public static boolean calculateSum(String str) {
-        if (str.length() < 3) {
-            return false; // 字符串长度小于3，肯定不是"SUM"
-        }
-
-        // 获取字符串的后三位
-        String lastThree = str.substring(str.length() - 3);
-
-        // 判断后三位是否为"SUM"
-        return lastThree.equals("SUM");
-    }
-
     // 计算表达式
-    public static List<List<BigDecimal>> calculateExpression(
+    public List<List<BigDecimal>> calculateExpression(
             String expression, Map<Long, List<List<BigDecimal>>> matrixMap) {
 
         Stack<List<List<BigDecimal>>> values = new Stack<>();
@@ -264,8 +226,14 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
                 while (j < expression.length() && Character.isDigit(expression.charAt(j))) {
                     j++;
                 }
+
                 Long matrixId = Long.parseLong(expression.substring(i + 1, j));
-                values.push(matrixMap.get(matrixId));
+
+                if(matrixId.equals(subtemplateId)){
+                    values.push(selfMatrix());
+                }
+                else values.push(matrixMap.get(matrixId));
+
                 i = j - 1;
             } else if (ch == '$') {
                 int j = i + 1;
@@ -288,6 +256,9 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
                     values.push(applyOp(operators.pop(), values.pop(), values.pop()));
                 }
                 operators.push(ch);
+            } else if(i + 2 < expression.length() && expression.substring(i, i + 3).equals("SUM")){
+                values.push(calculateSum(values.pop()));
+                i += 2;
             }
         }
 
@@ -299,40 +270,50 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
     }
 
     //处理标量，用来处理 1#5*1.06的情况，将1.06存入二维LIst，并用-1E+100标识
-    private static List<List<BigDecimal>> scalarToMatrix(BigDecimal scalar) {
+    private List<List<BigDecimal>> scalarToMatrix(BigDecimal scalar) {
         List<List<BigDecimal>> matrix = new ArrayList<>();
         List<BigDecimal> flag = new ArrayList<>();
-        flag.add(new BigDecimal("-1E+100"));
+        flag.add(new BigDecimal("-1E+101"));
         flag.add(scalar);
         matrix.add(flag);
         return matrix;
     }
 
-    // 应用操作符
-    private static void swap(List<List<BigDecimal>> a, List<List<BigDecimal>> b){
-        BigDecimal flag = new BigDecimal("-1E+100");
-        if(!a.get(0).get(0).equals(flag) && !b.get(0).get(0).equals(flag)) return;
-        if(a.get(0).get(0).equals(flag)){
-            List<List<BigDecimal>> tmp = a;
-            a = b;
-            b = tmp;
-        }
+    //处理计算过程中需要用到上一年数据的情况
+    private List<List<BigDecimal>> selfMatrix() {
+        List<List<BigDecimal>> matrix = new ArrayList<>();
+        List<BigDecimal> flag = new ArrayList<>();
+        flag.add(new BigDecimal("-1E+102"));
+        matrix.add(flag);
+        return matrix;
     }
-    private static List<List<BigDecimal>> applyOp(char op, List<List<BigDecimal>> b, List<List<BigDecimal>> a) {
-        swap(a,b);
-        BigDecimal flag = new BigDecimal("-1E+100");
+
+
+    private List<List<List<BigDecimal>>> preprocess(List<List<BigDecimal>> b, List<List<BigDecimal>> a){
+        if(a.get(0).get(0).equals(f1) && !b.get(0).get(0).equals(f1)) return List.of(b, a);
+        if(a.get(0).get(0).equals(f2) && !b.get(0).get(0).equals(f2)) return List.of(b, a);
+        return List.of(a, b);
+    }
+
+    private List<List<BigDecimal>> applyOp(char op, List<List<BigDecimal>> y, List<List<BigDecimal>> x) {
+        List<List<List<BigDecimal>>> swappedLists = preprocess(y,x);
+        List<List<BigDecimal>> a = swappedLists.get(0);
+        List<List<BigDecimal>> b = swappedLists.get(1);
+        System.out.println(a);
+        System.out.println(b);
+
         switch (op) {
             case '+':
-                if(b.get(0).get(0).equals(flag)) return addScalar(a, b.get(0).get(1));
+                if(b.get(0).get(0).equals(f1)) return addScalar(a, b.get(0).get(1));
                 else return addMatrices(a,b);
             case '-':
-                if(b.get(0).get(0).equals(flag)) return subtractScalar(a, b.get(0).get(1));
+                if(b.get(0).get(0).equals(f1)) return subtractScalar(a, b.get(0).get(1));
                 else return subtractMatrices(a,b);
             case '*':
-                if(b.get(0).get(0).equals(flag)) return multiplyScalar(a, b.get(0).get(1));
+                if(b.get(0).get(0).equals(f1)) return multiplyScalar(a, b.get(0).get(1));
                 else return multiplyMatrices(a,b);
             case '/':
-                if(b.get(0).get(0).equals(flag)){
+                if(b.get(0).get(0).equals(f1)){
                     if (b.get(0).get(1).compareTo(BigDecimal.ZERO) == 0) throw new ArithmeticException("Division by scalar zero");
                     return divideScalar(a, b.get(0).get(1));
                 }
@@ -342,114 +323,151 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
     }
 
     // 判断是否是操作符
-    private static boolean isOperator(char ch) {
+    private boolean isOperator(char ch) {
         return ch == '+' || ch == '-' || ch == '*' || ch == '/';
     }
 
     // 判断操作符优先级
-    private static boolean hasPrecedence(char op1, char op2) {
+    private boolean hasPrecedence(char op1, char op2) {
         if (op2 == '(' || op2 == ')') return false;
         if ((op1 == '*' || op1 == '/') && (op2 == '+' || op2 == '-')) return false;
         return true;
     }
 
-    // 处理一个操作符
-    private static void processOperation(Stack<List<List<BigDecimal>>> matrixStack, char operator) {
-        List<List<BigDecimal>> b = matrixStack.pop();
-        List<List<BigDecimal>> a = matrixStack.pop();
-        switch (operator) {
-            case '+':
-                matrixStack.push(addMatrices(a, b));
-                break;
-            case '-':
-                matrixStack.push(subtractMatrices(a, b));
-                break;
-            case '*':
-                matrixStack.push(multiplyMatrices(a, b));
-                break;
-            case '/':
-                matrixStack.push(divideMatrices(a, b));
-                break;
+    public List<List<BigDecimal>> deepCopy(List<List<BigDecimal>> original) {
+        List<List<BigDecimal>> copy = new ArrayList<>();
+        for (List<BigDecimal> row : original) {
+            // 创建每一行的深拷贝
+            List<BigDecimal> newRow = new ArrayList<>();
+            for (BigDecimal value : row) {
+                // 对每个元素进行拷贝
+                newRow.add(new BigDecimal(value.toString()));
+            }
+            copy.add(newRow);
         }
-    }
-
-
-    // 返回操作符的优先级
-    private static int precedence(char operator) {
-        switch (operator) {
-            case '+':
-            case '-':
-                return 1;
-            case '*':
-            case '/':
-                return 2;
-            default:
-                return 0;
-        }
+        return copy;
     }
 
     // 矩阵相加
-    private static List<List<BigDecimal>> addMatrices(List<List<BigDecimal>> a, List<List<BigDecimal>> b) {
+    private List<List<BigDecimal>> addMatrices(List<List<BigDecimal>> a, List<List<BigDecimal>> b) {
         int rows = a.size();
         int cols = a.get(0).size();
         List<List<BigDecimal>> result = new ArrayList<>(rows);
-        for (int i = 0; i < rows; i++) {
-            List<BigDecimal> row = new ArrayList<>(cols);
-            for (int j = 0; j < cols; j++) {
-                row.add(a.get(i).get(j).add(b.get(i).get(j)));
+
+        List<List<BigDecimal>> aCopy = deepCopy(a);
+
+        if(b.get(0).get(0).equals(f2)){
+            List<List<BigDecimal>> startYearData = subtemplateIdToStartYearData.get(subtemplateId);
+            for (int i = 0; i < rows; i++) {
+                List<BigDecimal> tmp = new ArrayList<>();
+                for (int j = 0; j < cols; j++) {
+                    if(j == 0) tmp.add(a.get(i).get(j).add(startYearData.get(i).get(j)));
+                    else tmp.add(a.get(i).get(j).add(tmp.get(j - 1)));
+                }
+                result.add(tmp);
             }
-            result.add(row);
+        }
+        else{
+            for (int i = 0; i < rows; i++) {
+                List<BigDecimal> tmp = new ArrayList<>();
+                for (int j = 0; j < cols; j++) {
+                    tmp.add(a.get(i).get(j).add(b.get(i).get(j)));
+                }
+                result.add(tmp);
+            }
         }
         return result;
     }
 
     // 矩阵相减
-    private static List<List<BigDecimal>> subtractMatrices(List<List<BigDecimal>> a, List<List<BigDecimal>> b) {
+    private List<List<BigDecimal>> subtractMatrices(List<List<BigDecimal>> a, List<List<BigDecimal>> b) {
         int rows = a.size();
         int cols = a.get(0).size();
         List<List<BigDecimal>> result = new ArrayList<>(rows);
-        for (int i = 0; i < rows; i++) {
-            List<BigDecimal> row = new ArrayList<>(cols);
-            for (int j = 0; j < cols; j++) {
-                row.add(a.get(i).get(j).subtract(b.get(i).get(j)));
+
+        if(b.get(0).get(0).equals(f2)){
+            List<List<BigDecimal>> startYearData = subtemplateIdToStartYearData.get(subtemplateId);
+            for (int i = 0; i < rows; i++) {
+                List<BigDecimal> tmp = new ArrayList<>();
+                for (int j = 0; j < cols; j++) {
+                    if(j == 0) tmp.add(a.get(i).get(j).subtract(startYearData.get(i).get(j)));
+                    else tmp.add(a.get(i).get(j).subtract(tmp.get(j - 1)));
+                }
+                result.add(tmp);
             }
-            result.add(row);
+        }
+        else{
+            for (int i = 0; i < rows; i++) {
+                List<BigDecimal> tmp = new ArrayList<>();
+                for (int j = 0; j < cols; j++) {
+                    tmp.add(a.get(i).get(j).subtract(b.get(i).get(j)));
+                }
+                result.add(tmp);
+            }
         }
         return result;
     }
 
     // 矩阵逐元素相乘
-    private static List<List<BigDecimal>> multiplyMatrices(List<List<BigDecimal>> a, List<List<BigDecimal>> b) {
+    private List<List<BigDecimal>> multiplyMatrices(List<List<BigDecimal>> a, List<List<BigDecimal>> b) {
         int rows = a.size();
         int cols = a.get(0).size();
         List<List<BigDecimal>> result = new ArrayList<>(rows);
-        for (int i = 0; i < rows; i++) {
-            List<BigDecimal> row = new ArrayList<>(cols);
-            for (int j = 0; j < cols; j++) {
-                row.add(a.get(i).get(j).multiply(b.get(i).get(j)));
+
+        if(b.get(0).get(0).equals(f2)){
+            List<List<BigDecimal>> startYearData = subtemplateIdToStartYearData.get(subtemplateId);
+            for (int i = 0; i < rows; i++) {
+                List<BigDecimal> tmp = new ArrayList<>();
+                for (int j = 0; j < cols; j++) {
+                    if(j == 0) tmp.add(a.get(i).get(j).multiply(startYearData.get(i).get(j)));
+                    else tmp.add(a.get(i).get(j).multiply(tmp.get(j - 1)));
+                }
+                result.add(tmp);
             }
-            result.add(row);
+        }
+        else{
+            for (int i = 0; i < rows; i++) {
+                List<BigDecimal> tmp = new ArrayList<>();
+                for (int j = 0; j < cols; j++) {
+                    tmp.add(a.get(i).get(j).multiply(b.get(i).get(j)));
+                }
+                result.add(tmp);
+            }
         }
         return result;
     }
 
     // 矩阵逐元素相除
-    private static List<List<BigDecimal>> divideMatrices(List<List<BigDecimal>> a, List<List<BigDecimal>> b) {
+    private List<List<BigDecimal>> divideMatrices(List<List<BigDecimal>> a, List<List<BigDecimal>> b) {
         int rows = a.size();
         int cols = a.get(0).size();
         List<List<BigDecimal>> result = new ArrayList<>(rows);
-        for (int i = 0; i < rows; i++) {
-            List<BigDecimal> row = new ArrayList<>(cols);
-            for (int j = 0; j < cols; j++) {
-                row.add(a.get(i).get(j).divide(b.get(i).get(j), BigDecimal.ROUND_HALF_UP));
+
+        if(b.get(0).get(0).equals(f2)){
+            List<List<BigDecimal>> startYearData = subtemplateIdToStartYearData.get(subtemplateId);
+            for (int i = 0; i < rows; i++) {
+                List<BigDecimal> tmp = new ArrayList<>();
+                for (int j = 0; j < cols; j++) {
+                    if(j == 0) tmp.add(a.get(i).get(j).divide(startYearData.get(i).get(j), BigDecimal.ROUND_HALF_UP));
+                    else tmp.add(a.get(i).get(j).divide(tmp.get(j - 1), BigDecimal.ROUND_HALF_UP));
+                }
+                result.add(tmp);
             }
-            result.add(row);
+        }
+        else{
+            for (int i = 0; i < rows; i++) {
+                List<BigDecimal> tmp = new ArrayList<>();
+                for (int j = 0; j < cols; j++) {
+                    tmp.add(a.get(i).get(j).divide(b.get(i).get(j), BigDecimal.ROUND_HALF_UP));
+                }
+                result.add(tmp);
+            }
         }
         return result;
     }
 
     // 矩阵逐元素乘以标量
-    private static List<List<BigDecimal>> addScalar(List<List<BigDecimal>> matrix, BigDecimal scalar) {
+    private List<List<BigDecimal>> addScalar(List<List<BigDecimal>> matrix, BigDecimal scalar) {
         int rows = matrix.size();
         int cols = matrix.get(0).size();
         List<List<BigDecimal>> result = new ArrayList<>(rows);
@@ -464,7 +482,7 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
     }
 
     // 矩阵逐元素乘以标量
-    private static List<List<BigDecimal>> subtractScalar(List<List<BigDecimal>> matrix, BigDecimal scalar) {
+    private List<List<BigDecimal>> subtractScalar(List<List<BigDecimal>> matrix, BigDecimal scalar) {
         int rows = matrix.size();
         int cols = matrix.get(0).size();
         List<List<BigDecimal>> result = new ArrayList<>(rows);
@@ -478,7 +496,7 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
         return result;
     }
     // 矩阵逐元素乘以标量
-    private static List<List<BigDecimal>> multiplyScalar(List<List<BigDecimal>> matrix, BigDecimal scalar) {
+    private List<List<BigDecimal>> multiplyScalar(List<List<BigDecimal>> matrix, BigDecimal scalar) {
         int rows = matrix.size();
         int cols = matrix.get(0).size();
         List<List<BigDecimal>> result = new ArrayList<>(rows);
@@ -493,14 +511,14 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
     }
 
     // 矩阵逐元素除以标量
-    private static List<List<BigDecimal>> divideScalar(List<List<BigDecimal>> matrix, BigDecimal scalar) {
+    private List<List<BigDecimal>> divideScalar(List<List<BigDecimal>> matrix, BigDecimal scalar) {
         int rows = matrix.size();
         int cols = matrix.get(0).size();
         List<List<BigDecimal>> result = new ArrayList<>(rows);
         for (int i = 0; i < rows; i++) {
             List<BigDecimal> row = new ArrayList<>(cols);
             for (int j = 0; j < cols; j++) {
-                row.add(matrix.get(i).get(j).divide(scalar));
+                row.add(matrix.get(i).get(j).divide(scalar, BigDecimal.ROUND_HALF_UP));
             }
             result.add(row);
         }

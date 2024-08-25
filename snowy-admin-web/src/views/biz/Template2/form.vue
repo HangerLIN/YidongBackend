@@ -71,8 +71,8 @@
 
 		<template #footer>
 			<a-button style="margin-right: 8px" @click="onClose">关闭</a-button>
-			<a-button style="margin-right: 8px" type="primary" @click="onSubmit" :loading="submitLoading">保存</a-button>
-			<a-button type="primary"  @click="nextshoru" :loading="submitLoading">下一步</a-button>
+<!--			<a-button style="margin-right: 8px" type="primary" @click="onSubmit" :loading="submitLoading">保存</a-button>-->
+<!--			<a-button type="primary"  @click="nextshoru" :loading="submitLoading">下一步</a-button>-->
 		</template>
 	</xn-form-container>
 </template>
@@ -94,21 +94,40 @@
 	const formData = ref({})
 	const formData1 = ref()
 	const submitLoading = ref(false)
+	const props = defineProps({
+		TemplateId: {
+			type: Number,
+			default: 0,
+		},
+		proId: {
+			type: Number,
+			default: 0,
+		},
+	})
 
 	// 打开抽屉
 	const onOpen = (record) => {
 		open.value = true
+		formData.value = Object.assign({}, {transactionId:props.TemplateId})
+		// formData.transactionId=props.TemplateId
+		console.log(props.TemplateId)
+		console.log('formData.transactionId')
 		if (record) {
 			let recordData = cloneDeep(record)
 			formData.value = Object.assign({}, recordData)
 			formData1.value = recordData
+			// formData.transactionId=formData1.value.templateId
+			console.log('formData.transactionId')
+
 		}
 	}
 	const onOpen1 = (record) => {
 		open1.value = true
 		console.log(formData1.value.templateId)
 		formData1ID = formData1.value.templateId
-		console.log(formData1ID)
+		// formData.transactionId=formData1ID
+		// console.log('formData.transactionId')
+		console.log(formData.transactionId)
 		if (record) {
 			let recordData = cloneDeep(record)
 			console.log(111111)

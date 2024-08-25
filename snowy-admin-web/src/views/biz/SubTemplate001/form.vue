@@ -47,9 +47,21 @@
 	// 表单数据
 	const formData = ref({})
 	const submitLoading = ref(false)
-
+	const props = defineProps({
+		TemplateId: {
+			type: Number,
+			default: 0,
+		},
+		proId: {
+			type: Number,
+			default: 0,
+		},
+	})
 	// 打开抽屉
 	const onOpen = (record) => {
+		console.log(props.TemplateId)
+		console.log('formData.transactionId')
+		formData.value = Object.assign({}, {templateId:props.TemplateId})
 		open.value = true
 		if (record) {
 			let recordData = cloneDeep(record)

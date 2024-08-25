@@ -30,6 +30,6 @@ public class Subtemplate001IdParam {
 
     /** 子模版ID */
     @Schema(description = "子模版ID", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "subtemplateId不能为空")
-    private Long subtemplateId;
+//    @NotBlank(message = "subtemplateId不能为空")
+    private String subtemplateId;
 }

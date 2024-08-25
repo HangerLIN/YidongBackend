@@ -30,6 +30,6 @@ public class template1IdParam {
 
     /** 业务ID */
     @Schema(description = "业务ID", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "transactionId不能为空")
-    private Long transactionId;
+//    @NotBlank(message = "transactionId不能为空")
+    private String transactionId;
 }
