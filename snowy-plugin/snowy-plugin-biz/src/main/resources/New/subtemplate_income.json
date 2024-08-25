@@ -49,7 +49,7 @@
       "templateId": 2,
       "subtemplateSerial": 6,
       "subtemplateName": "不含税收入合计",
-      "templateType": 1,
+      "templateType": 0,
       "basicInformation": [],
       "startYearEq": "2#5SUM",
       "endyearEq": "2#5SUM"
@@ -76,7 +76,7 @@
       "templateId": 2,
       "subtemplateSerial": 9,
       "subtemplateName": "含税收入合计",
-      "templateType": 1,
+      "templateType": 0,
       "basicInformation": [],
       "startYearEq": "2#7SUM+2#8SUM",
       "endyearEq": "2#7SUM+2#8SUM"
