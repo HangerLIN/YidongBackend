@@ -101,9 +101,9 @@ public class SubTemplateController {
     }
 
     // 添加子模版
-    @GetMapping("/biz/new/subtemplate/calculate2/{proId}/{tempId}")
+    @GetMapping("/biz/new/subtemplate/calculate2")
     @Operation(summary = "计算子模版结果2")
-    public CommonResult<SubtemplateOutput> calculateSubTemplate2(@PathVariable("proId") Long Projectid, @PathVariable("tempId") Long Templateid) {
+    public CommonResult<SubtemplateOutput> calculateSubTemplate2(Long Projectid,Long Templateid) {
 
 
         String Id = Projectid.toString() + ":" + Templateid.toString();
