@@ -61,8 +61,9 @@
 		</a-form>
 		<template #footer>
 			<a-button style="margin-right: 8px" @click="onClose">关闭</a-button>
-			<a-button type="primary" @click="onSubmit" :loading="submitLoading">保存</a-button>
-			<a-button type="primary" @click="nextTouzi" :loading="submitLoading">下一步</a-button>
+			<a-button style="margin-right: 8px" type="primary" @click="onSubmit" :loading="submitLoading">保存</a-button>
+			<a-button style="margin-right: 8px" type="primary" @click="nextTouzi" :loading="submitLoading">下一步1</a-button>
+			<a-button style="margin-right: 8px" type="primary" @click="nextKaizhi1" :loading="submitLoading">下一步2</a-button>
 		</template>
 	</xn-form-container>
 	<xn-form-container
@@ -124,6 +125,21 @@
 			<a-button type="primary" @click="nextMingxi" :loading="submitLoading">下一步</a-button>
 		</template>
 	</xn-form-container>
+	<xn-form-container
+		title="选择模版"
+		:width="1000"
+		v-model:open="open4"
+		:destroy-on-close="true"
+		@close="onClose"
+	>
+
+		<Index :cyc="cyc" :shouru_cycle="shouru_cycle"  :proId="projectId"></Index>
+		<template #footer>
+			<a-button style="margin-right: 8px" @click="onClose">关闭</a-button>
+			<a-button type="primary" @click="onSubmit" :loading="submitLoading">保存</a-button>
+			<a-button type="primary" @click="nextMingxi" :loading="submitLoading">下一步</a-button>
+		</template>
+	</xn-form-container>
 </template>
 
 <script setup name="projectBasicInfoForm">
@@ -134,9 +150,14 @@
 	import TouziMoney from "@/views/biz/basicinfo/touziMoney.vue";
 	import Shouru from "@/views/biz/basicinfo/shouru.vue";
 	import Kaizhi from "@/views/biz/basicinfo/kaizhi.vue";
-
+	import Index from "@/views/biz/template1user/index.vue"
 	const totaluniclude = ref()
 	const scheduleAndCosts = ref()
+	let epoch = ref(9)
+	// import { provide } from 'vue';
+	// const key = 'foo';
+	// let value = ref();
+	// provide(key, value);
 	const handleDataUpdate=(data)=>{
 		console.log(11111111111111)
 		totaluniclude.value = data
@@ -150,6 +171,8 @@
 
 	provide('sharedData', totaluniclude);
 	provide('sharedData1', scheduleAndCosts);
+	// provide('key',epoch)
+	// provide('key',1)
 	// 抽屉状态
 	let cyc=ref(0)
 	let shouru_cycle=ref(0)
@@ -158,6 +181,7 @@
 	const open1 = ref(false)
 	const open2 = ref(false)
 	const open3 = ref(false)
+	const open4 = ref(false)
 	const emit = defineEmits({ successful: null })
 	const formRef = ref()
 	const TouziformRef = ref()
@@ -237,6 +261,13 @@
 			formData.value = Object.assign({}, recordData)
 		}
 	}
+	const onOpen4 = (record) => {
+		open4.value = true
+		if (record) {
+			let recordData = cloneDeep(record)
+			formData.value = Object.assign({}, recordData)
+		}
+	}
 	// 关闭抽屉
 	const onClose = () => {
 		// formRef.value.resetFields()
@@ -261,7 +292,7 @@
 					.then((res) => {
 						// onClose()
 						console.log(res)
-						projectId=res
+						projectId.value=res
 						emit('successful')
 					})
 					.finally(() => {
@@ -275,16 +306,19 @@
 		onOpen,
 		onOpen1,
 		onOpen2,
-		onOpen3
+		onOpen3,
+		onOpen4
+
 
 	})
-
-
+	const epoch1 = ref(888)
+	provide('shourucyc',epoch1)
 
 	//投资明细
 	const nextTouzi = () => {
 		console.log(formData.value.buildPeriod)
 		cyc.value=formData.value.buildPeriod
+		epoch1.value=formData.value.evaluationPeriod
 		shouru_cycle.value=formData.value.evaluationPeriod
 		console.log('next'+cyc.value)
 		onClose()
@@ -307,10 +341,51 @@
 		// onClose()
 		// console.log('next')
 		// onOpen1()
+
 		console.log('next'+cyc.value)
 		onClose()
 		console.log('next')
 		onOpen3()
 		console.log('next')
 	}
+
+	// let epoch=5
+	const nextKaizhi1 = () => {
+		shouru_cycle.value=formData.value.evaluationPeriod
+		cyc.value=formData.value.buildPeriod
+		console.log(epoch.value)
+		console.log(shouru_cycle.value)
+		// ep(epoch)
+		// provide(key,value)
+		// provide('key',1)
+		console.log('next'+cyc.value)
+		console.log('next'+cyc.value)
+		console.log('next'+cyc.value)
+		//
+		// const key = 'foo';
+		// const value = 'cyc.value';
+		// provide(key, epoch);
+		onClose()
+		console.log('next')
+		onOpen4()
+		console.log(epoch.value)
+
+		console.log('next')
+
+
+		// provide('key',epoch.value)
+	}
+
+	// provide('key', 1111111111);
+	// 延迟 1 秒以模拟异步操作
+	// const ep=(epoch)=>{
+	// 	console.log(epoch.value)
+	// 	const a=epoch.value
+	// 	provide('key',a)
+	// }
+	// provide('key',epoch.value)
+	// cyc.value=formData.value.buildPeriod
+	// provide(key,cyc.value)
+	// provide(key,value)
+	// provide('key',epoch.value)
 </script>
