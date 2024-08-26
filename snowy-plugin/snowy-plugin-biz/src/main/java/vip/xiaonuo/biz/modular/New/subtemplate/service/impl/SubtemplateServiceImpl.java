@@ -206,9 +206,28 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
 
         return sb.toString();
     }
+    private List<List<BigDecimal>> shiftRight(List<List<BigDecimal>> matrix, Long matrixId) {
+        List<List<BigDecimal>> startYearData = subtemplateIdToStartYearData.get(matrixId);
+        List<List<BigDecimal>> mergeMatrix = merge(startYearData, matrix);
+
+        int rows = mergeMatrix.size();
+        int clos = mergeMatrix.get(0).size();
+        List<List<BigDecimal>> result = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            List<BigDecimal> row = new ArrayList<>();
+            for (int j = 0; j < clos - 1; j++) {
+                row.add(mergeMatrix.get(i).get(j));
+            }
+            result.add(row);
+        }
+        System.out.println("---------------------result---------------------");
+        System.out.println(result);
+        System.out.println("---------------------result---------------------");
+        return result;
+    }
 
     // 计算表达式
-    public List<List<BigDecimal>> calculateExpression(
+    private List<List<BigDecimal>> calculateExpression(
             String expression, Map<Long, List<List<BigDecimal>>> matrixMap) {
 
         Stack<List<List<BigDecimal>>> values = new Stack<>();
@@ -228,11 +247,13 @@ public class SubtemplateServiceImpl extends ServiceImpl<SubtemplateMapper, Subte
                 }
 
                 Long matrixId = Long.parseLong(expression.substring(i + 1, j));
+                List<List<BigDecimal>> matrix = matrixMap.get(matrixId);
+                if(j < expression.length() && expression.charAt(j) == '@') matrix = shiftRight(matrix, matrixId);
 
                 if(matrixId.equals(subtemplateId)){
                     values.push(selfMatrix());
                 }
-                else values.push(matrixMap.get(matrixId));
+                else values.push(matrix);
 
                 i = j - 1;
             } else if (ch == '$') {
